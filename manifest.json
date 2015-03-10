@@ -1,0 +1,26 @@
+{
+  "manifest_version": 2,
+  "name": "Jekyller",
+  "short_name": "Jekyller",
+  "description": "To Support Quick Jekyller Editor and Publisher",
+  "version": "0.5.7",
+  "minimum_chrome_version": "33",
+  "icons": {
+    "16": "assets/icon_16.png",
+    "128": "assets/icon_128.png"
+  },
+ "permissions": [
+	"storage",
+ 	"unlimitedStorage",
+  	"notifications",
+	"identity",
+	"<all_urls>"
+  ],
+  "app": {
+    "background": {
+      "page": "background.html",
+      "persisitent": true
+    }
+  }
+
+}
