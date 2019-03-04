@@ -1,15 +1,20 @@
 //-> Claud Modified for jekyller Need
 var root = null;
+var debug = false;
 /* Please replace with your own private Token */
 var access_token = null;
+
+var gh = null;
 
 chrome.storage.local.get({"access_token":null},function(o){
 	access_token = o.access_token;
 });
 
 
-chrome.runtime.getBackgroundPage(function(r) { root = r;});
-var gh = (function() {
+chrome.runtime.getBackgroundPage(function(r) { 
+
+root = r; 
+gh = (function() {
   'use strict';
   var signin_button;
   var revoke_button;
@@ -20,7 +25,14 @@ var gh = (function() {
     // application https://github.com/settings/applications.
     var clientId = 'ad57ed7e5d0b71e7e6a7';
     var clientSecret = '7c03c30b4f2fe03c5d0849ad06cb9fed3340980c';
+
+    if(root.debug){
+        clientId = '667dcd9db9d3305f9085';
+        clientSecret = '13fcd1ab9045ea9ddf1b5cf1bfe628a9757ec2c6';
+    }
+
     var redirectUri = chrome.identity.getRedirectURL('provider_cb');
+    console.log(redirectUri);
     var redirectRe = new RegExp(redirectUri + '[#\?](.*)');
 
     return {
@@ -39,6 +51,7 @@ var gh = (function() {
               '&access_type=online' +
               '&redirect_uri=' + encodeURIComponent(redirectUri)
         }
+        console.log(options);
         chrome.identity.launchWebAuthFlow(options, function(redirectUri) {
           console.log('launchWebAuthFlow completed', chrome.runtime.lastError,
               redirectUri);
@@ -175,12 +188,12 @@ var gh = (function() {
     var retry = true;
     var access_token;
 
-    console.log('xhrWithAuth', method, url, interactive);
+    //console.log('xhrWithAuth', method, url, interactive);
     getToken();
 
     function getToken() {
       tokenFetcher.getToken(interactive, function(error, token) {
-        console.log('token fetch', error, token);
+        //console.log('token fetch', error, token);
         if (error) {
           callback(error);
           return;
@@ -387,5 +400,6 @@ var gh = (function() {
     }
   };
 })();
-
 window.onload = gh.onload;
+});
+

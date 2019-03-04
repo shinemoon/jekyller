@@ -15,7 +15,8 @@ user-select: none;
 .meltdown_wrap {
 	position: relative;
 	margin-bottom: 10px;
-	padding: 0 5px;
+	//padding: 0 5px;
+	padding: 0px;
 	background: #c8c8c8;
 	-moz-border-radius: 5px;
 	-webkit-border-radius: 5px;
@@ -25,11 +26,11 @@ user-select: none;
 
 /* Allow the margins to collapse with the other childrens of .meltdown_wrap: */
 .meltdown_topmargin {
-	margin-bottom: 5px;
+	margin-bottom: 0px;
 }
 
 .meltdown_bottommargin {
-	margin-top: 5px;
+	margin-top: 0px;
 }
 
 /* Meltdown Font Icons
@@ -141,7 +142,7 @@ you can use the generic selector below, but it's slower:
 	border-radius: 3px;
 }
 .meltdown_editor-deco.focus {
-	border-color: #ffffff;
+//	border-color: #ffffff;
 }
 
 .meltdown_editor {
@@ -433,6 +434,7 @@ li.meltdown_controlbutton.disabled:focus > span {
 	border: 1px solid #a8a8a8;
 	border-top: 0;
 	padding: 5px;
+	padding-bottom: 25px;
 	overflow: auto;
 	background: #fff;
 	-webkit-border-bottom-right-radius: 3px;

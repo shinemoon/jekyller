@@ -7,26 +7,16 @@
 
 var user_info;	//git user info
 var gh;					//git handler
+var debug = false;
+
+var handleClick = function(){
+    console.log("Button Clicked, Open the Editor");   
+    chrome.tabs.create({
+        url:'index.html'
+    });
+};
 
 
-
-chrome.app.runtime.onLaunched.addListener(function(launchData) {
-  chrome.app.window.create('index.html', {
-		id: 'mainPage',
-		frame: 'none',
-		resizable: false,
-		focused: true,
-		outerBounds: {
-			'minWidth': 1000,
-			'minHeight':650,
-			'width': 1000,
-			'height':650
-		}
-	},function(curw){
-	  curw.restore();
-	  $('.editorwrap').removeClass('max');
-	});
-});
-
+chrome.browserAction.onClicked.addListener(handleClick);
 
 

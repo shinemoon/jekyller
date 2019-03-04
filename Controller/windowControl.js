@@ -1,28 +1,5 @@
 //Control Main windows' action
-	$('img.close').click(function(){
-	  //Avoid keep wrong initial status
-	  chrome.app.window.current().restore();
-	  $('.editorwrap').removeClass('max');
-		chrome.app.window.current().close();
-	});
-
-	$('img.minimize').click(function(){
-		chrome.app.window.current().minimize();
-	});
-
-
-	$('img.maximize').click(function(){
-	  var curw = chrome.app.window.current();
-	  if(curw.isMaximized()){
-	    curw.restore();
-	  	$('.op-span').removeClass('max');
-	  } else {
-	    curw.maximize();
-	  	$('.op-span').addClass('max');
-	  }
-	});
-
-	$('img.create').confirmOn({
+	$('.img#create').confirmOn({
  		questionText: 'Local Post Will Be Emptied , Is It OK?',
 		textYes: 'Yes, I\'m sure',
 		textNo: 'No, I\'m not sure'
@@ -31,16 +8,14 @@
     	createNewPost();
   })
 
-	$('img.local').click(function(){
+	$('.img#local').click(function(){
 	  $('.focus').removeClass('focus');
-	  $('.frame-icon.local').addClass('focus');
-    listLocalPop(true);
+       listLocalPop(true);
 	});
 
-	$('img.list').click(function(){
+	$('.img#list').click(function(){
 	  $('.focus').removeClass('focus');
-	  $('.frame-icon.list').addClass('focus');
-    listPop(true);
+       listPop(true);
 	});
 
 

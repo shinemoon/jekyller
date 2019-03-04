@@ -1,26 +1,27 @@
 {
   "manifest_version": 2,
-  "name": "Jekyller",
+  "name": "Jekyller Blog Editor",
   "short_name": "Jekyller",
-  "description": "To Support Quick Jekyller Editor and Publisher",
-  "version": "0.5.7",
+  "description": "To support writing, editing and managing the github.io based Jekyll Blog, with Markdown Previewer.",
+  "version": "0.73",
   "minimum_chrome_version": "33",
   "icons": {
-    "16": "assets/icon_16.png",
-    "128": "assets/icon_128.png"
+    "16": "assets/icon_512.png",
+    "128": "assets/icon_512.png"
   },
+    "browser_action": {
+        "default_icon": "assets/icon_512.png",
+        "default_title": "Jeykller"
+    },
+    "background":{
+        "page":"background.html",
+        "persisitent": true
+    },
  "permissions": [
 	"storage",
- 	"unlimitedStorage",
   	"notifications",
-	"identity",
+    "unlimitedStorage",
+    "identity",
 	"<all_urls>"
-  ],
-  "app": {
-    "background": {
-      "page": "background.html",
-      "persisitent": true
-    }
-  }
-
+  ]
 }

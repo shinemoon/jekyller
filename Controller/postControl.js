@@ -136,13 +136,13 @@ function deletePost(ind,cb){
 }
 
 function syncLocalPost(){
-   	chrome.storage.sync.set({syncpost:curpost},function(){
+   	chrome.storage.local.set({syncpost:curpost},function(){
 			console.log('sync done');
 		});
 }
 
 function getLocalPost(cb){
-   	chrome.storage.sync.get({syncpost:null},function(o){
+   	chrome.storage.local.get({syncpost:null},function(o){
 			console.log(o);
 			console.log('sync done');
 			cb(o.syncpost);

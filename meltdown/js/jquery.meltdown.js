@@ -706,7 +706,7 @@
 				var self = this;
 				doc.on("keypress." + plgName + ".fullscreenEscKey", function(e) {
 					if (e.keyCode === 27) {	// Esc key
-						self.toggleFullscreen(false);
+						//self.toggleFullscreen(false); //claud remove the full toggle feature.
 					}
 				});
 			} else {
