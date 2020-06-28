@@ -2,7 +2,7 @@
 	$('.img#create').confirmOn({
  		questionText: 'Local Post Will Be Emptied , Is It OK?',
 		textYes: 'Yes, I\'m sure',
-		textNo: 'No, I\'m not sure'
+		textNo: 'No, Thanks'
  	 }, 'click', function(e, confirmed){
 		if(confirmed)
     	createNewPost();
@@ -17,6 +17,13 @@
 	  $('.focus').removeClass('focus');
        listPop(true);
 	});
+
+	$('.img#skin').click(function(){
+        $('.focus').removeClass('focus');
+        switchSkin();
+	});
+
+
 
 
 
@@ -87,6 +94,18 @@ function logError(str){
 	}, 2000);
 }
 
+function switchSkin(){
+    console.log(skin);
+    if(skin=='dark')
+        skin = 'light';
+    else
+        skin = 'dark';
+    chrome.storage.local.set({skin:skin},function(){
+        $('#stylehdl').remove();
+        $('head').append('<link id="stylehdl" rel="stylesheet"type="text/css"href="styles-'+skin+'.css"/>');
+    });
+
+}
 
 
 

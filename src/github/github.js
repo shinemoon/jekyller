@@ -1,6 +1,5 @@
 //-> Claud Modified for jekyller Need
 var root = null;
-var debug = false;
 /* Please replace with your own private Token */
 var access_token = null;
 
@@ -23,12 +22,23 @@ gh = (function() {
   var tokenFetcher = (function() {
     // Replace clientId and clientSecret with values obtained by you for your
     // application https://github.com/settings/applications.
-    var clientId = 'ad57ed7e5d0b71e7e6a7';
-    var clientSecret = '7c03c30b4f2fe03c5d0849ad06cb9fed3340980c';
 
-    if(root.debug){
-        clientId = '667dcd9db9d3305f9085';
-        clientSecret = '13fcd1ab9045ea9ddf1b5cf1bfe628a9757ec2c6';
+//    var clientId = '7d4df663d17a7f300ea7';
+//    var clientSecret = '48b19b66d9ab8b58491c795b0e29b40090fb2b16';
+
+    var clientId = 'ac5d693f869a98dba1e3';
+    var clientSecret = 'd6118b6c82ff5b639430272da34a3febc789c6eb';
+
+
+
+    if(chrome.runtime.id=='blogcklanlfjglneidejdabdljnoohlc'){
+       // Formal Port
+       // clientId = 'ac5d693f869a98dba1e3';
+       // clientSecret = 'd6118b6c82ff5b639430272da34a3febc789c6eb';
+        clientId = '7d4df663d17a7f300ea7';
+        clientSecret = '48b19b66d9ab8b58491c795b0e29b40090fb2b16';
+
+
     }
 
     var redirectUri = chrome.identity.getRedirectURL('provider_cb');
@@ -44,7 +54,8 @@ gh = (function() {
         }
 
         var options = {
-          'interactive': interactive,
+//          'interactive': interactive,
+          'interactive': true ,
           url:'https://github.com/login/oauth/authorize?client_id=' + clientId +
               '&reponse_type=token' +
               '&scope=user,repo' +
@@ -57,6 +68,7 @@ gh = (function() {
               redirectUri);
 
           if (chrome.runtime.lastError) {
+            console.log( chrome.runtime.lastError)
             callback(new Error(chrome.runtime.lastError));
             return;
           }

@@ -1,13 +1,36 @@
 /* CSS file placeholder. */
+/*
+Highlight:
+    dark:   #c0360c
+    light:   #ff9500;
+Preview:
+    Color:
+        dark: #dfdfdf;
+        light:#333333;
+    Background:
+        dark: background:#424f5a; 
+        light: background: #eae8e8;
+    
+    TitleBar:
+        dark: background:#343f48; 
+        light: background: #dad8d8;
+
+
+*/
+
+::-webkit-scrollbar{
+display:none;
+}
+
 body {
   margin-top:0px;
-  background:rgb(66, 79, 90);
+  background:#eae8e8;
 }
 .top-banner {
   height:12px;
   text-align:left;
   font-size:16px;
-  background:#343f48;
+  background:#dad8d8;
   padding-top:4px;
   padding-left:20px;
   padding-bottom:10px;
@@ -41,6 +64,7 @@ body {
   opacity:0.8;
   color:white;
 }
+
 
 .frame-icon.op.focus {
    color:#ff9500;
@@ -84,7 +108,7 @@ display:block;
   z-index:1002;
   position:fixed;
   display:block;
-  border:2px solid rgb(66, 79, 90);
+  border:2px solid #eae8e8;
   box-shadow:rgba(20,20,20,0.8) 2px 2px 4px;
   border-top-left-radius:10px;
   border-top-right-radius:10px;
@@ -140,22 +164,22 @@ display:block;
 
 #user_info {
 	font-size: 10px;
-	color: rgba(200,200,200,0.9);
-//	margin-left:18px;
-//	margin-top:-5px;
+	color: #666;
 	cursor:pointer;
+    font-weight:normal;
+    font-family: "Georgia","Arial","Kesong","PingFang SC","Microsoft YaHei",sans-serif;
 }
 
 #user_info {
     position:fixed;
-    bottom:4px;
-    right:250px;
+    bottom:6px;
+    //right:250px;
 }
 
 #user_info a {
 	font-size: 11px;
-	color: rgba(200,200,200,0.9);
 	text-decoration: none;
+    font-style:italic;
 }
 #user_info a:hover {
 	color: rgba(0,0,0,0.3);
@@ -164,7 +188,7 @@ display:block;
 	color: rgba(0,0,0,0.3);
 }
 #user_info a:visited {
-	color: white;
+	color: black;
 }
 
 #user_info .ajax-loader img{
@@ -395,7 +419,7 @@ text-shadow: rgb(250, 247, 247) 1px 1px;
 
 .meltdown_preview-header{
   //background: #DBF9E2;
-  background:rgb(66, 79, 90);
+  background:#eae8e8;
   color: rgba(255,255,255,0);
   //border-bottom-color: #DBF9E2;
   border-color: rgba(255,255,255,0);
@@ -405,17 +429,16 @@ text-shadow: rgb(250, 247, 247) 1px 1px;
 .meltdown_wrap.fullscreen {
 	margin-left: 20px;
   margin-right: 20px;
-  background:rgb(66, 79, 90);
+  background:#eae8e8;
   //border-color: #DBF9E2;
   border-color: rgba(255,255,255,0);
 }
 
 .meltdown_editor {
-  font-size:16px;
+  font-size:14px;
   line-height: 25px;
   margin-top:5px;
-//  padding-top:18px;
-  font-family: Baskerville, Georgia, "Liberation Serif", "Kaiti SC", STKaiti, "AR PL UKai CN", "AR PL UKai HK", "AR PL UKai TW", "AR PL UKai TW MBE", "AR PL KaitiM GB", KaiTi, KaiTi_GB2312, "TW\-Kai", serif;
+ font-family: "Consolas","Arial","Kesong","PingFang SC","Microsoft YaHei",sans-serif;
 
 }
 
@@ -430,11 +453,11 @@ text-shadow: rgb(250, 247, 247) 1px 1px;
 }
 
 .meltdown_preview {
-  color:#dfdfdf;
+  color:#555555;
   font-size:12px;
   line-height:25px;
   //background:#DBF9E2;
-  background:rgb(66, 79, 90);
+  background:#eae8e8;
   border-color: rgba(255,255,255,0);
   //border-color: #DBF9E2;
   padding-top:30px;
@@ -466,16 +489,25 @@ textarea:focus {
 }
 
 .posttitle {
+    background:#dad8d8;
 	position: fixed;
 	top: 2px;
 	right: -30px;
 	z-index: 1001;
-	font-size: 20px;
-	color: rgba(200,200,200,0.4);
+	font-size: 18px;
+    color: rgba(0,0,0,0.5); text-shadow: 2px 2px 2px rgba(255,255,255,0.8);
 	width:50%;
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    font-family: "Lucida Calligraphy","Segoe Print","Arial","Lato","Kesong","PingFang SC","Microsoft YaHei",sans-serif;
+    font-weight:normal;
+    border-left:4px solid #ff9500;
+    border-top:0px solid #aaa;
+    box-shadow:rgba(20,20,20,0.8) 2px 2px 4px;
+    padding-top:4px;
+    padding-left:20px;
+    padding-bottom:8px;
 }
 
 .notification {
@@ -514,8 +546,8 @@ td.ind {
 }
 
 .meltdown_preview {
- font-family: Baskerville, "Times New Roman", "Liberation Serif", STFangsong, FangSong, FangSong_GB2312, "CWTEX\-F", serif;
- font-size: 16px;
+ font-family: "Sitka Text","Lato","Kesong","PingFang SC","Microsoft YaHei",sans-serif;
+ font-size: 14px;
 }
 
 #plist-table a {
@@ -543,42 +575,28 @@ blockquote {
     padding-top:20px;
 }
 
-/*
 hr {
-    border: 0px dashed #bbb;
-    border-top: 1px dashed #bbb;
+    border: 0px dashed #888;
+    border-top: 1px dashed #888;
 }
-hr:after {
-    content: '\002702';
-    position: relative;
-    top: -12px;
-    left: 40px;
-    padding: 0 3px;
-    background:rgb(66, 79, 90);
-    color: #bbb;
-    font-size: 18px;
+.confirmon-box {
+    background-color: #eae8e8;
 }
-*/
 
-
-
-hr {
-    margin-top:30px;
-    border: 0px double #bbb;
-    border-top: 4px double #666;
-    text-align: center;
+.confirmon-content {
+    color:#555555;
+    font-weight:normal;
 }
-hr:after {
-    content: '§';
-    //content: '\002665';
-    position: relative;
-    top: -15px;
-    padding: 0 10px;
-    background: #f0f0f0;
-    color: #666;
-    font-size: 18px;
-    background:rgb(66, 79, 90);
-    -webkit-transform: rotate(60deg);
-    -moz-transform: rotate(60deg);
-    transform: rotate(60deg);
+.confirmon-box button{
+    color:#555555;
+    font-weight:normal;
+    border: 1px solid #888;
+    background-color: #dad8d8;
 }
+.confirmon-button--yes {
+}
+
+.frame-icon.op {
+    color:black;
+}
+

@@ -52,6 +52,7 @@
 }
 
 .confirmon-box button:hover {
-        background-color: #00bbee;
+//        background-color: #00bbee;
         cursor: pointer;
+        opacity:0.6;
 }

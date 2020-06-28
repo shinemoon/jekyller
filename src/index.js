@@ -1,26 +1,36 @@
-  var ehdl  = $('#meltdowneditor').meltdown({
-		openPreview: true,
-		fullscreen: true,
-		sidebyside: true,
-		previewHeight: "auto"
-	});
+var ehdl  = $('#meltdowneditor').meltdown({
+	openPreview: true,
+	fullscreen: true,
+	sidebyside: true,
+	previewHeight: "auto"
+});
 
-	var curpostLocal;
+var curpostLocal;
 
-	$('.meltdown_control-fullscreen').remove();
-	$('.meltdown_control-sidebyside').remove();
-	//$('.meltdown_preview-header').remove();
-	$('.meltdown_preview-header').text('.');
-	$('.meltdown_bar').remove();
+$('.meltdown_control-fullscreen').remove();
+$('.meltdown_control-sidebyside').remove();
+//$('.meltdown_preview-header').remove();
+$('.meltdown_preview-header').text('.');
+$('.meltdown_bar').remove();
 
-  var picCacheList = {};
+var picCacheList = {};
 
-  chrome.storage.local.get({'workingpost':{
-		content:'Please start blogging.',
-		sha: null,
-		title: 'Untitled'
-	}},function(obj){
+var skin='dark';
+
+//Fetch config 
+// Skin: 
+//  - Default: Dark
+//  - Switch: Light
+
+  chrome.storage.local.get({
+        'workingpost':{
+		    content:'Please start blogging.',
+    		sha: null,
+    		title: 'Untitled'
+	    }, 
+        'skin':'dark'},function(obj){
 		curpostLocal = obj.workingpost;
+        skin = obj.skin;
 		$('.posttitle').text(obj.workingpost['title']);
 		getLocalPost(function(o){
 			if(o==null){
@@ -30,6 +40,9 @@
 			}
     	loadPost(curpost['content']);
 		});
+        //Dynamic Config Related:
+            //Skin:
+        $('head').append('<link id="stylehdl" rel="stylesheet"type="text/css"href="styles-'+skin+'.css"/>');
   })
 
 
@@ -63,4 +76,7 @@ Array.prototype.remove = function(from, to) {
 	this.length = from < 0 ? this.length + from : from;
 	return this.push.apply(this, rest);
 };
+var fontpath = chrome.extension.getURL('/assets');
+var fontstr =  "@font-face {font-family: 'Kesong';src: url('"+ fontpath +"/font.otf') format('truetype');}";
+$('body').append('<style>'+fontstr+'</style>');
 
