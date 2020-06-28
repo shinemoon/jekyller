@@ -472,6 +472,7 @@ textarea:focus {
 }
 
 .posttitle {
+    min-height:25px;
     background:#343f48;
 	position: fixed;
 	top: 2px;

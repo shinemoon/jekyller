@@ -23,23 +23,31 @@ gh = (function() {
     // Replace clientId and clientSecret with values obtained by you for your
     // application https://github.com/settings/applications.
 
-//    var clientId = '7d4df663d17a7f300ea7';
-//    var clientSecret = '48b19b66d9ab8b58491c795b0e29b40090fb2b16';
-
+    // Debug Port in local 
     var clientId = 'ac5d693f869a98dba1e3';
     var clientSecret = 'd6118b6c82ff5b639430272da34a3febc789c6eb';
 
 
 
     if(chrome.runtime.id=='blogcklanlfjglneidejdabdljnoohlc'){
-       // Formal Port
-       // clientId = 'ac5d693f869a98dba1e3';
-       // clientSecret = 'd6118b6c82ff5b639430272da34a3febc789c6eb';
+       // Formal Port for Edge
         clientId = '7d4df663d17a7f300ea7';
         clientSecret = '48b19b66d9ab8b58491c795b0e29b40090fb2b16';
-
-
     }
+
+    if(chrome.runtime.id=='lgdhgkhhglmhiacjecigalebiffjklec'){
+       // Formal Port for Chrome
+        clientId = 'ad57ed7e5d0b71e7e6a7';
+        clientSecret = '7c03c30b4f2fe03c5d0849ad06cb9fed3340980c';
+    }
+
+    if(chrome.runtime.id=='52b8f61ede1c5c08cf722012a74d2d0f339372be'){
+       // Formal Port for Firefox
+        clientId = '667dcd9db9d3305f9085';
+        clientSecret = '13fcd1ab9045ea9ddf1b5cf1bfe628a9757ec2c6';
+    }
+
+
 
     var redirectUri = chrome.identity.getRedirectURL('provider_cb');
     console.log(redirectUri);
