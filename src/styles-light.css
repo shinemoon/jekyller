@@ -177,6 +177,7 @@ display:block;
 }
 
 #user_info a {
+    color:gray;
 	font-size: 11px;
 	text-decoration: none;
     font-style:italic;
