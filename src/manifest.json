@@ -1,6 +1,6 @@
 {
   "manifest_version": 2,
-  "name": "Jekyller Blog Editor",
+  "name": "Github Jekyll Editor",
   "short_name": "Jekyller",
   "description": "To support writing, editing and managing the github.io based Jekyll Blog, with Markdown Previewer.",
   "version": "1.01",
