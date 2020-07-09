@@ -5,7 +5,7 @@ Jekyl Tool supported in Chromium Based Browser (MS Edge/Google Chrome/etc.), [wi
 
 1. Support Markdown Editor focusing on Jekyl (hosted in Github.io);
 2. Support list recent posts, edit recent post, publish post, delete post, etc.;
-3. Support 'cloud' feature with Google sync API .
+3. Support 'cloud' feature with sync API .
 
 And, some key reuse inputs:
 
@@ -29,7 +29,10 @@ And also , from June 2020, new update will mainly start from Edge Browser Store,
 
 ## History
 
-+ 1.01:		To support automatic judge for Edge/Chrome/Firefox
+
++ 1.03:		Adjust the permission , remove unlimitedstorage, assuming we will not take >5MB content
++ 1.02:		Optimize Some Style
++ 1.01:		To support automatic judge for Edge/Chrome/Firefox, and light/dark theme switch
 + 1.0:		Baseline for Edge Support
 
 > Old info not mentioned. Start from v1.0 Baseline
