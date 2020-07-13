@@ -46,25 +46,32 @@ var skin='dark';
   })
 
 
+/*
 function handlePic(url){
 		console.log(url);
 		var hashc = hashCode(url);
 		console.log(hashc);
-    if(typeof(picCacheList[hashc])!='undefined') {
-				return picCacheList[hashc];
+        if(typeof(picCacheList[hashc])!='undefined') {
+		    return picCacheList[hashc];
 		} else {
-  	  var xhr = new XMLHttpRequest();
-    	xhr.responseType = 'blob';
-	    xhr.onload = function() {
-				console.log(this);
-				picCacheList[hashCode(this.responseURL)] = window.URL.createObjectURL(this.response);
-				$('#meltdowneditor').meltdown('update',true);
-	    }
-	    xhr.open('GET', url, true);
-	    xhr.send();
+  	        var xhr = new XMLHttpRequest();
+        	xhr.responseType = 'blob';
+    	    xhr.onload = function() {
+    				console.log(this);
+    				picCacheList[hashCode(this.responseURL)] = window.URL.createObjectURL(this.response);
+    				$('#meltdowneditor').meltdown('update',true);
+	        }
+	        xhr.open('GET', url, true);
+	        xhr.send();
 			return null;
 	  }
 }
+*/
+
+function handlePic(url){
+    return url;
+}
+
 
 hashCode = function(s){
   return s.split("").reduce(function(a,b){a=((a<<5)-a)+b.charCodeAt(0);return a&a},0);              

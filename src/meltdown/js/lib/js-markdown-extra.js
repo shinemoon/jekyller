@@ -802,10 +802,10 @@ Markdown_Parser.prototype.doImages = function(text) {
 		        var url = self.encodeAttribute(self.urls[link_id]);
 						var lpic = handlePic(url);
 						if(lpic!=null) 
-		        	result = "<img src=\"" + lpic + "\" alt=\"" + alt_text + "\"";
+		        	        result = "<img src=\"" + lpic + "\" alt=\"" + alt_text + "\"";
 						else 
-		        //	result = "<img src=\"" + url + "\" alt=\"" + alt_text + "\"";
-        			result = "<img class='picloader' src='/assets/picloader.gif' alt=\"" + alt_text + "\"";
+		                //	result = "<img src=\"" + url + "\" alt=\"" + alt_text + "\"";
+        			        result = "<img class='picloader' src='/assets/picloader.gif' alt=\"" + alt_text + "\"";
 		        if ('undefined' !== typeof self.titles[link_id]) {
 		            var title = self.titles[link_id];
 		            title = self.encodeAttribute(title);
