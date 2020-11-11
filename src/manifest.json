@@ -20,7 +20,6 @@
  "permissions": [
     "https://github.com/",
 	"storage",
-  	"notifications",
     "identity"
   ]
 }
