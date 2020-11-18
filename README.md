@@ -1,7 +1,7 @@
 # Jekyller
 ## Intro
 
-Jekyl Tool supported in Chromium Based Browser (MS Edge/Google Chrome/etc.), [with google webstore address][1]/[with MS Store address][2]. Hope to :
+Jekyl Tool supported in Chromium Based Browser (e.g. MS Edge/etc.), [with google webstore address][1]/[with MS Store address][2]. Hope to :
 
 1. Support Markdown Editor focusing on Jekyl (hosted in Github.io);
 2. Support list recent posts, edit recent post, publish post, delete post, etc.;
@@ -14,7 +14,7 @@ And, some key reuse inputs:
 
 
 *  Github simple check/update/create/delete for recent posts:  
-	*  mainly got from https://github.com/GoogleChrome/chrome-app-samples for oauth2 part
+	*  mainly got from chrome-app-samples for oauth2 part
 
 
 Several highlight points:
