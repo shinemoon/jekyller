@@ -9,7 +9,6 @@ var curpostLocal;
 
 $('.meltdown_control-fullscreen').remove();
 $('.meltdown_control-sidebyside').remove();
-//$('.meltdown_preview-header').remove();
 $('.meltdown_preview-header').text('.');
 $('.meltdown_bar').remove();
 
@@ -40,33 +39,9 @@ var skin='dark';
 			}
     	loadPost(curpost['content']);
 		});
-        //Dynamic Config Related:
-            //Skin:
+		// Skin Chooser
         $('head').append('<link id="stylehdl" rel="stylesheet"type="text/css"href="styles-'+skin+'.css"/>');
   })
-
-
-/*
-function handlePic(url){
-		console.log(url);
-		var hashc = hashCode(url);
-		console.log(hashc);
-        if(typeof(picCacheList[hashc])!='undefined') {
-		    return picCacheList[hashc];
-		} else {
-  	        var xhr = new XMLHttpRequest();
-        	xhr.responseType = 'blob';
-    	    xhr.onload = function() {
-    				console.log(this);
-    				picCacheList[hashCode(this.responseURL)] = window.URL.createObjectURL(this.response);
-    				$('#meltdowneditor').meltdown('update',true);
-	        }
-	        xhr.open('GET', url, true);
-	        xhr.send();
-			return null;
-	  }
-}
-*/
 
 function handlePic(url){
     return url;
