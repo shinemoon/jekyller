@@ -1,8 +1,7 @@
 //-> Claud Modified for jekyller Need
 var root = null;
 /* Please replace with your own private Token */
-var access_token="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"
-
+var access_token="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"
 var gh = null;
 
 /*
@@ -17,7 +16,6 @@ chrome.runtime.getBackgroundPage(function(r) {
 root = r; 
 gh = (function() {
   'use strict';
-  var signin_button;
   var revoke_button;
   var user_info_div;
 
@@ -93,12 +91,10 @@ gh = (function() {
       //console.log("Got the following user info: " + response);
       root.user_info = JSON.parse(response);
       populateUserInfo(root.user_info);
-      hideButton(signin_button);
       showButton(revoke_button);
       //fetchUserRepos(root.user_info["repos_url"]);
     } else {
       console.log('infoFetch failed', error, status);
-      showButton(signin_button);
 			$('.signin').click();
     }
   }
@@ -136,7 +132,6 @@ gh = (function() {
   // Handlers for the buttons's onclick events.
 
   function interactiveSignIn() {
-    disableButton(signin_button);
   }
 
   function fetchContent(ulink,cb) {
@@ -207,16 +202,8 @@ gh = (function() {
     },
 
     onload: function () {
-      signin_button = document.querySelector('#signin');
-      signin_button.onclick = interactiveSignIn;
-
-      revoke_button = document.querySelector('#revoke');
-
+      revoke_button = document.querySelector('#token');
       user_info_div = document.querySelector('#user_info');
-
-      console.log(signin_button, revoke_button, user_info_div);
-
-      showButton(signin_button);
       getUserInfo(false);
     }
   };

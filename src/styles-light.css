@@ -616,3 +616,36 @@ pre code {
 p code {
     font-family: arial;
 }
+
+/* Update One - For ToolTip */
+
+.tooltip {
+  opacity: 1;
+}
+/* Tooltip 文本 */
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 150px;
+  background-color: whitesmoke;
+  color: #000;
+  text-align: center;
+  padding: 5px 0px;
+  font-size: 6px;
+  font-style:italic;
+  box-shadow: white  2px 2px 4px;
+  border-top-left-radius: 4px;
+  border-bottom-left-radius:4px;
+  opacity:1;
+
+  /* 定位 */
+  position: fixed;
+  z-index: 1005;
+  bottom: 3px;
+  right: 422px; 
+
+}
+
+/* 鼠标移动上去后显示提示框 */
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}
