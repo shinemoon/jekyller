@@ -573,15 +573,14 @@ p code {
 
 /* Tooltip 文本 */
 .tooltip .tooltiptext {
-  visibility: hidden;
+  display:none ;
   width: 150px;
-  background-color: black;
-  color: #fff;
+  background-color: #fff;
+  color: #000;
   text-align: center;
   padding: 5px 0px;
   font-size: 6px;
-  font-style:italic;
-  box-shadow: white  2px 2px 4px;
+  box-shadow: black 2px 2px 4px;
   border-top-left-radius: 4px;
   border-bottom-left-radius:4px;
 
@@ -594,5 +593,5 @@ p code {
 
 /* 鼠标移动上去后显示提示框 */
 .tooltip:hover .tooltiptext {
-  visibility: visible;
+  display:block;
 }

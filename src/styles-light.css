@@ -626,12 +626,11 @@ p code {
 .tooltip .tooltiptext {
   visibility: hidden;
   width: 150px;
-  background-color: whitesmoke;
-  color: #000;
+  background-color:#333;
+  color: #fff;
   text-align: center;
   padding: 5px 0px;
   font-size: 6px;
-  font-style:italic;
   box-shadow: white  2px 2px 4px;
   border-top-left-radius: 4px;
   border-bottom-left-radius:4px;
