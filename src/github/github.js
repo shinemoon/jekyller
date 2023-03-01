@@ -94,8 +94,6 @@ gh = (function() {
       showButton(revoke_button);
       //fetchUserRepos(root.user_info["repos_url"]);
     } else {
-      console.log('infoFetch failed', error, status);
-			$('.signin').click();
     }
   }
 

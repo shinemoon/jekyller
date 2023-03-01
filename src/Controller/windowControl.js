@@ -23,6 +23,16 @@
         switchSkin();
 	});
 
+	$('.frame-icon.op').mouseenter(function(){
+		$('.tooltiptext').text($(this).attr('val'));
+		$('.tooltip').fadeIn(100);
+	});
+
+	$('.frame-icon.op').mouseleave(function(){
+		$('.tooltiptext').text('-');
+		$('.tooltip').fadeOut(100);
+	});
+
 
 
 
