@@ -1,168 +1,157 @@
 //Control Main windows' action
-	$('.img#create').confirmOn({
- 		questionText: 'Local Post Will Be Emptied , Is It OK?',
-		textYes: 'Yes, I\'m sure',
-		textNo: 'No, Thanks'
- 	 }, 'click', function(e, confirmed){
-		if(confirmed)
-    	createNewPost();
-  })
+/* Icon Click Action */
 
-	$('.img#local').click(function(){
-	  $('.focus').removeClass('focus');
-       listLocalPop(true);
-	});
-
-	$('.img#list').click(function(){
-	  $('.focus').removeClass('focus');
-       listPop(true);
-	});
-
-	$('.img#skin').click(function(){
-        $('.focus').removeClass('focus');
-        switchSkin();
-	});
-
-	$('.img#token').click(function(){
-        $('.focus').removeClass('focus');
-        tokenPop();
-	});
-
-
-
-	$('.frame-icon.op').mouseenter(function(){
-		$('.tooltiptext').text($(this).attr('val'));
-		$('.tooltip').fadeIn(100);
-	});
-
-	$('.frame-icon.op').mouseleave(function(){
-		$('.tooltiptext').text('-');
-		$('.tooltip').fadeOut(100);
-	});
-
-
-
-
-
- function bindListAction(){
-	$('.frame-mask').click(function(){
-		listClose();
-	  listLocalClose();
-	});
-
-	$('#refresh').click(function(){
-	  getUserInfo(function(){
-	    getPostList(getPostDetails);
-	  });
-	  $('.frame-pop .ajax-loader').show();
-	});
- }
-
-$('body').keyup(function(){
-  storePost();
+// Create
+$('.img#create').confirmOn({
+	questionText: 'Local Post Will Be Emptied , Is It OK?',
+	textYes: 'Yes, I\'m sure',
+	textNo: 'No, Thanks'
+}, 'click', function (e, confirmed) {
+	if (confirmed)
+		createNewPost();
 })
 
-$('#user_info').click(function(){
+// Meta
+$('.img#meta').click(function () {
+	$('.focus').removeClass('focus');
+	metaPop(true);
 });
 
-function storePost(cb){
-  if($('.frame-pop.local:visible').length>0) {
-    if( $('.content.title input').val() != curpost['title'] ) {
-      $('.posttitle').text($('.content.title input').val());
-    }
-    //Auto saving
-    curpost['title'] = $('.content.title input').val();
-    curpost['date'] = $('.content.date input').val();
-    curpost['info'] = $('.content.info input').val();
-    curpost['comment']=$('.content.comment input').val();
-    curpost['tags']=toArray($('.content.tag input').val());
-    curpost['categories']=toArray($('.content.cate input').val());
-    curpost['published']=$('.content.post input').prop('checked');
-    curpost['slug']=$('.content.slug input').val();
-  }
+// List
+$('.img#list').click(function () {
+	$('.focus').removeClass('focus');
+	listPop(true);
+});
 
-  curpost['content'] = $('#meltdowneditor').val();
+// Skin
+$('.img#skin').click(function () {
+	$('.focus').removeClass('focus');
+	switchSkin();
+});
 
-	//-> fill meta
-  chrome.storage.local.set({'workingpost': curpost}, function(){
-    console.log('store');
-		syncLocalPost();
-		if(typeof(cb)!='undefined') cb();
-  });
-}
+// Token
+$('.img#token').click(function () {
+	$('.focus').removeClass('focus');
+	tokenPop(true);
+});
 
-function logInfo(str){
-	console.info(str);
-	$('.notification').removeClass('info').removeClass('error');
-	$('.notification').text(str).addClass('info');
-	$('.notification').show();
-	setTimeout (function(){
-		$('.notification').text('').hide();
-	}, 2000);
-}
 
-function logError(str){
-	console.error(str);
-	$('.notification').removeClass('info').removeClass('error');
-	$('.notification').text(str).addClass('error');
-	$('.notification').show();
-	setTimeout (function(){
-		$('.notification').text('').hide();
-	}, 2000);
-}
+// Tip-Hint Relevant
+$('.frame-icon.op').mouseenter(function () {
+	$('.tooltiptext').text($(this).attr('val'));
+	$('.tooltip').fadeIn(100);
+});
+$('.frame-icon.op').mouseleave(function () {
+	$('.tooltiptext').text('-');
+	$('.tooltip').fadeOut(100);
+});
 
-function switchSkin(){
-    console.log(skin);
-    if(skin=='dark')
-        skin = 'light';
-    else
-        skin = 'dark';
-    chrome.storage.local.set({skin:skin},function(){
-        $('#stylehdl').remove();
-        $('head').append('<link id="stylehdl" rel="stylesheet"type="text/css"href="styles-'+skin+'.css"/>');
-    });
 
-}
-
-function tokenPop(toggle){
-  $('#token').addClass('focus');
+/* Overall action */
+// Function to show -toggle the config frame
+function popFrame(id, toggle = true, cb) {
   //- Toggle
-  var frame = $('<div class="frame-pop remote"></div>');
+  if (toggle && $('.frame-pop.' + id + ':visible').length > 0) {
+    popClose();
+    return 0;
+  }
+  $('#' + id).addClass('focus');
+  var frame = $('<div class="frame-pop ' + id + '"></div>');
   var mask = $('<div class="frame-mask"> </div>');
   $('body').append(frame);
   $('body').append(mask);
-
-  $('.frame-pop').html('<div class=ajax-loader><img src="/assets/loader.gif"/></div>');
-  $('.frame-pop .ajax-loader').hide();
-
-
-  //refresh pop
-  //-> Get needed info
-  chrome.storage.local.get("ltoken",function(obj){
-    if(typeof(obj.ltoken)!='undefined') {
-      ltoken= obj.ltoken;
-	  refreshTokenInfo();
-    } else {
-	  refreshTokenInfo();
-	}
-  });
-
+  cb();
+  bindListAction(); //windowControl
   $('.frame-mask').show();
   $('.frame-pop').show();
 }
 
-function refreshTokenInfo(){
-  $('.frame-pop').append('<div id="token-input" class="config-input">\
-  										<div class="config-title">Token Set \
-										<textarea spellcheck="false" class="config-content"></textarea> \
-										<span title="Save Token" class="icon icon-checkmark"></span>\
-										 <span title="Clear Token" class="disabled icon icon-cross"></span>\
-										</div></div>');
+/* 1. Close all popping */
+/* 2. click mask then all pop close*/
+function bindListAction() {
+	$('.frame-mask').click(function () {
+		popClose();
+	});
+	$('#refresh').click(function () {
+		getPostList(getPostDetails);
+		$('.frame-pop .ajax-loader').show();
+	});
+}
 
-  $('.frame-pop').append('<div class="popping-note">\
-To start with this tool, you need to create (if not yet) the Github Token in your account, and copy /paste it here. \
-<br>\
-<br>\
-And if more details neeed, please refer to Github relevant page for support. \
-</div>');
+// Store the blog by key hit
+$('body').keyup(function () {
+	storePost();
+})
+
+// Reserve
+$('#user_info').click(function () {
+});
+
+// Restore the post
+function storePost(cb) {
+	if ($('.frame-pop.meta:visible').length > 0) {
+		if ($('.content.title input').val() != curpost['title']) {
+			$('.posttitle').text($('.content.title input').val());
+		}
+		//Auto saving
+		curpost['title'] = $('.content.title input').val();
+		curpost['date'] = $('.content.date input').val();
+		curpost['info'] = $('.content.info input').val();
+		curpost['comment'] = $('.content.comment input').val();
+		curpost['tags'] = toArray($('.content.tag input').val());
+		curpost['categories'] = toArray($('.content.cate input').val());
+		curpost['published'] = $('.content.post input').prop('checked');
+		curpost['slug'] = $('.content.slug input').val();
+	}
+
+	curpost['content'] = $('#meltdowneditor').val();
+
+	//-> fill meta
+	chrome.storage.local.set({ 'workingpost': curpost }, function () {
+		console.log('store');
+		syncLocalPost();
+		if (typeof (cb) != 'undefined') cb();
+	});
+}
+
+
+/* Show Info-log */
+function logInfo(str) {
+	console.info(str);
+	$('.notification').removeClass('info').removeClass('error');
+	$('.notification').text(str).addClass('info');
+	$('.notification').show();
+	setTimeout(function () {
+		$('.notification').text('').hide();
+	}, 2000);
+}
+
+function logError(str) {
+	console.error(str);
+	$('.notification').removeClass('info').removeClass('error');
+	$('.notification').text(str).addClass('error');
+	$('.notification').show();
+	setTimeout(function () {
+		$('.notification').text('').hide();
+	}, 2000);
+}
+
+/* Close All Popframe - as util*/
+function popClose(){
+    $('.frame-pop').remove();
+    $('.frame-mask').remove();
+    $('.frame-icon.focus').removeClass('focus');
+}
+
+/* Skin switch */
+function switchSkin() {
+	console.log(skin);
+	if (skin == 'dark')
+		skin = 'light';
+	else
+		skin = 'dark';
+	chrome.storage.local.set({ skin: skin }, function () {
+		$('#stylehdl').remove();
+		$('head').append('<link id="stylehdl" rel="stylesheet"type="text/css"href="styles-' + skin + '.css"/>');
+	});
 }
