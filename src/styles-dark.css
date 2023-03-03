@@ -634,10 +634,14 @@ p code {
  }
 
 
-.config-input .icon {
+.config-input .icon{
   margin-left:4px;
   margin-right:8px;
   vertical-align: middle;
+  color: lightgrey;
+  cursor: auto;
+}
+.config-input .icon.active{
   color:#5959dc;
   cursor: pointer;
 }
@@ -647,7 +651,7 @@ p code {
   color:#aaa;
 }
 
-.config-input .icon:hover {
+.config-input .icon.active:hover {
   color:#3FAE5F;
 }
 

@@ -67,6 +67,10 @@ function listPop(toggle) {
     $('.frame-pop').html('<div class=ajax-loader><img src="/assets/loader.gif"/></div>');
     $('.frame-pop .ajax-loader').hide();
     $('.frame-pop').append('<div id="tool-banner"><img id="refresh" src="/assets/refresh.png"/></div>');
+    $('img#refresh').click(function () {
+      getPostList(getPostDetails);
+      $('.frame-pop .ajax-loader').show();
+    });
     chrome.storage.local.get("clist", function (obj) {
       if (typeof (obj.clist) != 'undefined' && obj.clist.length > 0) {
         clist = obj.clist;
@@ -79,10 +83,15 @@ function listPop(toggle) {
 //Fetch blog list
 function getPostList(cb) {
   clist = [];
-  gh.fetchPostList(root.user_info.login, function (e, s, r) {
-    plist = JSON.parse(r);
-    if (typeof (cb) != 'undefined') cb(plist);
-  });
+  if (typeof (root.user_info) == "undefined" ) {
+    gh.onLogInFailed();
+    return;
+  } else {
+    gh.fetchPostList(root.user_info.login, function (e, s, r) {
+      plist = JSON.parse(r);
+      if (typeof (cb) != 'undefined') cb(plist);
+    }, gh.onLogInFailed);
+  }
 }
 
 // Construct the blog list

@@ -1,7 +1,6 @@
 //-> Claud Modified for jekyller Need
 var root = null;
 /* Please replace with your own private Token */
-var access_token = "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"
 var gh = null;
 
 /*
@@ -10,13 +9,13 @@ chrome.storage.local.get({"access_token":null},function(o){
 });
 */
 
-
 chrome.runtime.getBackgroundPage(function (r) {
   root = r;
   gh = (function () {
     'use strict';
     var revoke_button;
     var user_info_div;
+    var access_token = "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";
 
     function xhrWithDataAuth(method, url, data, callback) {
       var retry = true;
@@ -41,7 +40,7 @@ chrome.runtime.getBackgroundPage(function (r) {
     }
 
 
-    function xhrWithAuth(method, url, interactive, callback) {
+    function xhrWithAuth(method, url, interactive, callback, failedCallback) {
       var retry = true;
       requestStart();
 
@@ -61,7 +60,7 @@ chrome.runtime.getBackgroundPage(function (r) {
         }
         //console.log('requestComplete', this.status, this.response);
         if (this.status != 200) {
-          logError("Token is not working or Network issue, please check configuration.");
+          failedCallback(null, this.status, this.response);
         }
       }
     }
@@ -70,11 +69,10 @@ chrome.runtime.getBackgroundPage(function (r) {
       xhrWithAuth('GET',
         'https://api.github.com/user',
         interactive,
-        onUserInfoFetched);
+        onUserInfoFetched, onLogInFailed);
     }
 
     // Functions updating the User Interface:
-
     function showButton(button) {
       button.style.display = 'inline';
       button.disabled = false;
@@ -96,7 +94,12 @@ chrome.runtime.getBackgroundPage(function (r) {
         showButton(revoke_button);
         //fetchUserRepos(root.user_info["repos_url"]);
       } else {
+        // If failed
       }
+    }
+    function onLogInFailed(error, status, response) {
+      logInfo("Token is not working or Network issue, please check configuration.");
+      $('#token').click();
     }
 
     function populateUserInfo(user_info) {
@@ -108,7 +111,7 @@ chrome.runtime.getBackgroundPage(function (r) {
     }
 
     function fetchUserRepos(repoUrl) {
-      xhrWithAuth('GET', repoUrl, false, onUserReposFetched);
+      xhrWithAuth('GET', repoUrl, false, onUserReposFetched, onLogInFailed);
     }
 
     // Jekyller - start
@@ -117,7 +120,7 @@ chrome.runtime.getBackgroundPage(function (r) {
       xhrWithAuth('GET',
         'https://api.github.com/repos/' + user + '/' + user + '.github.io/contents/_posts',
         true,
-        cb);
+        cb, onLogInFailed);
     }
 
     // Jekyller - end
@@ -137,28 +140,27 @@ chrome.runtime.getBackgroundPage(function (r) {
     function fetchContent(ulink, cb) {
       xhrWithAuth("GET", "https://api.github.com/repos/" + root.user_info.login + "/" + root.user_info.login + ".github.io/contents/" + ulink, true, function (e, s, r) {
         cb(e, s, r);
-      });
+      },onLogInFailed);
     }
 
     return {
+      access_token,
+
       transparentXhr: function (method, url, cb) {
         xhrWithAuth(method, url, true, function (e, s, r) {
           cb(e, s, r);
         });
       },
-
       updateContent: function (ulink, content, sha, cb) {
         var data = {
           message: 'update from Jekyller',
           sha: sha,
           content: window.btoa(unescape(encodeURIComponent(content)))
         };
-
         if (sha == '') {
           delete (data.sha);
         }
         var sdata = JSON.stringify(data);
-
         xhrWithDataAuth("PUT", "https://api.github.com/repos/" + root.user_info.login + "/" + root.user_info.login + ".github.io/contents/" + ulink, sdata, function (e, s, r) {
           cb(e, s, r);
         });
@@ -169,9 +171,7 @@ chrome.runtime.getBackgroundPage(function (r) {
           message: 'update from Jekyller',
           sha: sha
         };
-
         var sdata = JSON.stringify(data);
-
         xhrWithDataAuth("DELETE", "https://api.github.com/repos/" + root.user_info.login + "/" + root.user_info.login + ".github.io/contents/" + ulink, sdata, function (e, s, r) {
           cb(e, s, r);
         });
@@ -201,6 +201,12 @@ chrome.runtime.getBackgroundPage(function (r) {
       getUserInfo: function (type) {
         return getUserInfo(type);
       },
+
+      // Function for issue
+      onLogInFailed: function(){
+        return onLogInFailed();
+      },
+
 
       onload: function () {
         revoke_button = document.querySelector('#token');

@@ -52,9 +52,11 @@ $('.frame-icon.op').mouseleave(function () {
 function popFrame(id, toggle = true, cb) {
   //- Toggle
   if (toggle && $('.frame-pop.' + id + ':visible').length > 0) {
-    popClose();
+     popClose();
     return 0;
-  }
+  } 
+
+  popClose();
   $('#' + id).addClass('focus');
   var frame = $('<div class="frame-pop ' + id + '"></div>');
   var mask = $('<div class="frame-mask"> </div>');
@@ -72,14 +74,11 @@ function bindListAction() {
 	$('.frame-mask').click(function () {
 		popClose();
 	});
-	$('#refresh').click(function () {
-		getPostList(getPostDetails);
-		$('.frame-pop .ajax-loader').show();
-	});
 }
 
 // Store the blog by key hit
-$('body').keyup(function () {
+//$('.meltdown_editor-deco').keyup(function () {
+$('body #meltdowneditor').keyup(function () {
 	storePost();
 })
 
