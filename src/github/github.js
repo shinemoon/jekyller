@@ -3,11 +3,6 @@ var root = null;
 /* Please replace with your own private Token */
 var gh = null;
 
-/*
-chrome.storage.local.get({"access_token":null},function(o){
-  access_token = o.access_token;
-});
-*/
 
 chrome.runtime.getBackgroundPage(function (r) {
   root = r;
@@ -15,7 +10,7 @@ chrome.runtime.getBackgroundPage(function (r) {
     'use strict';
     var revoke_button;
     var user_info_div;
-    var access_token = "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";
+    var access_token = null;
 
     function xhrWithDataAuth(method, url, data, callback) {
       var retry = true;
@@ -140,12 +135,10 @@ chrome.runtime.getBackgroundPage(function (r) {
     function fetchContent(ulink, cb) {
       xhrWithAuth("GET", "https://api.github.com/repos/" + root.user_info.login + "/" + root.user_info.login + ".github.io/contents/" + ulink, true, function (e, s, r) {
         cb(e, s, r);
-      },onLogInFailed);
+      }, onLogInFailed);
     }
 
     return {
-      access_token,
-
       transparentXhr: function (method, url, cb) {
         xhrWithAuth(method, url, true, function (e, s, r) {
           cb(e, s, r);
@@ -203,14 +196,26 @@ chrome.runtime.getBackgroundPage(function (r) {
       },
 
       // Function for issue
-      onLogInFailed: function(){
+      onLogInFailed: function () {
         return onLogInFailed();
       },
 
+      // Got token
+      access_token: function(){
+        return access_token;
+      },
 
       onload: function () {
         revoke_button = document.querySelector('#token');
         user_info_div = document.querySelector('#user_info');
+        chrome.storage.local.get("ltoken", function (obj) {
+          if (typeof (obj.ltoken) != 'undefined') {
+            access_token = obj.ltoken;
+          } else {
+            access_token = '';
+          }
+        });
+
       }
     };
   })();

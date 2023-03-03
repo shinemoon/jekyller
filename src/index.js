@@ -74,6 +74,8 @@ async function init() {
 	//Wait for github instance ready
 	while (gh == null)
 		await sleep(100)
+	while (gh.access_token() == null)
+		await sleep(100)
 	gh.getUserInfo(false);
 }
 init();
