@@ -110,13 +110,22 @@ chrome.runtime.getBackgroundPage(function (r) {
     }
 
     // Jekyller - start
-    //-> Get the Post Folder Tree
+    // => Oboseleted: as if it's>1000 post, this then can't support well.
     function fetchPostList(user, cb) {
       xhrWithAuth('GET',
         'https://api.github.com/repos/' + user + '/' + user + '.github.io/contents/_posts',
         true,
         cb, onLogInFailed);
     }
+
+   //-> Get the Post Folder Tree
+    function fetchPostListTree(user, cb) {
+      xhrWithAuth('GET',
+        'https://api.github.com/repos/' + user + '/' + user + '.github.io/git/trees/HEAD:_posts',
+        true,
+        cb, onLogInFailed);
+    }
+
 
     // Jekyller - end
 
@@ -189,6 +198,10 @@ chrome.runtime.getBackgroundPage(function (r) {
       fetchPostList: function (user, cb) {
         return fetchPostList(user, cb);
       },
+      fetchPostListTree: function (user, cb) {
+        return fetchPostListTree(user, cb);
+      },
+
 
       /* The one to gate the login*/
       getUserInfo: function (type) {

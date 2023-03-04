@@ -83,12 +83,18 @@ function listPop(toggle) {
 //Fetch blog list
 function getPostList(cb) {
   clist = [];
-  if (typeof (root.user_info) == "undefined" ) {
+  if (typeof (root.user_info) == "undefined") {
     gh.onLogInFailed();
     return;
   } else {
-    gh.fetchPostList(root.user_info.login, function (e, s, r) {
+//    gh.fetchPostList(root.user_info.login, function (e, s, r) {
+      gh.fetchPostListTree(root.user_info.login, function (e, s, r) {
       plist = JSON.parse(r);
+      try {
+        plist = plist['tree']
+      } catch {
+
+      }
       if (typeof (cb) != 'undefined') cb(plist);
     }, gh.onLogInFailed);
   }
@@ -142,6 +148,9 @@ function refreshPostList() {
 // To sort & filter post per blog file name 
 function getPostDetails(plist) {
   nlist = plist.sort(function (a, b) {
+     a.name = a.path;
+     b.name = b.path;
+
     //refine name
     var adate = refineDate(a.name).replace(/(\d+-\d+-\d+)-.*\.md/, "$1");
     var bdate = refineDate(b.name).replace(/(\d+-\d+-\d+)-.*\.md/, "$1");
@@ -172,7 +181,7 @@ function getPostDetails(plist) {
   for (var i = 0; i < listCnt; i++) {
     if (i == nnlist.length) break;
     console.log(nnlist[nnlist.length - 1 - i].path);
-    gh.getContent(nnlist[nnlist.length - 1 - i].path, function (c) {
+    gh.getContent("_posts/" + nnlist[nnlist.length - 1 - i].path, function (c) {
       var pcontent = postParse(c.content);
       if (c.date.match(/\d+-\d+-\d+/) == null) {
         return;
