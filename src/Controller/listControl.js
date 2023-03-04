@@ -107,7 +107,7 @@ function refreshPostList() {
   $('.frame-pop .ajax-loader').hide();
   $('.frame-pop table tr').remove();
   clist.every(function (v, i) {
-    $('.frame-pop table').append('<tr><td class="ind icon-bin"></td><td class="title"><div>' + v.title + '</div></td><td class="date"><a target=_blank href="http://' + root.user_info.login + '.github.io/' + v.slug + '">' + v.date + '</a></td></tr>');
+    $('.frame-pop table').append('<tr><td class="ind icon-bin"></td><td class="title"><div>' + v.title + '</div></td><td class="date"><a target=_blank href="http://' + root.user_info.login + '.github.io/' + v.slug + '">' + normalizeDate(v.date) + '</a></td></tr>');
     $('td.title:last').data('index', i);
     $('td.date:last').data('url', root.user_info.login + '.github.io/' + v.slug);
     if (i == clist.length - 1) return false;
@@ -147,7 +147,13 @@ function refreshPostList() {
 
 // To sort & filter post per blog file name 
 function getPostDetails(plist) {
-  nlist = plist.sort(function (a, b) {
+  processList();
+}
+
+/* Thanks For ChatGPT, you know such promise & await & async is always my headache, but it well helped me to re-coded */
+async function processList(page = 0, nnlist) {
+  clist = [];
+  var nlist = plist.sort(function (a, b) {
     a.name = a.path;
     b.name = b.path;
 
@@ -177,29 +183,34 @@ function getPostDetails(plist) {
     }
   }
 
-/* Thanks For ChatGPT, you know such promise & await & async is always my headache, but it well helped me to re-coded */
-  async function processList() {
-    for (var i = 0; i < listCnt; i++) {
-      if (i == nnlist.length) break;
-      console.log(nnlist[nnlist.length - 1 - i].path);
-      var c = await gh.getContentAsync("_posts/" + nnlist[nnlist.length - 1 - i].path);
-      var pcontent = postParse(c.content);
-      if (c.date.match(/\d+-\d+-\d+/) == null) {
-        continue;
-      }
-      pcontent['date'] = c.date;
-      pcontent['sha'] = c.sha;
-      pcontent['slug'] = c.url.replace(/^.*\//, '');
-      if (clist.length < listCnt) {
-        clist.push(pcontent);
-        chrome.storage.local.set({ clist: clist }, function () {
-          refreshPostList();
-        });
-      }
+  var startIndex = page * listCnt
+  for (var i = startIndex; i < startIndex + listCnt; i++) {
+    if (i == nnlist.length) break;
+    console.log(nnlist[nnlist.length - 1 - i].path);
+    var c = await gh.getContentAsync("_posts/" + nnlist[nnlist.length - 1 - i].path);
+    var pcontent = postParse(c.content);
+    if (c.date.match(/\d+-\d+-\d+/) == null) {
+      continue;
+    }
+    pcontent['date'] = c.date;
+    pcontent['sha'] = c.sha;
+    pcontent['slug'] = c.url.replace(/^.*\//, '');
+    if (clist.length < listCnt) {
+      clist.push(pcontent);
+      chrome.storage.local.set({ clist: clist }, function () {
+        refreshPostList();
+      });
     }
   }
-  processList();
-}
+  chrome.storage.local.get("clist", function (obj) {
+    if (typeof (obj.clist) != 'undefined' && obj.clist.length > 0) {
+      clist = obj.clist;
+      refreshPostList();
+    }
+  });
+
+};
+
 
 /* Funciton to load the post content after click the title */
 function loadText(ind) {

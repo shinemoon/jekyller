@@ -69,6 +69,24 @@ function sleep(ms) {
 	return new Promise(resolve => setTimeout(resolve, ms));
 }
 
+// Formalize the YYYY-MM-DD 
+function normalizeDate(dateStr) {
+  const parts = dateStr.split('-');
+  if (parts.length !== 3) {
+    throw new Error('Invalid date format, should be YYYY-MM-DD');
+  }
+  const year = parts[0];
+  let month = parts[1];
+  let day = parts[2];
+  if (month.length === 1) {
+    month = '0' + month;
+  }
+  if (day.length === 1) {
+    day = '0' + day;
+  }
+  return year + '-' + month + '-' + day;
+}
+
 //=> Refer to github.js as it's the key async
 async function init() {
 	//Wait for github instance ready
@@ -79,4 +97,5 @@ async function init() {
 	gh.getUserInfo(false);
 }
 init();
+
 
