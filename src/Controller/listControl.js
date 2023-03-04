@@ -87,8 +87,8 @@ function getPostList(cb) {
     gh.onLogInFailed();
     return;
   } else {
-//    gh.fetchPostList(root.user_info.login, function (e, s, r) {
-      gh.fetchPostListTree(root.user_info.login, function (e, s, r) {
+    //    gh.fetchPostList(root.user_info.login, function (e, s, r) {
+    gh.fetchPostListTree(root.user_info.login, function (e, s, r) {
       plist = JSON.parse(r);
       try {
         plist = plist['tree']
@@ -148,8 +148,8 @@ function refreshPostList() {
 // To sort & filter post per blog file name 
 function getPostDetails(plist) {
   nlist = plist.sort(function (a, b) {
-     a.name = a.path;
-     b.name = b.path;
+    a.name = a.path;
+    b.name = b.path;
 
     //refine name
     var adate = refineDate(a.name).replace(/(\d+-\d+-\d+)-.*\.md/, "$1");
@@ -176,15 +176,16 @@ function getPostDetails(plist) {
       nnlist.push(nlist[i]);
     }
   }
-  // Need to sort with date!
-  //=> Need recursively loading!
-  for (var i = 0; i < listCnt; i++) {
-    if (i == nnlist.length) break;
-    console.log(nnlist[nnlist.length - 1 - i].path);
-    gh.getContent("_posts/" + nnlist[nnlist.length - 1 - i].path, function (c) {
+
+/* Thanks For ChatGPT, you know such promise & await & async is always my headache, but it well helped me to re-coded */
+  async function processList() {
+    for (var i = 0; i < listCnt; i++) {
+      if (i == nnlist.length) break;
+      console.log(nnlist[nnlist.length - 1 - i].path);
+      var c = await gh.getContentAsync("_posts/" + nnlist[nnlist.length - 1 - i].path);
       var pcontent = postParse(c.content);
       if (c.date.match(/\d+-\d+-\d+/) == null) {
-        return;
+        continue;
       }
       pcontent['date'] = c.date;
       pcontent['sha'] = c.sha;
@@ -195,10 +196,10 @@ function getPostDetails(plist) {
           refreshPostList();
         });
       }
-    });
+    }
   }
+  processList();
 }
-
 
 /* Funciton to load the post content after click the title */
 function loadText(ind) {

@@ -118,7 +118,7 @@ chrome.runtime.getBackgroundPage(function (r) {
         cb, onLogInFailed);
     }
 
-   //-> Get the Post Folder Tree
+    //-> Get the Post Folder Tree
     function fetchPostListTree(user, cb) {
       xhrWithAuth('GET',
         'https://api.github.com/repos/' + user + '/' + user + '.github.io/git/trees/HEAD:_posts',
@@ -145,6 +145,25 @@ chrome.runtime.getBackgroundPage(function (r) {
       xhrWithAuth("GET", "https://api.github.com/repos/" + root.user_info.login + "/" + root.user_info.login + ".github.io/contents/" + ulink, true, function (e, s, r) {
         cb(e, s, r);
       }, onLogInFailed);
+    }
+
+    async function getContentAsync(url) {
+      return new Promise(function (resolve, reject) {
+        fetchContent(url, function (e, s, r) {
+          if (s == 200) {
+            var tmp = JSON.parse(r);
+            resolve({
+              status: 'OK',
+              sha: tmp.sha,
+              content: decodeURIComponent(escape(window.atob(tmp.content))),
+              date: tmp.name.replace(/^(\d+-\d+-\d+)-.*/, '$1'),
+              url: root.user_info.login + '.github.io/' + tmp.name.replace(/^\d+-\d+-\d+-/, '').replace(/.md$/, '')
+            });
+          } else {
+            reject(new Error('Failed to fetch content'));
+          }
+        });
+      });
     }
 
     return {
@@ -178,23 +197,9 @@ chrome.runtime.getBackgroundPage(function (r) {
           cb(e, s, r);
         });
       },
-
-
-      getContent: function (url, cb) {
-        fetchContent(url, function (e, s, r) {
-          if (s == 200) {
-            var tmp = JSON.parse(r);
-            cb({
-              status: 'OK',
-              sha: tmp.sha,
-              content: decodeURIComponent(escape(window.atob(tmp.content))),
-              date: tmp.name.replace(/^(\d+-\d+-\d+)-.*/, '$1'),
-              url: root.user_info.login + '.github.io/' + tmp.name.replace(/^\d+-\d+-\d+-/, '').replace(/.md$/, '')
-            });
-          }
-        });
+      getContentAsync:function(url){
+          return getContentAsync(url);
       },
-
       fetchPostList: function (user, cb) {
         return fetchPostList(user, cb);
       },
@@ -214,7 +219,7 @@ chrome.runtime.getBackgroundPage(function (r) {
       },
 
       // Got token
-      access_token: function(){
+      access_token: function () {
         return access_token;
       },
 
