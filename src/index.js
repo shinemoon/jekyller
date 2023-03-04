@@ -1,3 +1,4 @@
+var user_info = null;
 var ehdl = $('#meltdowneditor').meltdown({
 	openPreview: true,
 	fullscreen: true,
@@ -59,7 +60,7 @@ Array.prototype.remove = function (from, to) {
 	this.length = from < 0 ? this.length + from : from;
 	return this.push.apply(this, rest);
 };
-var fontpath = chrome.extension.getURL('/assets');
+var fontpath = chrome.runtime.getURL('assets');
 var fontstr = "@font-face {font-family: 'Kesong';src: url('" + fontpath + "/font.otf') format('truetype');}";
 $('body').append('<style>' + fontstr + '</style>');
 

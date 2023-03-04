@@ -1,10 +1,8 @@
 /* Element & Parameters */
 var listCnt = 6;
-var root = null;
 var plist = null;
 var clist = [];
 var curpost = null;
-chrome.runtime.getBackgroundPage(function (r) { root = r; });
 
 
 var dates = {
@@ -83,12 +81,11 @@ function listPop(toggle) {
 //Fetch blog list
 function getPostList(cb) {
   clist = [];
-  if (typeof (root.user_info) == "undefined") {
+  if (typeof (user_info) == "undefined") {
     gh.onLogInFailed();
     return;
   } else {
-    //    gh.fetchPostList(root.user_info.login, function (e, s, r) {
-    gh.fetchPostListTree(root.user_info.login, function (e, s, r) {
+    gh.fetchPostListTree(user_info.login, function (e, s, r) {
       plist = JSON.parse(r);
       try {
         plist = plist['tree']
@@ -107,9 +104,9 @@ function refreshPostList() {
   $('.frame-pop .ajax-loader').hide();
   $('.frame-pop table tr').remove();
   clist.every(function (v, i) {
-    $('.frame-pop table').append('<tr><td class="ind icon-bin"></td><td class="title"><div>' + v.title + '</div></td><td class="date"><a target=_blank href="http://' + root.user_info.login + '.github.io/' + v.slug + '">' + normalizeDate(v.date) + '</a></td></tr>');
+    $('.frame-pop table').append('<tr><td class="ind icon-bin"></td><td class="title"><div>' + v.title + '</div></td><td class="date"><a target=_blank href="http://' + user_info.login + '.github.io/' + v.slug + '">' + normalizeDate(v.date) + '</a></td></tr>');
     $('td.title:last').data('index', i);
-    $('td.date:last').data('url', root.user_info.login + '.github.io/' + v.slug);
+    $('td.date:last').data('url', user_info.login + '.github.io/' + v.slug);
     if (i == clist.length - 1) return false;
     return true;
   })

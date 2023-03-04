@@ -1,6 +1,4 @@
-var root = null;
 var curpost = null;
-chrome.runtime.getBackgroundPage(function (r) { root = r; });
 
 function metaPop(toggle) {
   popFrame('meta', toggle, function () {
@@ -36,7 +34,7 @@ function refreshPostMeta() {
   }
 
   $('.send').click(function () {
-    if (root.user_info == null) {
+    if (user_info == null) {
       return;
     }
     $('.top-masker').show();
