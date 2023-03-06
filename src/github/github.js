@@ -88,13 +88,14 @@ chrome.runtime.getBackgroundPage(function (r) {
         populateUserInfo(root.user_info);
         showButton(revoke_button);
         //fetchUserRepos(root.user_info["repos_url"]);
+        logInfo("LogIn Successfully.");
       } else {
         // If failed
       }
     }
     function onLogInFailed(error, status, response) {
-      logInfo("Token is not working or Network issue, please check configuration.");
-      $('#token').click();
+      logError("Token is not working or Network issue, please check configuration.");
+      tokenPop(false);
     }
 
     function populateUserInfo(user_info) {
@@ -219,7 +220,9 @@ chrome.runtime.getBackgroundPage(function (r) {
       },
 
       // Got token
-      access_token: function () {
+      access_token: function (token=null) {
+        if(token!=null) 
+          access_token = token;
         return access_token;
       },
 
