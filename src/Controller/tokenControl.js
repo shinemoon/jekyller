@@ -41,11 +41,14 @@ And if more details neeed, please refer to Github relevant page for support. \
 
         $('.save-token').click(function () {
             if ($(this).hasClass('active')) {
+                console.log("Token to Saved.")
                 $(this).removeClass('active');
                 ltoken = $('.config-content').val();
                 chrome.storage.local.set({ 'ltoken': ltoken }, function () {
                     console.log("Token Saved.")
                     refreshIcon();
+                    gh.access_token(ltoken);
+                    gh.getUserInfo(false);
                 });
             }
         });

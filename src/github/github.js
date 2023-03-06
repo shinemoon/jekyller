@@ -78,20 +78,22 @@ gh = (function () {
     button.disabled = true;
   }
 
-  function onUserInfoFetched(error, status, response) {
-    if (!error && status == 200) {
-      //console.log("Got the following user info: " + response);
-      user_info = JSON.parse(response);
-      populateUserInfo(user_info);
-      showButton(revoke_button);
-    } else {
-      // If failed
+    function onUserInfoFetched(error, status, response) {
+      if (!error && status == 200) {
+        //console.log("Got the following user info: " + response);
+        root.user_info = JSON.parse(response);
+        populateUserInfo(root.user_info);
+        showButton(revoke_button);
+        //fetchUserRepos(root.user_info["repos_url"]);
+        logInfo("LogIn Successfully.");
+      } else {
+        // If failed
+      }
     }
-  }
-  function onLogInFailed(error, status, response) {
-    logInfo("Token is not working or Network issue, please check configuration.");
-    $('#token').click();
-  }
+    function onLogInFailed(error, status, response) {
+      logError("Token is not working or Network issue, please check configuration.");
+      tokenPop(false);
+    }
 
   function populateUserInfo(user_info) {
     var elem = user_info_div;
@@ -214,10 +216,12 @@ gh = (function () {
       return onLogInFailed();
     },
 
-    // Got token
-    access_token: function () {
-      return access_token;
-    },
+      // Got token
+      access_token: function (token=null) {
+        if(token!=null) 
+          access_token = token;
+        return access_token;
+      },
 
     onload: function () {
       revoke_button = document.querySelector('#token');
