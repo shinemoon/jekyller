@@ -81,10 +81,9 @@ gh = (function () {
     function onUserInfoFetched(error, status, response) {
       if (!error && status == 200) {
         //console.log("Got the following user info: " + response);
-        root.user_info = JSON.parse(response);
-        populateUserInfo(root.user_info);
+        user_info = JSON.parse(response);
+        populateUserInfo(user_info);
         showButton(revoke_button);
-        //fetchUserRepos(root.user_info["repos_url"]);
         logInfo("LogIn Successfully.");
       } else {
         // If failed

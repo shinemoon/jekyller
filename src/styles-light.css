@@ -353,7 +353,7 @@ display:block;
 #plist-table td.ind {
     width:10px;
 	background:white!important;
-	color:red;
+  color: rgb(255 149 0);
 }
 
 #plist-table td.ind:hover {
@@ -715,4 +715,29 @@ p code {
   font-size:14px;
   color:#888;
   white-space: pre-wrap;
+}
+
+.frame-pop #list-page {
+  position: absolute;
+  right: 25px;
+  bottom: 50px;
+  font-size: 14px;
+  color: rgb(255 149 0);
+  opacity: 0.7;
+}
+
+.frame-pop #list-page #pnumber{
+    color: #888;
+    font-size: 16px;
+    font-weight: bold;
+    width: 40px;
+    display: inline-block;
+    text-align: center;
+}
+
+#list-page .nav {
+  cursor: pointer;
+}
+#list-page .nav:hover{
+  opacity:0.5;
 }

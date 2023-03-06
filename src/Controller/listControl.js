@@ -4,6 +4,7 @@ var plist = null;
 var clist = [];
 var curpost = null;
 var curpage = 0;
+var totalpage=1;
 
 
 var dates = {
@@ -105,57 +106,80 @@ function getPostList(cb) {
 
 // Construct the blog list
 function refreshPostList() {
-  $('#plist-table').remove();
-  $('#list-page').remove();
-  $('.frame-pop').append('<div id="plist-table"><table></table></div>');
-  $('.frame-pop .ajax-loader').hide();
-  $('.frame-pop table tr').remove();
-  clist.every(function (v, i) {
-    $('.frame-pop table').append('<tr><td class="ind icon-bin"></td><td class="title"><div>' + v.title + '</div></td><td class="date"><a target=_blank href="http://' + user_info.login + '.github.io/' + v.slug + '">' + normalizeDate(v.date) + '</a></td></tr>');
-    $('td.title:last').data('index', i);
-    $('td.date:last').data('url', user_info.login + '.github.io/' + v.slug);
-    if (i == clist.length - 1) return false;
-    return true;
-  });
-  //Pagination Mark
-  $('.frame-pop').append("<div  id='list-page'></div>");
-  $('#list-page').append("<span class='icon-first' id='first'></span>");
-  $('#list-page').append("<span class='icon-previous2' id='prev'></span>");
-  $('#list-page').append("<span class='number' id='pnumber'>"+curpage+"</span>");
-  $('#list-page').append("<span class='icon-next2' id='next'></span>");
-  $('#list-page').append("<span class='icon-last' id='last'></span>");
+  function constructUI() {
+    $('#plist-table').remove();
+    $('#list-page').remove();
+    $('.frame-pop').append('<div id="plist-table"><table></table></div>');
+    $('.frame-pop .ajax-loader').hide();
+    $('.frame-pop table tr').remove();
+    clist.every(function (v, i) {
+      $('.frame-pop table').append('<tr><td class="ind icon-bin"></td><td class="title"><div>' + v.title + '</div></td><td class="date"><a target=_blank href="http://' + user_info.login + '.github.io/' + v.slug + '">' + normalizeDate(v.date) + '</a></td></tr>');
+      $('td.title:last').data('index', i);
+      $('td.date:last').data('url', user_info.login + '.github.io/' + v.slug);
+      if (i == clist.length - 1) return false;
+      return true;
+    });
+    //Pagination Mark
+    $('.frame-pop').append("<div  id='list-page'></div>");
+    $('#list-page').append("<span class='nav icon-first' id='first'></span>");
+    $('#list-page').append("<span class='nav icon-previous2' id='next'></span>");
+    $('#list-page').append("<span class='nav number' id='pnumber'>" + (curpage+1) + "</span>");
+    $('#list-page').append("<span class='nav icon-next2' id='prev'></span>");
+    $('#list-page').append("<span class='nav icon-last' id='last'></span>");
+  }
+  function bindPageAction() {
+    totalpage = Math.ceil(plist.length/6);
+    $('#first').click(function(){
+      processList(0);
+    })
+    $('#last').click(function(){
+      processList(totalpage-1);
+    })
 
-  $('td.ind').confirmOn({
-    questionText: 'Are You Sure to Delete This Post?',
-    textYes: 'Yes, I\'m sure',
-    textNo: 'No, I\'m not sure'
-  }, 'click', function (e, confirmed) {
-    if (confirmed) {
-      //console.log($('#plist-table').data('curind'));
-      $('.top-masker').show();
-      deletePost($('#plist-table').data('curind'), function () {
-        $('.top-masker').hide();
-      });
-    }
-  });
+    $('#prev').click(function(){
+      if(curpage<totalpage)
+        processList(curpage+1);
+    })
 
-  $('td.ind').click(function () {
-    $('#plist-table').data('curind', $(this).parent().find('td.title').data('index'));
-  });
+    $('#next').click(function(){
+      if(curpage>0)
+        processList(curpage-1);
+    })
 
-  $('td.title').click(function () {
-    $('#plist-table').data('curind', $(this).data('index'));
-  });
 
-  $('td.title').confirmOn({
-    questionText: 'Local Post Will Be Overrided by This One, Is It OK?',
-    textYes: 'Yes, I\'m sure',
-    textNo: 'No, I\'m not sure'
-  }, 'click', function (e, confirmed) {
-    if (confirmed)
-      loadText($('#plist-table').data('curind'));
-  })
+    $('td.ind').confirmOn({
+      questionText: 'Are You Sure to Delete This Post?',
+      textYes: 'Yes, I\'m sure',
+      textNo: 'No, I\'m not sure'
+    }, 'click', function (e, confirmed) {
+      if (confirmed) {
+        //console.log($('#plist-table').data('curind'));
+        $('.top-masker').show();
+        deletePost($('#plist-table').data('curind'), function () {
+          $('.top-masker').hide();
+        });
+      }
+    });
+    $('td.ind').click(function () {
+      $('#plist-table').data('curind', $(this).parent().find('td.title').data('index'));
+    });
 
+    $('td.title').click(function () {
+      $('#plist-table').data('curind', $(this).data('index'));
+    });
+    $('td.title').confirmOn({
+      questionText: 'Local Post Will Be Overrided by This One, Is It OK?',
+      textYes: 'Yes, I\'m sure',
+      textNo: 'No, I\'m not sure'
+    }, 'click', function (e, confirmed) {
+      if (confirmed)
+        loadText($('#plist-table').data('curind'));
+    })
+  }
+
+  // Execution
+  constructUI();
+  bindPageAction();
 }
 
 // To sort & filter post per blog file name 
@@ -196,7 +220,7 @@ async function processList(page = 0, nnlist) {
 
   if (page != curpage) { //New fetch needed, since page switched
     var startIndex = page * listCnt
-     $('.frame-pop .ajax-loader').show(); 
+    $('.frame-pop .ajax-loader').show();
     for (var i = startIndex; i < startIndex + listCnt; i++) {
       if (i == nnlist.length) break;
       console.log(nnlist[nnlist.length - 1 - i].path);
@@ -210,7 +234,7 @@ async function processList(page = 0, nnlist) {
       pcontent['slug'] = c.url.replace(/^.*\//, '');
       if (clist.length < listCnt) {
         clist.push(pcontent);
-        await new Promise((resolve)=>{
+        await new Promise((resolve) => {
           chrome.storage.local.set({ clist: clist, plist: plist, curpage: page }, function (result) {
             resolve(result);
           })
@@ -218,8 +242,8 @@ async function processList(page = 0, nnlist) {
         curpage = page;
       }
     }
-    $('.frame-pop .ajax-loader').hide(); 
-  refreshPostList();
+    $('.frame-pop .ajax-loader').hide();
+    refreshPostList();
   }
   // Just refresh 
   chrome.storage.local.get({ "clist": [] }, function (obj) {
