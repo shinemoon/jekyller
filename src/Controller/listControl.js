@@ -4,6 +4,7 @@ var root = null;
 var plist = null;
 var clist = [];
 var curpost = null;
+var curpage = 0;
 chrome.runtime.getBackgroundPage(function (r) { root = r; });
 
 
@@ -61,26 +62,31 @@ var dates = {
 
 
 //Popping the Frame for blog list
-function listPop(toggle) {
+async function listPop(toggle) {
+  if (plist == null) {
+    // If Plist not refreshed manually, use previous one
+    [plist, clist, curpage] = await new Promise((resolve) => {
+      chrome.storage.local.get({ 'plist': [], 'clist': [], 'curpage': 0 }, function (result) {
+        resolve([result.plist, result.clist, result.curpage]);
+      });
+      console.log(curpage);
+    });
+  }
   popFrame('list', toggle, function () {
     //-> Get needed info
     $('.frame-pop').html('<div class=ajax-loader><img src="/assets/loader.gif"/></div>');
     $('.frame-pop .ajax-loader').hide();
     $('.frame-pop').append('<div id="tool-banner"><img id="refresh" src="/assets/refresh.png"/></div>');
     $('img#refresh').click(function () {
-      getPostList(getPostDetails);
+      getPostList(getPostDetails); //Compare with processList, getPostList will refresh the full post list from github
       $('.frame-pop .ajax-loader').show();
     });
-    chrome.storage.local.get("clist", function (obj) {
-      if (typeof (obj.clist) != 'undefined' && obj.clist.length > 0) {
-        clist = obj.clist;
-        refreshPostList();
-      }
-    });
+    //Refresh list
+    processList(curpage);
   });
 }
 
-//Fetch blog list
+//To Remotely Fetch blog list
 function getPostList(cb) {
   clist = [];
   if (typeof (root.user_info) == "undefined") {
@@ -103,16 +109,26 @@ function getPostList(cb) {
 // Construct the blog list
 function refreshPostList() {
   $('#plist-table').remove();
+  $('#list-page').remove();
   $('.frame-pop').append('<div id="plist-table"><table></table></div>');
   $('.frame-pop .ajax-loader').hide();
   $('.frame-pop table tr').remove();
   clist.every(function (v, i) {
     $('.frame-pop table').append('<tr><td class="ind icon-bin"></td><td class="title"><div>' + v.title + '</div></td><td class="date"><a target=_blank href="http://' + root.user_info.login + '.github.io/' + v.slug + '">' + normalizeDate(v.date) + '</a></td></tr>');
+
     $('td.title:last').data('index', i);
     $('td.date:last').data('url', root.user_info.login + '.github.io/' + v.slug);
     if (i == clist.length - 1) return false;
     return true;
-  })
+  });
+  //Pagination Mark
+  $('.frame-pop').append("<div  id='list-page'></div>");
+  $('#list-page').append("<span class='icon-first' id='first'></span>");
+  $('#list-page').append("<span class='icon-previous2' id='prev'></span>");
+  $('#list-page').append("<span class='number' id='pnumber'>"+curpage+"</span>");
+  $('#list-page').append("<span class='icon-next2' id='next'></span>");
+  $('#list-page').append("<span class='icon-last' id='last'></span>");
+
   $('td.ind').confirmOn({
     questionText: 'Are You Sure to Delete This Post?',
     textYes: 'Yes, I\'m sure',
@@ -143,20 +159,20 @@ function refreshPostList() {
     if (confirmed)
       loadText($('#plist-table').data('curind'));
   })
+
 }
 
 // To sort & filter post per blog file name 
 function getPostDetails(plist) {
-  processList();
+  processList(curpage);
 }
 
 /* Thanks For ChatGPT, you know such promise & await & async is always my headache, but it well helped me to re-coded */
 async function processList(page = 0, nnlist) {
-  clist = [];
+  clist = []
   var nlist = plist.sort(function (a, b) {
     a.name = a.path;
     b.name = b.path;
-
     //refine name
     var adate = refineDate(a.name).replace(/(\d+-\d+-\d+)-.*\.md/, "$1");
     var bdate = refineDate(b.name).replace(/(\d+-\d+-\d+)-.*\.md/, "$1");
@@ -177,38 +193,45 @@ async function processList(page = 0, nnlist) {
 
   var nnlist = [];
   for (var i = 0; i < nlist.length; i++) {
-    console.log(nlist[i].name);
     if (nlist[i].name.match(/^\d+-\d+-\d+-.*\.md/) != null) {
       nnlist.push(nlist[i]);
     }
   }
 
-  var startIndex = page * listCnt
-  for (var i = startIndex; i < startIndex + listCnt; i++) {
-    if (i == nnlist.length) break;
-    console.log(nnlist[nnlist.length - 1 - i].path);
-    var c = await gh.getContentAsync("_posts/" + nnlist[nnlist.length - 1 - i].path);
-    var pcontent = postParse(c.content);
-    if (c.date.match(/\d+-\d+-\d+/) == null) {
-      continue;
+  if (page != curpage) { //New fetch needed, since page switched
+    var startIndex = page * listCnt
+     $('.frame-pop .ajax-loader').show(); 
+    for (var i = startIndex; i < startIndex + listCnt; i++) {
+      if (i == nnlist.length) break;
+      console.log(nnlist[nnlist.length - 1 - i].path);
+      var c = await gh.getContentAsync("_posts/" + nnlist[nnlist.length - 1 - i].path);
+      var pcontent = postParse(c.content);
+      if (c.date.match(/\d+-\d+-\d+/) == null) {
+        continue;
+      }
+      pcontent['date'] = c.date;
+      pcontent['sha'] = c.sha;
+      pcontent['slug'] = c.url.replace(/^.*\//, '');
+      if (clist.length < listCnt) {
+        clist.push(pcontent);
+        await new Promise((resolve)=>{
+          chrome.storage.local.set({ clist: clist, plist: plist, curpage: page }, function (result) {
+            resolve(result);
+          })
+        });
+        curpage = page;
+      }
     }
-    pcontent['date'] = c.date;
-    pcontent['sha'] = c.sha;
-    pcontent['slug'] = c.url.replace(/^.*\//, '');
-    if (clist.length < listCnt) {
-      clist.push(pcontent);
-      chrome.storage.local.set({ clist: clist }, function () {
-        refreshPostList();
-      });
-    }
+    $('.frame-pop .ajax-loader').hide(); 
+  refreshPostList();
   }
-  chrome.storage.local.get("clist", function (obj) {
+  // Just refresh 
+  chrome.storage.local.get({ "clist": [] }, function (obj) {
     if (typeof (obj.clist) != 'undefined' && obj.clist.length > 0) {
       clist = obj.clist;
       refreshPostList();
     }
   });
-
 };
 
 

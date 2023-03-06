@@ -622,10 +622,10 @@ p code {
 /* Tooltip 文本 */
 .tooltip .tooltiptext {
   display:hide;
-  width: 150px;
-  height:15px;
+  width: 120px;
+  height:14px;
   background-color:#dad8d8;
-  color: #555;
+  color: #333;
   text-align: center;
   padding: 5px 0px;
   font-size: 6px;
@@ -641,6 +641,78 @@ p code {
   right: 420px; 
 }
 
-.tooltip {
-  opacity: 1;
+/* Update One - 2nd Mar 2023 - For Token Config */
+
+.config-input {
+  margin-top:30px;
+  margin-left:auto;
+  margin-right: auto;
+  width: 100%;
+  vertical-align: middle;
+}
+
+.config-input .config-title {
+  font-size:11px;
+  color:grey;
+  width:50px;
+  display: inline;
+  vertical-align: middle;
+}
+
+.config-input textarea{
+  margin-left:20px;
+  padding-top: 5px;
+  padding-left: 5px;
+  padding-bottom: 4px;
+  width: 240px;
+  resize: none;
+  color: #ccc;
+  height:12px;
+  font-size: 12px;
+  font-family: Arial, Helvetica, sans-serif;
+  outline: solid 1px #ddd;
+  border: solid 0px #ddd;
+  border-radius: 2px;
+  vertical-align: middle;
+}
+
+ .config-input textarea:focus{
+  background:rgba(255,203,0,0.1);
+  outline: solid 1px #ddd;
+ }
+
+
+.config-input .icon{
+  margin-left:4px;
+  margin-right:8px;
+  vertical-align: middle;
+  color: lightgrey;
+  cursor: auto;
+}
+.config-input .icon.active{
+  color:#5959dc;
+  cursor: pointer;
+}
+
+.config-input .icon.disabled, .config-input .icon.disabled:hover {
+  cursor: default;
+  color:#aaa;
+}
+
+.config-input .icon.active:hover {
+  color:#3FAE5F;
+}
+
+.popping-note {
+  margin-top:12px;
+  margin-left:0px;
+  width:350px;
+  height:170px;
+  background: rgba(0,0,0,0.06);
+  border: #888 1px dotted;
+  border-radius: 10px;
+  padding:10px;
+  font-size:14px;
+  color:#888;
+  white-space: pre-wrap;
 }
