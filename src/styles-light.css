@@ -116,8 +116,6 @@ display:block;
   border-bottom-right-radius:10px;
   padding-left:20px;
   display:none;
-  //background:#343f48;
-  //background-color:#efefef;
   background-color:white;
   background-image: url("assets/Mark.png");
   background-repeat: no-repeat;
@@ -173,7 +171,6 @@ display:block;
 #user_info {
     position:fixed;
     bottom:6px;
-    //right:250px;
 }
 
 #user_info a {
@@ -240,16 +237,12 @@ display:block;
 	width:100px;
 }
 #post-table td.label {
-    //border-left:2px solid rgba(0,100,0,0.5);
     background:rgba(100,100,100,0.05);
     border-radius: 4px;
     cursor:pointer;
 }
 
 
-#post-table td.content {
-//	width:150px;
-}
 #post-table input:hover,
 #post-table input:focus,
 #post-table select:hover,
@@ -257,12 +250,10 @@ display:block;
 #post-table textarea:hover,
 #post-table textarea:focus
 {
-//	border: solid 1px #6d0;
 	outline: none;
     border-radius: 4px;
     cursor:pointer;
     background:rgba(255,203,0,0.1);
-    //background:rgba(0,200,200,0.1);
 }
 
 #post-table input,
@@ -290,7 +281,7 @@ display:block;
 }
 
 #post-table td .send {
-	display: inline-block;
+	display: block;
 	background: #3FAE5F;
 	text-transform: uppercase;
 	text-align: center;
@@ -334,7 +325,6 @@ display:block;
   width:160px;
   text-align:center;
   font-size:12px;
-  //border-bottom: 1px dotted blue;
   color:#333;
   /*height:35px;*/
 }
@@ -407,6 +397,7 @@ top: 175px;
 color: #DC8C59;
 text-shadow: rgb(250, 247, 247) 1px 1px;
 -webkit-transform: rotate(-25deg);
+ transform: rotate(-25deg);
 }
 
 
@@ -419,10 +410,8 @@ text-shadow: rgb(250, 247, 247) 1px 1px;
 
 
 .meltdown_preview-header{
-  //background: #DBF9E2;
   background:#eae8e8;
   color: rgba(255,255,255,0);
-  //border-bottom-color: #DBF9E2;
   border-color: rgba(255,255,255,0);
 
 }
@@ -431,7 +420,6 @@ text-shadow: rgb(250, 247, 247) 1px 1px;
 	margin-left: 20px;
   margin-right: 20px;
   background:#eae8e8;
-  //border-color: #DBF9E2;
   border-color: rgba(255,255,255,0);
 }
 
@@ -457,20 +445,14 @@ text-shadow: rgb(250, 247, 247) 1px 1px;
   color:#555555;
   font-size:12px;
   line-height:25px;
-  //background:#DBF9E2;
   background:#eae8e8;
   border-color: rgba(255,255,255,0);
-  //border-color: #DBF9E2;
   padding-top:30px;
   padding-left:20px;
   padding-right:20px;
   margin-right:-10px;
-  //box-shadow:#efefef -4px 4px 2px;
 }
 
-textarea:focus {
-//  outline:none!important;
-}
 
 .meltdown_resizehandle.meltdown_resizehandle-vert.meltdown_resizehandle-horiz {
   display:none;
@@ -596,8 +578,6 @@ hr {
     font-weight:normal;
     border: 1px solid #888;
     background-color: #dad8d8;
-}
-.confirmon-button--yes {
 }
 
 .frame-icon.op {
