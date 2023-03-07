@@ -127,6 +127,8 @@ function refreshPostList() {
     $('#list-page').append("<span class='nav icon-next2' id='prev'></span>");
     $('#list-page').append("<span class='nav icon-last' id='last'></span>");
 
+    //Search Area!
+
     $('#pnumber textarea').val(curpage + 1);
     $('#pnumber textarea').on('input', function (event) {
       // 获取输入的文本内容
