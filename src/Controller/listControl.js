@@ -153,30 +153,49 @@ function refreshPostList() {
 
 
     $('#pnumber textarea').on('blur', function (event) {
-        // Meanwhile we need to ensure this is legal number
-        if ($(this).val() < 1)
-          $(this).val(1);
-        if ($(this).val() > totalpage)
-          $(this).val(totalpage);
-        if($(this).val()!=curpage)
-          processList($(this).val() - 1);
+      // Meanwhile we need to ensure this is legal number
+      if ($(this).val() < 1)
+        $(this).val(1);
+      if ($(this).val() > totalpage)
+        $(this).val(totalpage);
+      if ($(this).val() != curpage)
+        processList($(this).val() - 1);
     });
   }
   function bindPageAction() {
     totalpage = Math.ceil(plist.length / 6);
     $('#first').click(function () {
+      if (!$('.frame-pop .ajax-loader').is(':hidden')) {
+        return;
+      }
+      $('#pnumber textarea').val(1);
+
       processList(0);
     })
     $('#last').click(function () {
+      if (!$('.frame-pop .ajax-loader').is(':hidden')) {
+        return;
+      }
+      $('#pnumber textarea').val(totalpage);
       processList(totalpage - 1);
     })
 
     $('#prev').click(function () {
+      if (!$('.frame-pop .ajax-loader').is(':hidden')) {
+        return;
+      }
+      $('#pnumber textarea').val(curpage + 2);
+
       if (curpage < totalpage)
         processList(curpage + 1);
     })
 
     $('#next').click(function () {
+      if (!$('.frame-pop .ajax-loader').is(':hidden')) {
+        return;
+      }
+      $('#pnumber textarea').val(curpage);
+
       if (curpage > 0)
         processList(curpage - 1);
     })
