@@ -4,7 +4,7 @@ var plist = null;
 var clist = [];
 var curpost = null;
 var curpage = 0;
-var totalpage=1;
+var totalpage = 1;
 
 
 var dates = {
@@ -123,27 +123,60 @@ function refreshPostList() {
     $('.frame-pop').append("<div  id='list-page'></div>");
     $('#list-page').append("<span class='nav icon-first' id='first'></span>");
     $('#list-page').append("<span class='nav icon-previous2' id='next'></span>");
-    $('#list-page').append("<span class='nav number' id='pnumber'>" + (curpage+1) + "</span>");
+    $('#list-page').append("<span class='nav number' id='pnumber'><textarea οnfοcus='this.select()' οnmοuseοver='this.focus()'></textarea></span>");
     $('#list-page').append("<span class='nav icon-next2' id='prev'></span>");
     $('#list-page').append("<span class='nav icon-last' id='last'></span>");
+
+    $('#pnumber textarea').val(curpage + 1);
+    $('#pnumber textarea').on('input', function (event) {
+      // 获取输入的文本内容
+      const text = $(this).val();
+
+      // 用正则表达式匹配文本内容，只保留前4个数字
+      const digits = text.match(/^\d{0,4}/)[0];
+
+      // 如果输入的文本内容超过4个数字，则更新textarea的值为前4个数字
+      if (digits !== text) {
+        $(this).val(digits);
+      }
+    });
+    $('#pnumber textarea').on('keydown', function (event) {
+      // 如果按下了回车键
+      if (event.keyCode === 13) {
+        event.preventDefault(); // 阻止默认的回车行为
+        // 在此处添加你希望的处理逻辑
+        $(this).blur();
+      }
+    });
+
+
+    $('#pnumber textarea').on('blur', function (event) {
+        // Meanwhile we need to ensure this is legal number
+        if ($(this).val() < 1)
+          $(this).val(1);
+        if ($(this).val() > totalpage)
+          $(this).val(totalpage);
+        if($(this).val()!=curpage)
+          processList($(this).val() - 1);
+    });
   }
   function bindPageAction() {
-    totalpage = Math.ceil(plist.length/6);
-    $('#first').click(function(){
+    totalpage = Math.ceil(plist.length / 6);
+    $('#first').click(function () {
       processList(0);
     })
-    $('#last').click(function(){
-      processList(totalpage-1);
+    $('#last').click(function () {
+      processList(totalpage - 1);
     })
 
-    $('#prev').click(function(){
-      if(curpage<totalpage)
-        processList(curpage+1);
+    $('#prev').click(function () {
+      if (curpage < totalpage)
+        processList(curpage + 1);
     })
 
-    $('#next').click(function(){
-      if(curpage>0)
-        processList(curpage-1);
+    $('#next').click(function () {
+      if (curpage > 0)
+        processList(curpage - 1);
     })
 
 
