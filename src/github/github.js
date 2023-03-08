@@ -123,6 +123,14 @@ gh = (function () {
       cb, onLogInFailed);
   }
 
+  // -> Search code
+  function searchPost(user, qstr, cb) {
+    var queryString = 'q=' + encodeURIComponent(qstr+' repo:'+user + '/' + user + '.github.io path:_posts extension:md');
+    xhrWithAuth('GET',
+      'https://api.github.com/search/code?' + queryString,
+      true,
+      cb, onLogInFailed);
+  }
 
   // Jekyller - end
 
@@ -200,11 +208,13 @@ gh = (function () {
     fetchPostList: function (user, cb) {
       return fetchPostList(user, cb);
     },
+
     fetchPostListTree: function (user, cb) {
       return fetchPostListTree(user, cb);
     },
-
-
+    searchPost: function (user,qstr, cb) {
+      return searchPost(user,qstr, cb);
+    },
     /* The one to gate the login*/
     getUserInfo: function (type) {
       return getUserInfo(type);
