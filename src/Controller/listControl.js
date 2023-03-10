@@ -155,7 +155,7 @@ function refreshPostList() {
 
     $('#search').click(function () {
       $('.frame-pop .ajax-loader').show();
-      getPostList(type='search', getPostDetails ); //Compare with processList, getPostList will refresh the full post list from github
+      getPostList( getPostDetails,type='search'); //Compare with processList, getPostList will refresh the full post list from github
     });
 
     function uniformList() {
