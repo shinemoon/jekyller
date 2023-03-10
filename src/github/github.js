@@ -40,6 +40,7 @@ gh = (function () {
       var xhr = new XMLHttpRequest();
       xhr.open(method, url);
       xhr.setRequestHeader('Authorization', 'Bearer ' + access_token);
+      xhr.setRequestHeader('Accept', 'application/vnd.github.text-match+json');
       xhr.onload = requestComplete;
       xhr.send();
     }
