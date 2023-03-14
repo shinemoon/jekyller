@@ -63,6 +63,42 @@
         "message": "发生错误，请重新检查!",
         "description": "Genreal Error"
     },
+    "Title":{
+        "message": "标题",
+        "description": "Title"
+    },
+    "Slug":{
+        "message": "短标题",
+        "description": "Slug"
+    },
+    "Category":{
+        "message": "目录",
+        "description": "Category"
+    },
+    "Tags":{
+        "message": "标签",
+        "description": "Tags"
+    },
+    "Date":{
+        "message": "日期",
+        "description": "Date"
+    },
+    "Info":{
+        "message": "写作信息",
+        "description": "Info"
+    },
+    "Comment":{
+        "message": "注释",
+        "description": "Comment"
+    },
+    "Published":{
+        "message": "发布",
+        "description": "Published"
+    },
+    "Update":{
+        "message": "更新",
+        "description": "Update"
+    },
     "tokenHelp": {
         "message": "开始使用之前，请先于Github中申请一个Token（要求对本Repo的内容具备读写权限） <br> <br>需要更多的细节和帮助，请参考Github的关于Token的官方帮助。 ",
         "description": "ConfigHelp"
