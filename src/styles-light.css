@@ -621,33 +621,34 @@ p code {
   right: 420px; 
 }
 
+
 /* Update One - 2nd Mar 2023 - For Token Config */
 
 .config-input {
-  margin-top:30px;
-  margin-left:auto;
+  margin-top: 30px;
+  margin-left: auto;
   margin-right: auto;
   width: 100%;
   vertical-align: middle;
 }
 
 .config-input .config-title {
-  font-size:11px;
-  color:grey;
-  width:50px;
+  font-size: 11px;
+  color: grey;
+  width: 50px;
   display: inline;
   vertical-align: middle;
 }
 
-.config-input textarea{
-  margin-left:20px;
+.config-input textarea {
+  margin-left: 20px;
   padding-top: 5px;
   padding-left: 5px;
   padding-bottom: 4px;
   width: 240px;
   resize: none;
   color: #ccc;
-  height:12px;
+  height: 12px;
   font-size: 12px;
   font-family: Arial, Helvetica, sans-serif;
   outline: solid 1px #ddd;
@@ -656,44 +657,46 @@ p code {
   vertical-align: middle;
 }
 
- .config-input textarea:focus{
-  background:rgba(255,203,0,0.1);
+.config-input textarea:focus {
+  background: rgba(255, 203, 0, 0.1);
   outline: solid 1px #ddd;
- }
+}
 
 
-.config-input .icon{
-  margin-left:4px;
-  margin-right:8px;
+.config-input .icon {
+  margin-left: 4px;
+  margin-right: 8px;
   vertical-align: middle;
   color: lightgrey;
   cursor: auto;
 }
-.config-input .icon.active{
-  color:#5959dc;
+
+.config-input .icon.active {
+  color: #5959dc;
   cursor: pointer;
 }
 
-.config-input .icon.disabled, .config-input .icon.disabled:hover {
+.config-input .icon.disabled,
+.config-input .icon.disabled:hover {
   cursor: default;
-  color:#aaa;
+  color: #aaa;
 }
 
 .config-input .icon.active:hover {
-  color:#3FAE5F;
+  color: #3FAE5F;
 }
 
 .popping-note {
-  margin-top:12px;
-  margin-left:0px;
-  width:350px;
-  height:170px;
-  background: rgba(0,0,0,0.06);
+  margin-top: 12px;
+  margin-left: 0px;
+  width: 350px;
+  height: 170px;
+  background: rgba(0, 0, 0, 0.03);
   border: #888 1px dotted;
   border-radius: 10px;
-  padding:10px;
-  font-size:14px;
-  color:#888;
+  padding: 10px;
+  font-size: 14px;
+  color: #888;
   white-space: pre-wrap;
 }
 
@@ -702,30 +705,70 @@ p code {
   right: 25px;
   bottom: 50px;
   font-size: 14px;
-  color: rgb(255 149 0);
+  color: rgb(241 70 70);
   opacity: 0.7;
+  height: 18px;
 }
 
-.frame-pop #list-page #pnumber textarea{
-    color: #888;
-    font-size: 16px;
-    font-weight: bold;
-    width: 40px;
-    display: inline-block;
-    text-align: center;
-    border:none;
-    resize:none;
-    height:13px;
-    outline:none;
-    overflow:hidden;
+
+.frame-pop #list-page #pnumber textarea {
+  color: #888;
+  font-size: 16px;
+  font-weight: bold;
+  width: 40px;
+  display: inline-block;
+  text-align: center;
+  border: none;
+  resize: none;
+  height: 13px;
+  outline: none;
+  overflow: hidden;
 }
-.frame-pop #list-page #pnumber textarea:focus{
-  color:#5959dc;
+
+.frame-pop #list-page #pnumber textarea:focus {
+  color: #5959dc;
 }
 
 #list-page .nav {
   cursor: pointer;
 }
-#list-page .nav:hover{
-  opacity:0.5;
+
+#list-page .nav:hover {
+  opacity: 0.5;
+}
+
+
+/* Search Pannel */
+#search-pannel {
+  height: 18px;
+  position: fixed;
+  right: 50px;
+  bottom: 320px;
+  font-size: 14px;
+  color: rgb(241 70 70);
+  opacity: 0.7;
+}
+
+#search-pannel .nav {
+  cursor: pointer;
+}
+
+#search-pannel .nav:hover {
+  opacity: 0.5;
+}
+
+#search-pannel textarea {
+  color: #888;
+  font-size: 14px;
+  font-weight: bold;
+  width: 140px;
+  display: inline-block;
+  text-align: left;
+  border: none;
+  resize: none;
+  height: 14px;
+  outline: none;
+  overflow: hidden;
+  background:#ddd;
+  margin-right:10px;
 }

@@ -65,7 +65,7 @@ function updatePost(cb){
 		console.log(e);
 		if(r=='200') {	//Done
 			var ucontent = JSON.parse(s);	
-			logInfo('Update Post Successfully!');
+			logInfo(gm('postUpdated'));
 			//remove the local list Item, as info expired
 			for(var i =0; i< clist.length; i++){
 				console.log(clist[i].sha);
@@ -83,7 +83,7 @@ function updatePost(cb){
 			});
 		} else if(r=='201') { //Created
 			var ucontent = JSON.parse(s);	
-			logInfo('Create Post Successfully!');
+			logInfo(gm('postCreated'));
 			//-> Need to refresh the list
 			curpost.sha = ucontent.content.sha;
 			//remove old one
@@ -94,9 +94,9 @@ function updatePost(cb){
 				$('.frame-mask').click();
 			});
 		} else if(r=='409') { //Failed
-			logError('Error due to version conflict, please to webpage to solve that, or reload the online version before update!');
+			logError(gm('ErrVersion'));
 		} else {
-			logError('Error Please Check On Web! ');
+			logError(gm('ErrGeneral'));
 		}
 		if(typeof(cb)!='undefined') cb();
 	});
@@ -114,7 +114,7 @@ function deletePost(ind,cb){
 		var deli = null;
 		if(r=='200') {	//Done
 			var ucontent = JSON.parse(s);	
-			logInfo('Delete Post Successfully!');
+			logInfo(gm('postDeleted'));
 			//remove the local list Item, as info expired
 			for(var i =0; i< clist.length; i++){
 				if(clist[i].sha == delpost.sha){
@@ -129,7 +129,7 @@ function deletePost(ind,cb){
 				$('.frame-mask').click();
 			});
 		} else {
-			logError('Error Please Check On Web! ');
+			logError(gm('ErrGeneral'));
 		}
 		if(typeof(cb)!='undefined') cb();
 	});

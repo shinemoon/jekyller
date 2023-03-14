@@ -38,7 +38,7 @@ $('.img#token').click(function () {
 
 // Tip-Hint Relevant
 $('.frame-icon.op').mouseenter(function () {
-	$('.tooltiptext').text($(this).attr('val'));
+	$('.tooltiptext').text(gm($(this).attr('val')));
 	$('.tooltip').fadeIn(100);
 });
 $('.frame-icon.op').mouseleave(function () {

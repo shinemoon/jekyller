@@ -18,22 +18,17 @@ function refreshTokenInfo() {
             ltoken = '';
         }
         $('.frame-pop').append('<div id="token-input" class="config-input">\
-  										<div class="config-title">Token Set \
+  										<div class="config-title">'+gm('tokenSet')+'\
 										<textarea spellcheck="false" class="config-content">'+ ltoken + '</textarea> \
-										<span title="Save Token" class="save-token icon icon-checkmark"></span>\
-										 <span title="Clear Token" class="remove-token icon icon-cross"></span>\
+										<span title="'+gm('saveToken')+'" class="save-token icon icon-checkmark"></span>\
+										 <span title="'+gm('cleartoken')+'" class="remove-token icon icon-cross"></span>\
 										</div></div>');
 
-        $('.frame-pop').append('<div class="popping-note">\
-To start with this tool, you need to create (if not yet) the Github Token in your account, and copy /paste it here. \
-<br>\
-<br>\
-And if more details neeed, please refer to Github relevant page for support. \
-</div>'
-        );
+        var noteStr = gm('tokenHelp');
 
-        function refreshIcon(){
-            if(ltoken!=""){
+        $('.frame-pop').append('<div class="popping-note">' + noteStr + '</div>');
+        function refreshIcon() {
+            if (ltoken != "") {
                 $(".remove-token").addClass('active');
             }
         };
@@ -67,7 +62,7 @@ And if more details neeed, please refer to Github relevant page for support. \
         });
 
         $('.config-content').keyup(function () {
-            if ($(this).val() != ltoken && $(this).val()!='') {
+            if ($(this).val() != ltoken && $(this).val() != '') {
                 $('.save-token').addClass('active');
             } else {
                 $('.save-token').removeClass('active');

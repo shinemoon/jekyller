@@ -1,0 +1,10 @@
+{
+    "extName":{
+        "message":"Jeykller Editor",
+        "description":"Extension Name"
+    },
+    "blogName":{
+        "message":"Blog of: ",
+        "description":"Blog Owner"
+    }
+}
