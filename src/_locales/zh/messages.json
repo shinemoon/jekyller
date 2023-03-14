@@ -3,6 +3,10 @@
         "message": "Jeykller 编辑器",
         "description": "Extension Name"
     },
+    "extDes": {
+        "message": "用于支持Github Hosted的Jekyll博客的编辑器，可以支持博文的撰写、修改以及支持实时预览等功能。",
+        "description": "Extension Description"
+    },
     "ListRecent": {
         "message": "博客列表",
         "description": "ListPost"
@@ -35,72 +39,72 @@
         "message": "保存令牌",
         "description": "Save Token"
     },
-    "postUpdated":{
+    "postUpdated": {
         "message": "文章更新成功!",
         "description": "Update Post Done"
     },
-    "postCreated":{
+    "postCreated": {
         "message": "文章创建成功!",
         "description": "Create Post Done"
     },
-    "postDeleted":{
+    "postDeleted": {
         "message": "文章删除成功!",
         "description": "Delete Post Done"
     },
-    "loginDone":{
+    "loginDone": {
         "message": "登录成功!",
         "description": "Login Done"
     },
-    "loginFail":{
+    "loginFail": {
         "message": "登录失败，令牌错误或未正确设置，请确认!",
         "description": "Login Failed"
     },
-    "ErrVerion":{
+    "ErrVerion": {
         "message": "版本冲突，请重新加载文章!",
         "description": "Version Conflicted"
     },
-    "ErrGeneral":{
+    "ErrGeneral": {
         "message": "发生错误，请重新检查!",
         "description": "Genreal Error"
     },
-    "Title":{
+    "Title": {
         "message": "标题",
         "description": "Title"
     },
-    "Slug":{
+    "Slug": {
         "message": "短标题",
         "description": "Slug"
     },
-    "Category":{
+    "Category": {
         "message": "目录",
         "description": "Category"
     },
-    "Tags":{
+    "Tags": {
         "message": "标签",
         "description": "Tags"
     },
-    "Date":{
+    "Date": {
         "message": "日期",
         "description": "Date"
     },
-    "Info":{
+    "Info": {
         "message": "写作信息",
         "description": "Info"
     },
-    "Comment":{
+    "Comment": {
         "message": "注释",
         "description": "Comment"
     },
-    "Published":{
+    "Published": {
         "message": "发布",
         "description": "Published"
     },
-    "Update":{
+    "Update": {
         "message": "更新",
         "description": "Update"
     },
     "tokenHelp": {
-        "message": "开始使用之前，请先于Github中申请一个Token（要求对本Repo的内容具备读写权限） <br> <br>需要更多的细节和帮助，请参考Github的关于Token的官方帮助。 ",
+        "message": "开始使用之前，请先于Github中申请一个Token（要求对本Repo的内容具备读写权限） <br> <br>需要更多的细节和帮助，请<a href='https://docs.github.com/zh/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token'>参考Github的关于Token的官方帮助。 </a>",
         "description": "ConfigHelp"
     },
     "blogName": {

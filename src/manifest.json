@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "__MSG_extName__",
   "short_name": "Jekyller",
-  "description": "To support writing, editing and managing the github.io based Jekyll Blog, with Markdown Previewer.",
+  "description": "__MSG_extDes__",
   "default_locale":"en",
   "version": "3.0",
   "minimum_chrome_version": "88",

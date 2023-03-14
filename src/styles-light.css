@@ -424,7 +424,7 @@ text-shadow: rgb(250, 247, 247) 1px 1px;
 }
 
 .meltdown_editor {
-  font-size:14px;
+  font-size: 15px;
   line-height: 25px;
   margin-top:5px;
  font-family: "Consolas","Arial","Kesong","PingFang SC","Microsoft YaHei",sans-serif;
@@ -531,7 +531,7 @@ td.ind {
 
 .meltdown_preview {
  font-family: "Sitka Text","Lato","Kesong","PingFang SC","Microsoft YaHei",sans-serif;
- font-size: 14px;
+ font-size: 15px;
 }
 
 #plist-table a {
@@ -695,9 +695,18 @@ p code {
   border: #888 1px dotted;
   border-radius: 10px;
   padding: 10px;
-  font-size: 14px;
+  font-size: 12px;
   color: #888;
   white-space: pre-wrap;
+}
+.popping-note a {
+  text-decoration: dotted;
+  color:#aaa;
+  font-weight:bold;
+}
+.popping-note a:hover {
+  text-decoration: dotted;
+  color:#888;
 }
 
 .frame-pop #list-page {
