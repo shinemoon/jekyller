@@ -6,6 +6,7 @@ var slist = []; // Search
 var curpost = null;
 var curpage = 0;
 var totalpage = 1;
+var searchStr = '';
 
 
 var dates = {
@@ -65,9 +66,9 @@ var dates = {
 async function listPop(toggle) {
   if (plist == null) {
     // If Plist not refreshed manually, use previous one
-    [plist, clist, curpage] = await new Promise((resolve) => {
-      chrome.storage.local.get({ 'plist': [], 'clist': [], 'curpage': 0 }, function (result) {
-        resolve([result.plist, result.clist, result.curpage]);
+    [plist, clist, curpage, searchStr] = await new Promise((resolve) => {
+      chrome.storage.local.get({ 'plist': [], 'clist': [], 'curpage': 0, 'searchStr': '' }, function (result) {
+        resolve([result.plist, result.clist, result.curpage, result.searchStr]);
       });
       console.log(curpage);
     });
@@ -76,24 +77,63 @@ async function listPop(toggle) {
     //-> Get needed info
     $('.frame-pop').html('<div class=ajax-loader><img src="/assets/loader.gif"/></div>');
     $('.frame-pop .ajax-loader').hide();
-    $('.frame-pop').append('<div id="tool-banner"><img id="refresh" src="/assets/refresh.png"/></div>');
+    $('.frame-pop').append('<div id="tool-banner"><img id="refresh" src="/assets/refresh.png"/ title="Refesh the List"></div>');
+    //Search Area!
+    $('.frame-pop').append("<div id='list-type'></div>");
+    $('.frame-pop').append("<div  id='search-pannel'></div>");
+    $('#search-pannel').append("<textarea id='txt-search' οnfοcus='this.select()' οnmοuseοver='this.focus()'></textarea>");
+    $('#search-pannel').append("<span class='nav icon-search' id='search' title='Search Blog'></span>");
+    $('#txt-search').val(searchStr);
+
+    if (searchStr == '') {
+      $('#list-type').text('All');
+    } else {
+      $('#list-type').text('Search');
+    }
+
+
+
     $('img#refresh').click(function () {
-      getPostList(getPostDetails, type='all'); //Compare with processList, getPostList will refresh the full post list from github
-      $('.frame-pop .ajax-loader').show();
+      $('#txt-search').val('');
+      chrome.storage.local.set({ searchStr: $('#txt-search').val() }, function (result) {
+        getPostList(getPostDetails, type = 'all'); //Compare with processList, getPostList will refresh the full post list from github
+        $('.frame-pop .ajax-loader').show();
+      });
     });
+
+    $('#search').click(function () {
+      $('.frame-pop .ajax-loader').show();
+      chrome.storage.local.set({ searchStr: $('#txt-search').val() }, function (result) {
+        getPostList(getPostDetails, type = 'search'); //Compare with processList, getPostList will refresh the full post list from github
+      });
+    });
+
+
+    $('#txt-search').on('keydown', function (event) {
+      // 如果按下了回车键
+      if (event.keyCode === 13) {
+        event.preventDefault(); // 阻止默认的回车行为
+        // 在此处添加你希望的处理逻辑
+        $(this).blur();
+        $('#search').click();
+      };
+    });
+
+
     //Refresh list
     processList(curpage);
   });
 }
 
 //To Remotely Fetch blog list
-function getPostList(cb, type='all') {
+function getPostList(cb, type = 'all') {
   clist = [];
   if (typeof (user_info) == "undefined") {
     gh.onLogInFailed();
     return;
   } else {
-    if (type == 'all')
+    if (type == 'all') {
+      $('#list-type').text('All');
       gh.fetchPostListTree(user_info.login, function (e, s, r) {
         curpage = 0;
         plist = JSON.parse(r);
@@ -103,10 +143,12 @@ function getPostList(cb, type='all') {
         }
         if (typeof (cb) != 'undefined') cb();
       }, gh.onLogInFailed);
-    if (type == 'search')
+    };
+    if (type == 'search') {
+      $('#list-type').text('Search ');
       gh.searchPost(user_info.login, $('#txt-search').val(), function (e, s, r) {
         slist = JSON.parse(r);
-        if (slist['total_count'] > 0) { //Save the search string & the list!
+        if (slist['total_count'] >= 0) { //Save the search string & the list!
           curpage = 0;
           slist = slist['items'];
           rlist = [];
@@ -128,7 +170,7 @@ function getPostList(cb, type='all') {
           }
           processData(slist)
             .then(function (rlist) {
-              plist=rlist;
+              plist = rlist;
               // 处理 plist 数组
               if (typeof (cb) != 'undefined') cb();
             })
@@ -137,6 +179,7 @@ function getPostList(cb, type='all') {
             });
         }
       }, gh.onLogInFailed);
+    };
   }
 }
 
@@ -146,17 +189,6 @@ function refreshPostList() {
   function constructUI() {
     $('#plist-table').remove();
     $('#list-page').remove();
-    $('#search-pannel').remove();
-
-    //Search Area!
-    $('.frame-pop').append("<div  id='search-pannel'></div>");
-    $('#search-pannel').append("<textarea id='txt-search' οnfοcus='this.select()' οnmοuseοver='this.focus()'></textarea>");
-    $('#search-pannel').append("<span class='nav icon-search' id='search'></span>");
-
-    $('#search').click(function () {
-      $('.frame-pop .ajax-loader').show();
-      getPostList( getPostDetails,type='search'); //Compare with processList, getPostList will refresh the full post list from github
-    });
 
     function uniformList() {
       // slist => plist
@@ -195,6 +227,7 @@ function refreshPostList() {
         $(this).val(digits);
       }
     });
+
     $('#pnumber textarea').on('keydown', function (event) {
       // 如果按下了回车键
       if (event.keyCode === 13) {
@@ -237,20 +270,20 @@ function refreshPostList() {
       if (!$('.frame-pop .ajax-loader').is(':hidden')) {
         return;
       }
-      $('#pnumber textarea').val(curpage + 2);
-
-      if (curpage < totalpage)
+      if (curpage < totalpage - 1) {
+        $('#pnumber textarea').val(curpage + 2);
         processList(curpage + 1);
+      }
     })
 
     $('#next').click(function () {
       if (!$('.frame-pop .ajax-loader').is(':hidden')) {
         return;
       }
-      $('#pnumber textarea').val(curpage);
-
-      if (curpage > 0)
+      if (curpage > 0) {
+        $('#pnumber textarea').val(curpage);
         processList(curpage - 1);
+      }
     })
 
 
@@ -291,12 +324,12 @@ function refreshPostList() {
 
 // To sort & filter post per blog file name 
 function getPostDetails() {
-  processList(curpage);
+  processList(curpage, true);
 }
 
 /* Thanks For ChatGPT, you know such promise & await & async is always my headache, but it well helped me to re-coded */
-async function processList(page = 0) {
-  var force = false;
+async function processList(page = 0, forcerefesh = false) {
+  var force = forcerefesh;
   clist = []
   var nlist = plist.sort(function (a, b) {
     a.name = a.path;
@@ -342,14 +375,14 @@ async function processList(page = 0) {
       pcontent['slug'] = c.url.replace(/^.*\//, '');
       if (clist.length < listCnt) {
         clist.push(pcontent);
-        await new Promise((resolve) => {
-          chrome.storage.local.set({ clist: clist, plist: plist, curpage: page }, function (result) {
-            resolve(result);
-          })
-        });
         curpage = page;
       }
     }
+    await new Promise((resolve) => {
+      chrome.storage.local.set({ clist: clist, plist: plist, curpage: page }, function (result) {
+        resolve(result);
+      })
+    });
     $('.frame-pop .ajax-loader').hide();
     refreshPostList();
   }
