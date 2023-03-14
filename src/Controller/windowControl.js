@@ -19,8 +19,10 @@ $('.img#meta').click(function () {
 
 // List
 $('.img#list').click(function () {
-	$('.focus').removeClass('focus');
-	listPop(true);
+	if (user_info!= null) {
+		$('.focus').removeClass('focus');
+		listPop(true);
+	}
 });
 
 // Skin
@@ -50,22 +52,22 @@ $('.frame-icon.op').mouseleave(function () {
 /* Overall action */
 // Function to show -toggle the config frame
 function popFrame(id, toggle = true, cb) {
-  //- Toggle
-  if (toggle && $('.frame-pop.' + id + ':visible').length > 0) {
-     popClose();
-    return 0;
-  } 
+	//- Toggle
+	if (toggle && $('.frame-pop.' + id + ':visible').length > 0) {
+		popClose();
+		return 0;
+	}
 
-  popClose();
-  $('#' + id).addClass('focus');
-  var frame = $('<div class="frame-pop ' + id + '"></div>');
-  var mask = $('<div class="frame-mask"> </div>');
-  $('body').append(frame);
-  $('body').append(mask);
-  cb();
-  bindListAction(); //windowControl
-  $('.frame-mask').show();
-  $('.frame-pop').show();
+	popClose();
+	$('#' + id).addClass('focus');
+	var frame = $('<div class="frame-pop ' + id + '"></div>');
+	var mask = $('<div class="frame-mask"> </div>');
+	$('body').append(frame);
+	$('body').append(mask);
+	cb();
+	bindListAction(); //windowControl
+	$('.frame-mask').show();
+	$('.frame-pop').show();
 }
 
 /* 1. Close all popping */
@@ -136,10 +138,10 @@ function logError(str) {
 }
 
 /* Close All Popframe - as util*/
-function popClose(){
-    $('.frame-pop').remove();
-    $('.frame-mask').remove();
-    $('.frame-icon.focus').removeClass('focus');
+function popClose() {
+	$('.frame-pop').remove();
+	$('.frame-mask').remove();
+	$('.frame-icon.focus').removeClass('focus');
 }
 
 /* Skin switch */
