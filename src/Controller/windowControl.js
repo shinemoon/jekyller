@@ -3,9 +3,9 @@
 
 // Create
 $('.img#create').confirmOn({
-	questionText: 'Local Post Will Be Emptied , Is It OK?',
-	textYes: 'Yes, I\'m sure',
-	textNo: 'No, Thanks'
+	questionText: gm('emptyblog'),
+	textYes: gm('yes'),
+	textNo:gm('cancel') 
 }, 'click', function (e, confirmed) {
 	if (confirmed)
 		createNewPost();

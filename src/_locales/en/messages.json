@@ -107,6 +107,18 @@
         "message": "Before you begin, please apply for a token on Github (with read/write access to this repo) <br> <br> For more details and help, please refer to <a href='https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token'>Github's official documentation about tokens.</a>",
         "description": "ConfigHelp"
     },
+    "emptyblog": {
+        "message": "Local Post Will Be Emptied , Is It OK?",
+        "description": "Blog Empitied"
+    },
+    "yes": {
+        "message": "Yes, sure",
+        "description": "Yes"
+    },
+    "cancel": {
+        "message": "No, Thanks",
+        "description": "cancel"
+    },
     "blogName": {
         "message": "Blog: ",
         "description": "Blog Owner"

@@ -107,6 +107,18 @@
         "message": "开始使用之前，请先于Github中申请一个Token（要求对本Repo的内容具备读写权限） <br> <br>需要更多的细节和帮助，请<a href='https://docs.github.com/zh/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token'>参考Github的关于Token的官方帮助。 </a>",
         "description": "ConfigHelp"
     },
+    "emptyblog": {
+        "message": "当前草稿将被删除，请确认：",
+        "description": "Blog Empitied"
+    },
+    "yes": {
+        "message": "确认",
+        "description": "Yes"
+    },
+    "cancel": {
+        "message": "取消",
+        "description": "cancel"
+    },
     "blogName": {
         "message": "博客：",
         "description": "Blog Owner"
