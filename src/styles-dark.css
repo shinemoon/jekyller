@@ -748,9 +748,7 @@ p code {
 }
 
 #search-pannel textarea {
-  color: #888;
   font-size: 11px;
-  font-weight: bold;
   width: 140px;
   display: inline-block;
   text-align: left;
@@ -759,7 +757,10 @@ p code {
   height: 14px;
   outline: none;
   overflow: hidden;
-  background:#efefef8c;
+  background:#f1464657;
+  border-radius:3px;
+  font-family: calibri;
+  color:black;
   margin-right:10px;
   padding-left:10px;
 }

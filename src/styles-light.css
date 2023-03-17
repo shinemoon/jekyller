@@ -572,12 +572,14 @@ hr {
 .confirmon-content {
     color:#555555;
     font-weight:normal;
+    font-size:12px;
 }
 .confirmon-box button{
     color:#555555;
     font-weight:normal;
     border: 1px solid #888;
     background-color: #dad8d8;
+    font-size:12px;
 }
 
 .frame-icon.op {
@@ -766,22 +768,6 @@ p code {
   opacity: 0.5;
 }
 
-#search-pannel textarea {
-  color: #888;
-  font-size: 14px;
-  font-weight: bold;
-  width: 140px;
-  display: inline-block;
-  text-align: left;
-  border: none;
-  resize: none;
-  height: 14px;
-  outline: none;
-  overflow: hidden;
-  background:#ddd;
-  margin-right:10px;
-}
-
 
 /* Search Pannel */
 #search-pannel {
@@ -800,23 +786,6 @@ p code {
 
 #search-pannel .nav:hover {
   opacity: 0.5;
-}
-
-#search-pannel textarea {
-  color: #888;
-  font-size: 11px;
-  font-weight: bold;
-  width: 140px;
-  display: inline-block;
-  text-align: left;
-  border: none;
-  resize: none;
-  height: 14px;
-  outline: none;
-  overflow: hidden;
-  background:#efefef8c;
-  margin-right:10px;
-  padding-left:10px;
 }
 
 #list-type {
@@ -852,7 +821,6 @@ p code {
 #search-pannel textarea {
   color: #888;
   font-size: 11px;
-  font-weight: bold;
   width: 140px;
   display: inline-block;
   text-align: left;
@@ -861,10 +829,15 @@ p code {
   height: 14px;
   outline: none;
   overflow: hidden;
-  background:#efefef8c;
+  background:#ff950073;
+  border-radius:3px;
+  font-family: calibri;
+  color: #333;
   margin-right:10px;
   padding-left:10px;
 }
+
+
 
 #list-type {
     position: fixed;

@@ -98,11 +98,6 @@ async function init() {
 	gh.getUserInfo(false);
 }
 
-//i18n function
-function gm(str){
-	return chrome.i18n.getMessage(str);
-}
-
 init();
 
 

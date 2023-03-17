@@ -1,5 +1,9 @@
 //Control Main windows' action
 /* Icon Click Action */
+//i18n function
+function gm(str){
+	return chrome.i18n.getMessage(str);
+}
 
 // Create
 $('.img#create').confirmOn({

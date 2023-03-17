@@ -81,7 +81,7 @@ async function listPop(toggle) {
     //Search Area!
     $('.frame-pop').append("<div id='list-type'></div>");
     $('.frame-pop').append("<div  id='search-pannel'></div>");
-    $('#search-pannel').append("<textarea id='txt-search' οnfοcus='this.select()' οnmοuseοver='this.focus()'></textarea>");
+    $('#search-pannel').append("<textarea id='txt-search' οnfοcus='this.select()' οnmοuseοver='this.focus()' spellcheck=false></textarea>");
     $('#search-pannel').append("<span class='nav icon-search' id='search' title='Search Blog'></span>");
     $('#txt-search').val(searchStr);
 
@@ -103,7 +103,8 @@ async function listPop(toggle) {
 
     $('#search').click(function () {
       $('.frame-pop .ajax-loader').show();
-      chrome.storage.local.set({ searchStr: $('#txt-search').val() }, function (result) {
+      searchStr = $('#txt-search').val();
+      chrome.storage.local.set({ searchStr: searchStr}, function (result) {
         getPostList(getPostDetails, type = 'search'); //Compare with processList, getPostList will refresh the full post list from github
       });
     });
@@ -308,9 +309,9 @@ function refreshPostList() {
       $('#plist-table').data('curind', $(this).data('index'));
     });
     $('td.title').confirmOn({
-      questionText: 'Local Post Will Be Overrided by This One, Is It OK?',
-      textYes: 'Yes, I\'m sure',
-      textNo: 'No, I\'m not sure'
+      questionText: gm('emptyblog'),
+      textYes: gm('yes'),
+      textNo:gm('cancel') 
     }, 'click', function (e, confirmed) {
       if (confirmed)
         loadText($('#plist-table').data('curind'));
