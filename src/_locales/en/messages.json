@@ -1,0 +1,126 @@
+{
+    "extName": {
+        "message": "Github Jekyll Editor",
+        "description": "Extension Name"
+    },
+    "extDes": {
+        "message": "To support writing, editing and managing the github.io based Jekyll Blog, with Markdown Previewer.",
+        "description": "Extension Description"
+    },
+    "ListRecent": {
+        "message": "Blog List",
+        "description": "ListPost"
+    },
+    "ConfigMeta": {
+        "message": "Blog Configuration",
+        "description": "ConfigMeta"
+    },
+    "switchDay": {
+        "message": "Day/Night Mode",
+        "description": "Switch Day Night"
+    },
+    "CreatePost": {
+        "message": "Create Post",
+        "description": "Create Post"
+    },
+    "ConfigToken": {
+        "message": "Configure Token",
+        "description": "ConfigToken"
+    },
+    "TokenSet": {
+        "message": "Enter Token",
+        "description": "tokenSet"
+    },
+    "clearToken": {
+        "message": "Clear Token",
+        "description": "Clear Token"
+    },
+    "saveToken": {
+        "message": "Save Token",
+        "description": "Save Token"
+    },
+    "postUpdated": {
+        "message": "Post updated successfully!",
+        "description": "Update Post Done"
+    },
+    "postCreated": {
+        "message": "Post created successfully!",
+        "description": "Create Post Done"
+    },
+    "postDeleted": {
+        "message": "Post deleted successfully!",
+        "description": "Delete Post Done"
+    },
+    "loginDone": {
+        "message": "Login successful!",
+        "description": "Login Done"
+    },
+    "loginFail": {
+        "message": "Login failed, invalid token or not set properly. Please verify!",
+        "description": "Login Failed"
+    },
+    "ErrVerion": {
+        "message": "Version conflict, please reload the post!",
+        "description": "Version Conflicted"
+    },
+    "ErrGeneral": {
+        "message": "An error occurred, please check again!",
+        "description": "General Error"
+    },
+    "Title": {
+        "message": "Title",
+        "description": "Title"
+    },
+    "Slug": {
+        "message": "Slug",
+        "description": "Slug"
+    },
+    "Category": {
+        "message": "Category",
+        "description": "Category"
+    },
+    "Tags": {
+        "message": "Tags",
+        "description": "Tags"
+    },
+    "Date": {
+        "message": "Date",
+        "description": "Date"
+    },
+    "Info": {
+        "message": "Information",
+        "description": "Info"
+    },
+    "Comment": {
+        "message": "Comment",
+        "description": "Comment"
+    },
+    "Published": {
+        "message": "Publish",
+        "description": "Published"
+    },
+    "Update": {
+        "message": "Update",
+        "description": "Update"
+    },
+    "tokenHelp": {
+        "message": "Before you begin, please apply for a token on Github (with read/write access to this repo) <br> <br> For more details and help, please refer to <a href='https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token'>Github's official documentation about tokens.</a>",
+        "description": "ConfigHelp"
+    },
+    "emptyblog": {
+        "message": "Local Post Will Be Emptied , Is It OK?",
+        "description": "Blog Empitied"
+    },
+    "yes": {
+        "message": "Yes, sure",
+        "description": "Yes"
+    },
+    "cancel": {
+        "message": "No, Thanks",
+        "description": "cancel"
+    },
+    "blogName": {
+        "message": "Blog: ",
+        "description": "Blog Owner"
+    }
+}
