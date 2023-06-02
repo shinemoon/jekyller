@@ -1,10 +1,10 @@
 # Jekyller
 ## Intro
 
-Jekyl Tool supported in Chromium Based Browser (e.g. MS Edge/etc.), [with google webstore address][1]/[with MS Store address][2]. Hope to :
+Jekyl Tool supported in MS Edge, [with MS Store address][2] (*Note: Update in Chromium Webstore now is stopped [with google webstore address][1]*). Hope to :
 
 1. Support Markdown Editor focusing on Jekyl (hosted in Github.io);
-2. Support list recent posts, edit recent post, publish post, delete post, etc.;
+2. Support list posts, edit post, publish post, delete post, etc.;
 3. Support 'cloud' feature with sync API .
 
 And, some key reuse inputs:
@@ -21,13 +21,20 @@ Several highlight points:
 - For security concern, removed the key.pem file from folder, so, if anyone fork and want to do own development for chrome app, you need to generate the pem file by yourself and use it for publishing (without it, you can't get fixed key for the Github API access);
 - Some critical changed on Meltdown code to support cross domain picture display;
 
-And also , from June 2020, new update will mainly start from Edge Browser Store, and for Chrome Webstore, I will try to push major update only.
+And also , from Mar 2022, new update will only in Edge Browser Store, and for Chrome Webstore, maintenance stopped.
 
 [1]: https://chrome.google.com/webstore/detail/jekyller/lgdhgkhhglmhiacjecigalebiffjklec
 [2]: https://microsoftedge.microsoft.com/addons/detail/jekyller-blog-editor/blogcklanlfjglneidejdabdljnoohlc?hl=zh-CN
 
 
 ## History
++ 3.0:		Major Update:
+  *	Authorization approach updated from Oauth2 to Github Token;
+  * UI refinement;
+  * Extend the post list from recent 6 to all posts by pagination;
+  * Update the fetch logic from sync to async which can ensure the right order of the blog list;
+  * Add search function (but not so good for non-Latin as github search API can only recoganize 'full word' ,so in other language e.g. Chinese, Japanese, please well use 'tag' to sort your blog, which can ensure and help searching greatly)
+  * Multiple language support added by i18n , now English/Chinese supported.
 
 
 + 1.03:		Adjust the permission , remove unlimitedstorage, assuming we will not take >5MB content
