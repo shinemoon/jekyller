@@ -27,6 +27,10 @@ Several highlight points:
 
 
 ## History
++ 3.1:	
+  * update the markdown parser from Meltdown-default (js-markdown-extra.js) to [marked](https://marked.js.org/);
+  * rendor refinement
+
 + 3.0:		Major Update:
   *	Authorization approach updated from Oauth2 to Github Token;
   * UI refinement;

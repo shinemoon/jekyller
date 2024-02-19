@@ -3,7 +3,8 @@ var ehdl = $('#meltdowneditor').meltdown({
 	openPreview: true,
 	fullscreen: true,
 	sidebyside: true,
-	previewHeight: "auto"
+	previewHeight: "auto",
+	parser:window.marked.parse
 });
 
 var curpostLocal;
