@@ -9,9 +9,9 @@
 var user_info;	//git user info
 var gh;					//git handler
 
-var handleClick = function(){
+var handleClick = function () {
     chrome.tabs.create({
-        url:'index.html'
+        url: 'index.html'
     });
 };
 

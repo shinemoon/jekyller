@@ -85,7 +85,7 @@ function Markdown_Parser() {
     this.document_gamut = [
         // Strip link definitions, store in hashes.
         ['stripLinkDefinitions', 20],
-        ['runBasicBlockGamut',   30]
+        ['runBasicBlockGamut', 30]
     ];
 
     // These are all the transformations that form block-level

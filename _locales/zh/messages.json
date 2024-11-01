@@ -60,8 +60,8 @@
         "description": "Login Failed"
     },
     "ErrVerion": {
-        "message": "版本冲突，请重新加载文章!",
-        "description": "Version Conflicted"
+        "message": "版本冲突，请复制保存内容后，重新加载文章!",
+        "description": "Version Conflicted, Please reload the post (after copy your content)"
     },
     "ErrGeneral": {
         "message": "发生错误，请重新检查!",
