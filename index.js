@@ -1,33 +1,5 @@
 var user_info = null;
 
-// 初始化 Ace 编辑器
-const editor = ace.edit("editor");
-editor.setTheme("ace/theme/monokai");
-editor.session.setMode("ace/mode/markdown");  // 设置为 Markdown 模式
-// 切换到 Vim 模式
-editor.setKeyboardHandler("ace/keyboard/vim");
-
-editor.setOptions({
-	fontSize: "14px",
-	showPrintMargin: false,
-	wrap: true  // 自动换行，便于 Markdown 编辑
-});
-
-// 获取预览容器
-const preview = document.getElementById("preview");
-
-// 渲染 Markdown 内容为 HTML
-function updatePreview() {
-	const markdownContent = editor.getValue();          // 获取 Markdown 内容
-	preview.innerHTML = marked.parse(markdownContent);  // 渲染 Markdown 为 HTML
-}
-
-// 初始内容渲染
-updatePreview();
-
-// 内容更改事件监听
-editor.getSession().on('change', updatePreview); // 当编辑器内容变化时更新预览
-
 var curpostLocal;
 
 var picCacheList = {};
@@ -80,6 +52,36 @@ Array.prototype.remove = function (from, to) {
 var fontpath = chrome.runtime.getURL('assets');
 var fontstr = "@font-face {font-family: 'Kesong';src: url('" + fontpath + "/font.otf') format('truetype');}";
 $('body').append('<style>' + fontstr + '</style>');
+
+
+
+// 初始化 Ace 编辑器
+const editor = ace.edit("editor");
+editor.setTheme("ace/theme/dawn");
+editor.session.setMode("ace/mode/markdown");  // 设置为 Markdown 模式
+// 切换到 Vim 模式
+editor.setKeyboardHandler("ace/keyboard/vim");
+
+editor.setOptions({
+	fontSize: "12px",
+	showPrintMargin: false,
+	wrap: true  // 自动换行，便于 Markdown 编辑
+});
+
+// 获取预览容器
+const preview = document.getElementById("preview");
+
+// 渲染 Markdown 内容为 HTML
+function updatePreview() {
+	const markdownContent = editor.getValue();          // 获取 Markdown 内容
+	preview.innerHTML = marked.parse(markdownContent);  // 渲染 Markdown 为 HTML
+}
+// 初始内容渲染
+updatePreview();
+
+// 内容更改事件监听
+editor.getSession().on('change', updatePreview); // 当编辑器内容变化时更新预览
+
 
 /* Initialization to check the token! */
 /* Utils for timer */

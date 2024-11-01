@@ -108,7 +108,8 @@ function storePost(cb) {
 		curpost['slug'] = $('.content.slug input').val();
 	}
 
-	curpost['content'] = $('#editor').val();
+//	curpost['content'] = $('#editor').val();
+	curpost['content'] = editor.getValue();
 
 	//-> fill meta
 	chrome.storage.local.set({ 'workingpost': curpost }, function () {

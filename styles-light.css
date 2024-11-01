@@ -33,7 +33,7 @@ body {
   text-align: left;
   font-size: 16px;
   background: #dad8d8;
-  padding-top: 4px;
+  padding-top: 1px;
   padding-left: 20px;
   padding-bottom: 10px;
   border-left: 4px solid #ff9500;
@@ -774,21 +774,28 @@ p code {
 }
 
 #container {
-  display:flex;
+  display: flex;
 }
 
 #editor,
 #preview {
   width: 50%;
+  margin-top: 10px;
   /* 各占一半宽度 */
-  height: 100vh;
+  height: 90vh;
   /* 高度占满视口高度 */
   overflow-y: auto;
   /* 允许垂直滚动 */
 }
 
+#editor {
+  padding-top: 40px;
+}
+
 /* 可选：为预览器添加一些内边距 */
 #preview {
   padding: 20px;
+  padding-top: 50px;
   box-sizing: border-box;
 }
+

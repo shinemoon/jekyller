@@ -3,6 +3,7 @@ function loadPost(content) {
 	//reconstruct the code;
 	var str = '';
 	editor.setValue(content);
+	updatePreview();
 	$('.frame-pop').remove();
 	$('.frame-mask').remove();
 	$('.frame-icon.focus').removeClass('focus');
