@@ -83,8 +83,7 @@ function bindListAction() {
 }
 
 // Store the blog by key hit
-//$('.meltdown_editor-deco').keyup(function () {
-$('body #meltdowneditor').keyup(function () {
+$('body #editor').keyup(function () {
 	storePost();
 })
 
@@ -109,7 +108,7 @@ function storePost(cb) {
 		curpost['slug'] = $('.content.slug input').val();
 	}
 
-	curpost['content'] = $('#meltdowneditor').val();
+	curpost['content'] = $('#editor').val();
 
 	//-> fill meta
 	chrome.storage.local.set({ 'workingpost': curpost }, function () {

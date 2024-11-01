@@ -2,8 +2,7 @@
 function loadPost(content) {
 	//reconstruct the code;
 	var str = '';
-	$('#meltdowneditor').val(content);
-	$('#meltdowneditor').meltdown('update');
+	editor.setValue(content);
 	$('.frame-pop').remove();
 	$('.frame-mask').remove();
 	$('.frame-icon.focus').removeClass('focus');
