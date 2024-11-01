@@ -1,4 +1,4 @@
-let curpost = null;
+curpost = null;
 
 // 弹出元数据编辑框 Meta Pop-up
 function metaPop(toggle) {

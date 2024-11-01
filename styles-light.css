@@ -4,8 +4,21 @@
 
 body {
   margin: 0;
-  background: #eae8e8;
+  background: white;
   overflow-y: hidden;
+}
+body .tooltip {
+  position: fixed;
+  right: 400px;
+  top: 0px;
+  background: rgba(234, 232, 232, 0.2862745098);
+  opacity: 0.8;
+  border-left: 2px solid rgba(255, 149, 0, 0.5607843137);
+  text-align: left;
+  z-index: 1002;
+  width: 120px;
+  padding: 5px 0px 5px 10px;
+  color: #666;
 }
 body #user_info {
   font-size: 10px;
@@ -14,7 +27,7 @@ body #user_info {
   font-weight: normal;
   font-family: "Georgia", "Arial", "Kesong", "PingFang SC", "Microsoft YaHei", sans-serif;
   position: fixed;
-  bottom: 6px;
+  top: 6px;
 }
 body #user_info a {
   color: gray;
@@ -35,11 +48,11 @@ body #user_info .ajax-loader img {
   height: 12px;
   text-align: left;
   font-size: 16px;
-  background: #dad8d8;
+  background: rgba(234, 232, 232, 0.2862745098);
   padding: 1px 20px 10px;
   border-left: 4px solid #ff9500;
   position: fixed;
-  bottom: 0;
+  top: 0;
   right: 0;
   z-index: 1003;
   width: 400px;
@@ -51,7 +64,7 @@ body #user_info .ajax-loader img {
   float: right;
   margin-right: 10px;
   margin-top: 3px;
-  color: white;
+  color: black;
   cursor: pointer;
   -webkit-app-region: no-drag;
 }
@@ -78,7 +91,7 @@ body #user_info .ajax-loader img {
   z-index: 1002;
   position: fixed;
   display: block;
-  border: 2px solid #eae8e8;
+  border: 2px solid rgba(234, 232, 232, 0.2862745098);
   box-shadow: rgba(20, 20, 20, 0.8) 2px 2px 4px;
   border-radius: 10px;
   padding-left: 20px;
@@ -125,7 +138,7 @@ body #user_info .ajax-loader img {
   border-radius: 0;
   color: rgb(111, 107, 107);
   right: 0;
-  top: 0;
+  bottom: 0;
   font-size: 12px;
   opacity: 0.8;
 }
@@ -220,12 +233,35 @@ body #user_info .ajax-loader img {
 #container #preview {
   width: 50%;
   height: 100vh;
-  overflow-y: hidden;
-  padding-top: 40px;
+  margin-top: 28px;
 }
-#container #editor.preview,
-#container #preview.preview {
-  padding: 20px;
-  padding-top: 50px;
-  box-sizing: border-box;
+#container #editor {
+  line-height: 1.6em;
+  margin-bottom: 10px;
+  overflow-y: hidden;
+}
+#container #preview {
+  padding: 0px 28px 15px 20px;
+  line-height: 1.6em;
+  font-size: 1.4em;
+  color: #45505a;
+  font-family: Kesong, Arial, Helvetica, sans-serif;
+  overflow-y: auto;
+  background: rgba(234, 232, 232, 0.2862745098);
+  border-left: 8px solid white;
+}
+
+.posttitle {
+  text-align: right;
+  padding-right: 30px;
+  font-size: 18px;
+  padding: 4px 20px;
+  font-family: "KESONG";
+  border-right: 2px solid #ff9500;
+  width: auto;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  background: rgba(234, 232, 232, 0.2862745098);
+  box-shadow: rgba(20, 20, 20, 0.8) 2px -2px 4px;
 }/*# sourceMappingURL=styles-light.css.map */

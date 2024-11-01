@@ -98,9 +98,10 @@ editor.setTheme("ace/theme/tomorrow");
 editor.session.setMode("ace/mode/markdown");
 editor.setKeyboardHandler("ace/keyboard/vim");
 editor.setOptions({
-    fontSize: "12px",
+    fontSize: "14px",
     showPrintMargin: false,
-    wrap: true
+    wrap:true,
+    wrapMethod:"text",
 });
 
 // ==========================
@@ -126,8 +127,8 @@ editor.getSession().on('change', updatePreview);
  * 动态调整编辑器和预览区域高度 Dynamically adjust the height of the editor and preview area
  */
 function setDivHeight() {
-    document.getElementById("editor").style.height = `${window.innerHeight - 100}px`;
-    document.getElementById("preview").style.height = `${window.innerHeight - 100}px`;
+    document.getElementById("editor").style.height = `${window.innerHeight - 40}px`;
+    document.getElementById("preview").style.height = `${window.innerHeight - 50}px`;
 }
 
 // 初次调用和窗口调整事件监听 Initial call and listen for window resize event

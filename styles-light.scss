@@ -1,12 +1,15 @@
 // Define color variables
 $highlight-dark: #c0360c;
 $highlight-light: #ff9500;
+$highlight-light-opacity: #ff95008f;
 $color-dark: #dfdfdf;
 $color-light: #333333;
 $bg-dark: #424f5a;
-$bg-light: #eae8e8;
+$bg-light: #eae8e849;
 $titlebar-dark: #343f48;
 $titlebar-light: #dad8d8;
+
+$fg-dark: #45505a;
 
 // Scrollbar styling
 ::-webkit-scrollbar {
@@ -16,8 +19,24 @@ $titlebar-light: #dad8d8;
 // Base styles
 body {
   margin: 0;
-  background: $bg-light;
+  //background: $bg-light;
+  background: white;
   overflow-y: hidden;
+
+  //Tool tip
+  .tooltip {
+    position: fixed;
+    right: 400px;
+    top: 0px;
+    background: $bg-light;
+    opacity: 0.8;
+    border-left: 2px solid $highlight-light-opacity;
+    text-align: left;
+    z-index: 1002;
+    width: 120px;
+    padding: 5px 0px 5px 10px;
+    color: #666;
+  }
 
   #user_info {
     font-size: 10px;
@@ -26,7 +45,8 @@ body {
     font-weight: normal;
     font-family: "Georgia", "Arial", "Kesong", "PingFang SC", "Microsoft YaHei", sans-serif;
     position: fixed;
-    bottom: 6px;
+    top: 6px;
+
 
     a {
       color: gray;
@@ -54,11 +74,11 @@ body {
   height: 12px;
   text-align: left;
   font-size: 16px;
-  background: $titlebar-light;
+  background: $bg-light;
   padding: 1px 20px 10px;
   border-left: 4px solid $highlight-light;
   position: fixed;
-  bottom: 0;
+  top: 0;
   right: 0;
   z-index: 1003;
   width: 400px;
@@ -70,7 +90,7 @@ body {
     float: right;
     margin-right: 10px;
     margin-top: 3px;
-    color: white;
+    color: black;
     cursor: pointer;
     -webkit-app-region: no-drag;
 
@@ -152,7 +172,7 @@ body {
   border-radius: 0;
   color: rgb(111, 107, 107);
   right: 0;
-  top: 0;
+  bottom: 0;
   font-size: 12px;
   opacity: 0.8;
 
@@ -261,16 +281,40 @@ body {
   #preview {
     width: 50%;
     height: 100vh;
+    margin-top: 28px;
+  }
+
+  #editor {
+    line-height: 1.6em;
+    margin-bottom: 10px;
     overflow-y: hidden;
+  }
 
-    padding-top: 40px;
-
-    &.preview {
-      padding: 20px;
-      padding-top: 50px;
-      box-sizing: border-box;
-    }
+  #preview {
+    padding: 0px 28px 15px 20px;
+    line-height: 1.6em;
+    font-size: 1.4em;
+    color: $fg-dark;
+    font-family: Kesong, Arial, Helvetica, sans-serif;
+    overflow-y: auto;
+    background: $bg-light;
+    border-left: 8px solid white;
   }
 }
 
+
 // Other components and utility styles...
+.posttitle {
+  text-align: right;
+  padding-right: 30px;
+  font-size: 18px;
+  padding: 4px 20px;
+  font-family: 'KESONG';
+  border-right: 2px solid $highlight-light;
+  width: auto;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  background: $bg-light;
+  box-shadow: rgba(20, 20, 20, 0.8) 2px -2px 4px;
+}
