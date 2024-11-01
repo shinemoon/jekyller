@@ -1,71 +1,72 @@
-//-> Claud Modified for jekyller Need
-/* Please replace with your own private Token */
+/* Claud 修改以支持 Jekyller Claud Modified for Jekyller support */
+/* 请使用您自己的私有令牌 Replace with your own private token */
 var gh = null;
-
 
 gh = (function () {
   'use strict';
-  var revoke_button;
-  var user_info_div;
+
+  // 声明全局变量 Declare global variables
+  var revoke_button, user_info_div;
   var access_token = null;
 
+  // 用于发送带有数据的授权请求 Send an authenticated request with data
   function xhrWithDataAuth(method, url, data, callback) {
-    var retry = true;
-    requestStart();
+    let retry = true;
+    startRequest();
 
-    function requestStart() {
-      var xhr = new XMLHttpRequest();
+    function startRequest() {
+      const xhr = new XMLHttpRequest();
       xhr.open(method, url);
       xhr.setRequestHeader('Authorization', 'Bearer ' + access_token);
-      xhr.onload = requestComplete;
+      xhr.onload = completeRequest;
       xhr.send(data);
     }
 
-    function requestComplete() {
-      //console.log('requestComplete', this.status, this.response);
+    function completeRequest() {
+      // 处理请求响应 Handle request response
       if ((this.status < 200 || this.status >= 300) && retry) {
-        retry = false;
+        retry = false; // 重试一次 Retry once
       } else {
         callback(null, this.status, this.response);
       }
     }
   }
 
-
+  // 无数据的授权请求发送函数 Authenticated request without data
   function xhrWithAuth(method, url, interactive, callback, failedCallback) {
-    var retry = true;
-    requestStart();
+    let retry = true;
+    startRequest();
 
-    function requestStart() {
-      var xhr = new XMLHttpRequest();
+    function startRequest() {
+      const xhr = new XMLHttpRequest();
       xhr.open(method, url);
       xhr.setRequestHeader('Authorization', 'Bearer ' + access_token);
       xhr.setRequestHeader('Accept', 'application/vnd.github.text-match+json');
-      xhr.onload = requestComplete;
+      xhr.onload = completeRequest;
       xhr.send();
     }
 
-    function requestComplete() {
+    function completeRequest() {
+      // 检查请求状态并调用相应回调函数 Check request status and invoke appropriate callback
       if ((this.status < 200 || this.status >= 300) && retry) {
         retry = false;
       } else {
         callback(null, this.status, this.response);
       }
-      //console.log('requestComplete', this.status, this.response);
+
+      // 若请求失败，则调用失败回调 If request fails, call failed callback
       if (this.status != 200) {
         failedCallback(null, this.status, this.response);
       }
     }
   }
 
+  // 获取用户信息 Fetch user info
   function getUserInfo(interactive) {
-    xhrWithAuth('GET',
-      'https://api.github.com/user',
-      interactive,
-      onUserInfoFetched, onLogInFailed);
+    xhrWithAuth('GET', 'https://api.github.com/user', interactive, onUserInfoFetched, onLogInFailed);
   }
 
-  // Functions updating the User Interface:
+  // 更新用户界面元素函数 Functions to update UI elements
   function showButton(button) {
     button.style.display = 'inline';
     button.disabled = false;
@@ -79,80 +80,67 @@ gh = (function () {
     button.disabled = true;
   }
 
-    function onUserInfoFetched(error, status, response) {
-      if (!error && status == 200) {
-        //console.log("Got the following user info: " + response);
-        user_info = JSON.parse(response);
-        populateUserInfo(user_info);
-        showButton(revoke_button);
-        logInfo(gm("loginDone"));
-      } else {
-        // If failed
-      }
+  // 成功获取用户信息后调用 Called upon successful user info fetch
+  function onUserInfoFetched(error, status, response) {
+    if (!error && status == 200) {
+      user_info = JSON.parse(response);
+      populateUserInfo(user_info);
+      showButton(revoke_button);
+      logInfo(gm("loginDone"));
     }
-    function onLogInFailed(error, status, response) {
-      logError('loginFail');
-      tokenPop(false);
-    }
+  }
 
+  // 登录失败处理函数 Login failure handler
+  function onLogInFailed(error, status, response) {
+    logError('loginFail');
+    tokenPop(false);
+  }
+
+  // 填充用户信息到界面 Populate user info into the UI
   function populateUserInfo(user_info) {
     var elem = user_info_div;
     var nameElem = document.createElement('div');
-    //console.info(user_info);
-    nameElem.innerHTML = gm("blogname")+" <a href='http://" + user_info.login + ".github.io' target=_blank>" + user_info.login + "</a>";
+    nameElem.innerHTML = gm("blogname") + " <a href='http://" + user_info.login + ".github.io' target=_blank>" + user_info.login + "</a>";
     elem.innerHTML = nameElem.innerHTML;
   }
 
+  // 获取用户的所有仓库 Fetch user repositories
   function fetchUserRepos(repoUrl) {
     xhrWithAuth('GET', repoUrl, false, onUserReposFetched, onLogInFailed);
   }
 
-  // Jekyller - start
-  // => Oboseleted: as if it's>1000 post, this then can't support well.
+  // 获取博文列表 (不推荐) Fetch post list (Deprecated)
   function fetchPostList(user, cb) {
-    xhrWithAuth('GET',
-      'https://api.github.com/repos/' + user + '/' + user + '.github.io/contents/_posts',
-      true,
-      cb, onLogInFailed);
+    xhrWithAuth('GET', 'https://api.github.com/repos/' + user + '/' + user + '.github.io/contents/_posts', true, cb, onLogInFailed);
   }
 
-  //-> Get the Post Folder Tree
+  // 获取博文目录树 Fetch post folder tree
   function fetchPostListTree(user, cb) {
-    xhrWithAuth('GET',
-      'https://api.github.com/repos/' + user + '/' + user + '.github.io/git/trees/HEAD:_posts',
-      true,
-      cb, onLogInFailed);
+    xhrWithAuth('GET', 'https://api.github.com/repos/' + user + '/' + user + '.github.io/git/trees/HEAD:_posts', true, cb, onLogInFailed);
   }
 
-  // -> Search code
+  // 搜索特定博文 Search for specific post
   function searchPost(user, qstr, cb) {
-    var queryString = 'q=' + encodeURIComponent(qstr+' repo:'+user + '/' + user + '.github.io path:_posts extension:md');
-    xhrWithAuth('GET',
-      'https://api.github.com/search/code?' + queryString,
-      true,
-      cb, onLogInFailed);
+    var queryString = 'q=' + encodeURIComponent(qstr + ' repo:' + user + '/' + user + '.github.io path:_posts extension:md');
+    xhrWithAuth('GET', 'https://api.github.com/search/code?' + queryString, true, cb, onLogInFailed);
   }
 
-  // Jekyller - end
-
-
-
-
+  // 用户仓库请求处理函数 User repository fetch handler
   function onUserReposFetched(error, status, response) {
-    //console.log(response);
+    // 可在此处处理仓库信息 Handle repository info here
   }
 
-  // Handlers for the buttons's onclick events.
+  // 交互式登录函数 Interactive sign-in function (placeholder)
+  function interactiveSignIn() {}
 
-  function interactiveSignIn() {
-  }
-
+  // 获取内容的主要函数 Primary function to fetch content
   function fetchContent(ulink, cb) {
     xhrWithAuth("GET", "https://api.github.com/repos/" + user_info.login + "/" + user_info.login + ".github.io/contents/" + ulink, true, function (e, s, r) {
       cb(e, s, r);
     }, onLogInFailed);
   }
 
+  // 使用 Promise 异步获取内容 Asynchronous content fetch with Promise
   async function getContentAsync(url) {
     return new Promise(function (resolve, reject) {
       fetchContent(url, function (e, s, r) {
@@ -172,12 +160,14 @@ gh = (function () {
     });
   }
 
+  // 公开的 API 方法 Public API methods
   return {
     transparentXhr: function (method, url, cb) {
       xhrWithAuth(method, url, true, function (e, s, r) {
         cb(e, s, r);
       });
     },
+
     updateContent: function (ulink, content, sha, cb) {
       var data = {
         message: 'update from Jekyller',
@@ -187,10 +177,7 @@ gh = (function () {
       if (sha == '') {
         delete (data.sha);
       }
-      var sdata = JSON.stringify(data);
-      xhrWithDataAuth("PUT", "https://api.github.com/repos/" + user_info.login + "/" + user_info.login + ".github.io/contents/" + ulink, sdata, function (e, s, r) {
-        cb(e, s, r);
-      });
+      xhrWithDataAuth("PUT", "https://api.github.com/repos/" + user_info.login + "/" + user_info.login + ".github.io/contents/" + ulink, JSON.stringify(data), cb);
     },
 
     deleteContent: function (ulink, sha, cb) {
@@ -198,14 +185,13 @@ gh = (function () {
         message: 'update from Jekyller',
         sha: sha
       };
-      var sdata = JSON.stringify(data);
-      xhrWithDataAuth("DELETE", "https://api.github.com/repos/" + user_info.login + "/" + user_info.login + ".github.io/contents/" + ulink, sdata, function (e, s, r) {
-        cb(e, s, r);
-      });
+      xhrWithDataAuth("DELETE", "https://api.github.com/repos/" + user_info.login + "/" + user_info.login + ".github.io/contents/" + ulink, JSON.stringify(data), cb);
     },
+
     getContentAsync: function (url) {
       return getContentAsync(url);
     },
+
     fetchPostList: function (user, cb) {
       return fetchPostList(user, cb);
     },
@@ -213,38 +199,33 @@ gh = (function () {
     fetchPostListTree: function (user, cb) {
       return fetchPostListTree(user, cb);
     },
-    searchPost: function (user,qstr, cb) {
-      return searchPost(user,qstr, cb);
+
+    searchPost: function (user, qstr, cb) {
+      return searchPost(user, qstr, cb);
     },
-    /* The one to gate the login*/
+
     getUserInfo: function (type) {
       return getUserInfo(type);
     },
 
-    // Function for issue
     onLogInFailed: function () {
       return onLogInFailed();
     },
 
-      // Got token
-      access_token: function (token=null) {
-        if(token!=null) 
-          access_token = token;
-        return access_token;
-      },
+    access_token: function (token = null) {
+      if (token != null) access_token = token;
+      return access_token;
+    },
 
     onload: function () {
       revoke_button = document.querySelector('#token');
       user_info_div = document.querySelector('#user_info');
       chrome.storage.local.get("ltoken", function (obj) {
-        if (typeof (obj.ltoken) != 'undefined') {
-          access_token = obj.ltoken;
-        } else {
-          access_token = '';
-        }
+        access_token = obj.ltoken || '';
       });
-
     }
   };
 })();
+
+// 加载时执行 onload Executes on window load
 window.onload = gh.onload;

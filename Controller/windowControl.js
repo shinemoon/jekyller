@@ -1,162 +1,176 @@
-//Control Main windows' action
-/* Icon Click Action */
-//i18n function
-function gm(str){
-	return chrome.i18n.getMessage(str);
+// 控制主窗口的操作 Control Main Window Actions
+
+// ==========================
+// i18n 多语言翻译功能 i18n Translation Function
+// ==========================
+function gm(str) {
+    return chrome.i18n.getMessage(str);
 }
 
-// Create
+// ==========================
+// 主要操作绑定 Primary Action Bindings
+// ==========================
+
+// 创建新帖子 Create New Post
 $('.img#create').confirmOn({
-	questionText: gm('emptyblog'),
-	textYes: gm('yes'),
-	textNo:gm('cancel') 
-}, 'click', function (e, confirmed) {
-	if (confirmed)
-		createNewPost();
-})
-
-// Meta
-$('.img#meta').click(function () {
-	$('.focus').removeClass('focus');
-	metaPop(true);
+    questionText: gm('emptyblog'),
+    textYes: gm('yes'),
+    textNo: gm('cancel')
+}, 'click', (e, confirmed) => {
+    if (confirmed) createNewPost();
 });
 
-// List
-$('.img#list').click(function () {
-	if (user_info!= null) {
-		$('.focus').removeClass('focus');
-		listPop(true);
-	}
+// 显示 Meta 信息 Show Meta Information
+$('.img#meta').click(() => {
+    $('.focus').removeClass('focus');
+    metaPop(true);
 });
 
-// Skin
-$('.img#skin').click(function () {
-	$('.focus').removeClass('focus');
-	switchSkin();
+// 显示帖子列表 Show Post List
+$('.img#list').click(() => {
+    if (user_info != null) {
+        $('.focus').removeClass('focus');
+        listPop(true);
+    }
 });
 
-// Token
-$('.img#token').click(function () {
-	$('.focus').removeClass('focus');
-	tokenPop(true);
+// 切换主题皮肤 Switch Theme Skin
+$('.img#skin').click(() => {
+    $('.focus').removeClass('focus');
+    switchSkin();
 });
 
+// 令牌操作 Token Action
+$('.img#token').click(() => {
+    $('.focus').removeClass('focus');
+    tokenPop(true);
+});
 
-// Tip-Hint Relevant
+// ==========================
+// 提示操作 Tooltip Actions
+// ==========================
+
+// 显示和隐藏操作图标提示 Show/Hide Tooltip for Icons
 $('.frame-icon.op').mouseenter(function () {
-	$('.tooltiptext').text(gm($(this).attr('val')));
-	$('.tooltip').fadeIn(100);
+    $('.tooltiptext').text(gm($(this).attr('val')));
+    $('.tooltip').fadeIn(100);
 });
 $('.frame-icon.op').mouseleave(function () {
-	$('.tooltiptext').text('-');
-	$('.tooltip').fadeOut(100);
+    $('.tooltiptext').text('-');
+    $('.tooltip').fadeOut(100);
 });
 
+// ==========================
+// 弹框和蒙层控制 Pop-up and Overlay Control
+// ==========================
 
-/* Overall action */
-// Function to show -toggle the config frame
+/**
+ * 显示或切换配置框 Toggle Configuration Frame
+ * @param {string} id Frame ID
+ * @param {boolean} toggle 是否切换模式 Whether to Toggle
+ * @param {function} cb 回调函数 Callback Function
+ */
 function popFrame(id, toggle = true, cb) {
-	//- Toggle
-	if (toggle && $('.frame-pop.' + id + ':visible').length > 0) {
-		popClose();
-		return 0;
-	}
+    if (toggle && $(`.frame-pop.${id}:visible`).length > 0) {
+        popClose();
+        return 0;
+    }
 
-	popClose();
-	$('#' + id).addClass('focus');
-	var frame = $('<div class="frame-pop ' + id + '"></div>');
-	var mask = $('<div class="frame-mask"> </div>');
-	$('body').append(frame);
-	$('body').append(mask);
-	cb();
-	bindListAction(); //windowControl
-	$('.frame-mask').show();
-	$('.frame-pop').show();
+    popClose();
+    $(`#${id}`).addClass('focus');
+    const frame = $(`<div class="frame-pop ${id}"></div>`);
+    const mask = $('<div class="frame-mask"></div>');
+    $('body').append(frame, mask);
+    cb();
+    bindListAction();
+    $('.frame-mask').show();
+    $('.frame-pop').show();
 }
 
-/* 1. Close all popping */
-/* 2. click mask then all pop close*/
+// 绑定点击蒙层关闭所有弹窗 Bind Mask Click to Close All Pop-ups
 function bindListAction() {
-	$('.frame-mask').click(function () {
-		popClose();
-	});
+    $('.frame-mask').click(() => popClose());
 }
 
-// Store the blog by key hit
-$('body #editor').keyup(function () {
-	storePost();
-})
+// ==========================
+// 编辑和存储功能 Editing and Storing Functionality
+// ==========================
 
-// Reserve
-$('#user_info').click(function () {
-});
+// 存储博客内容 Save Blog Content
+$('body #editor').keyup(() => storePost());
 
-// Restore the post
+// 恢复博客内容 Restore Post Content
 function storePost(cb) {
-	if ($('.frame-pop.meta:visible').length > 0) {
-		if ($('.content.title input').val() != curpost['title']) {
-			$('.posttitle').text($('.content.title input').val());
-		}
-		//Auto saving
-		curpost['title'] = $('.content.title input').val();
-		curpost['date'] = $('.content.date input').val();
-		curpost['info'] = $('.content.info input').val();
-		curpost['comment'] = $('.content.comment input').val();
-		curpost['tags'] = toArray($('.content.tag input').val());
-		curpost['categories'] = toArray($('.content.cate input').val());
-		curpost['published'] = $('.content.post input').prop('checked');
-		curpost['slug'] = $('.content.slug input').val();
-	}
+    if ($('.frame-pop.meta:visible').length > 0) {
+        if ($('.content.title input').val() !== curpost['title']) {
+            $('.posttitle').text($('.content.title input').val());
+        }
+        
+        // 自动保存元数据 Auto-Saving Metadata
+        Object.assign(curpost, {
+            title: $('.content.title input').val(),
+            date: $('.content.date input').val(),
+            info: $('.content.info input').val(),
+            comment: $('.content.comment input').val(),
+            tags: toArray($('.content.tag input').val()),
+            categories: toArray($('.content.cate input').val()),
+            published: $('.content.post input').prop('checked'),
+            slug: $('.content.slug input').val(),
+            content: editor.getValue()
+        });
+    }
 
-//	curpost['content'] = $('#editor').val();
-	curpost['content'] = editor.getValue();
-
-	//-> fill meta
-	chrome.storage.local.set({ 'workingpost': curpost }, function () {
-		console.log('store');
-		syncLocalPost();
-		if (typeof (cb) != 'undefined') cb();
-	});
+    // 保存到本地存储 Save to Local Storage
+    chrome.storage.local.set({ 'workingpost': curpost }, () => {
+        console.log('store');
+        syncLocalPost();
+        if (typeof cb !== 'undefined') cb();
+    });
 }
 
+// ==========================
+// 信息与错误日志 Display Logs for Info and Errors
+// ==========================
 
-/* Show Info-log */
+/**
+ * 显示信息日志 Show Info Log
+ * @param {string} str 日志信息 Log Message
+ */
 function logInfo(str) {
-	console.info(str);
-	$('.notification').removeClass('info').removeClass('error');
-	$('.notification').text(str).addClass('info');
-	$('.notification').show();
-	setTimeout(function () {
-		$('.notification').text('').hide();
-	}, 2000);
+    console.info(str);
+    $('.notification').removeClass('info error').text(str).addClass('info').show();
+    setTimeout(() => $('.notification').text('').hide(), 2000);
 }
 
+/**
+ * 显示错误日志 Show Error Log
+ * @param {string} str 错误信息 Error Message
+ */
 function logError(str) {
-	console.error(str);
-	$('.notification').removeClass('info').removeClass('error');
-	$('.notification').text(str).addClass('error');
-	$('.notification').show();
-	setTimeout(function () {
-		$('.notification').text('').hide();
-	}, 2000);
+    console.error(str);
+    $('.notification').removeClass('info error').text(str).addClass('error').show();
+    setTimeout(() => $('.notification').text('').hide(), 2000);
 }
 
-/* Close All Popframe - as util*/
+// ==========================
+// 通用操作和关闭弹窗 Utility Functions and Close Pop-ups
+// ==========================
+
+/** 关闭所有弹窗和蒙层 Close All Pop-ups and Mask */
 function popClose() {
-	$('.frame-pop').remove();
-	$('.frame-mask').remove();
-	$('.frame-icon.focus').removeClass('focus');
+    $('.frame-pop, .frame-mask').remove();
+    $('.frame-icon.focus').removeClass('focus');
 }
 
-/* Skin switch */
+// ==========================
+// 切换主题皮肤 Skin Switching
+// ==========================
+
+/** 切换皮肤主题 Toggle Theme Skin */
 function switchSkin() {
-	console.log(skin);
-	if (skin == 'dark')
-		skin = 'light';
-	else
-		skin = 'dark';
-	chrome.storage.local.set({ skin: skin }, function () {
-		$('#stylehdl').remove();
-		$('head').append('<link id="stylehdl" rel="stylesheet"type="text/css"href="styles-' + skin + '.css"/>');
-	});
+    skin = (skin === 'dark') ? 'light' : 'dark';
+    chrome.storage.local.set({ skin }, () => {
+        const theme = (skin === 'dark') ? "ace/theme/tomorrow_night_eighties" : "ace/theme/tomorrow";
+        editor.setTheme(theme);  // 切换主题 Switch Theme
+    });
 }

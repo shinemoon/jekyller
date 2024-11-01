@@ -1,25 +1,61 @@
-var curpost = null;
+let curpost = null;
 
+// 弹出元数据编辑框 Meta Pop-up
 function metaPop(toggle) {
-  popFrame('meta', toggle, function () {
-    //-> Get needed info
-    refreshPostMeta();
-  });
-};
+    popFrame('meta', toggle, refreshPostMeta);
+}
 
+// 刷新并填充帖子元数据 Refresh and Populate Post Metadata
 function refreshPostMeta() {
-  $('#post-table').remove();
-  $('.frame-pop').append('<div id="post-table"><table></table></div>');
-  $('.frame-pop .ajax-loader').hide();
-  $('.frame-pop table tr').remove();
-  //- Title - Post -
-  $('.frame-pop table').append('<tr><td class="title label">' + gm('Title') + '</td><td class="title content"><div>' + '<input placeholder="Post Title"  type="text"/>' + '</div></td></tr><tr><td class="title label">' + gm('Slug') + '</td><td class="slug content"><div>' + '<input placeholder="Post Slug"  type="text"/>' + '</div></td></tr>');
-  $('.frame-pop table').append('<tr><td class="date label">' + gm('Date') + '</td><td class="date content"><div>' + '<input placeholder="YYYY-MM-DD"  type="text"/>' + '</div></td></tr><tr><td class="info label">' + gm('Info') + '</td><td class="info content"> <input placeholder="User Defined Meta" type="text"/>' + '</td></tr>');
-  $('.frame-pop table').append('<tr><td class="tag label">' + gm('Tags') + '</td><td class="tag content"><div>' + '<input placeholder="taga,tagb,etc."  type="text"/>' + '</div></td></tr><tr><td class="cate label">' + gm('Category') + '</td><td class="cate content"> <input placeholder="catetorya,categoryb,etc." type="text"/>' + '</td></tr>');
-  $('.frame-pop table').append('<tr><td class="comment label">' + gm('Comment') + '</td><td class="comment content"><div>' + '<input placeholder="User Defined Meta"  type="text"/>' + '</div></td></tr><tr><td class="post label">' + gm('Published') + '? </td><td class="post content"> <input type="checkbox"/><div class="send">Post</div>' + '</td></tr>');
+    $('#post-table').remove();
+    const $postTable = $('<div id="post-table"><table></table></div>');
+    $('.frame-pop').append($postTable).find('.ajax-loader').hide();
 
-  //-> LoadData
-  if (curpost != null) {
+    const fields = [
+        { label: gm('Title'), class: 'title', type: 'text', placeholder: 'Post Title' },
+        { label: gm('Slug'), class: 'slug', type: 'text', placeholder: 'Post Slug' },
+        { label: gm('Date'), class: 'date', type: 'text', placeholder: 'YYYY-MM-DD' },
+        { label: gm('Info'), class: 'info', type: 'text', placeholder: 'User Defined Meta' },
+        { label: gm('Tags'), class: 'tag', type: 'text', placeholder: 'taga,tagb,etc.' },
+        { label: gm('Category'), class: 'cate', type: 'text', placeholder: 'categorya,categoryb,etc.' },
+        { label: gm('Comment'), class: 'comment', type: 'text', placeholder: 'User Defined Meta' }
+    ];
+
+    fields.forEach(field => {
+        $postTable.find('table').append(`
+            <tr>
+                <td class="${field.class} label">${field.label}</td>
+                <td class="${field.class} content"><input placeholder="${field.placeholder}" type="${field.type}"/></td>
+            </tr>
+        `);
+    });
+
+    $postTable.find('table').append(`
+        <tr>
+            <td class="post label">${gm('Published')}?</td>
+            <td class="post content">
+                <input type="checkbox"/>
+                <div class="send">${gm('Post')}</div>
+            </td>
+        </tr>
+    `);
+
+    loadDataIntoFields();
+    
+    $('.send').on('click', () => {
+        if (user_info) {
+            $('.top-masker').show();
+            storePost(() => {
+                updatePost(() => $('.top-masker').hide());
+            });
+        }
+    });
+}
+
+// 填充数据到字段 Load Data into Fields
+function loadDataIntoFields() {
+    if (!curpost) return;
+
     $('.content.title input').val(curpost.title);
     $('.content.date input').val(curpost.date);
     $('.content.slug input').val(curpost.slug);
@@ -28,43 +64,16 @@ function refreshPostMeta() {
     $('.content.tag input').val(toString(curpost.tags));
     $('.content.cate input').val(toString(curpost.categories));
     $('.content.post input').prop('checked', curpost.published);
-    if (curpost.sha != null || curpost.sha != "") {
-      $('.send').text(gm('Update'));
-    }
-  }
 
-  $('.send').click(function () {
-    if (user_info == null) {
-      return;
-    }
-    $('.top-masker').show();
-    storePost(function () {
-      updatePost(function () {
-        $('.top-masker').hide();
-      });
-    });
-  })
+    $('.send').text(curpost.sha ? gm('Update') : gm('Post'));
 }
 
-
-function toString(inp) {
-  if (typeof (inp) == 'undefined' || inp == null) return "";
-  if (typeof (inp) == 'string') {
-    return inp;
-  } else {
-    var str = '';
-    for (var i = 0; i < inp.length; i++) {
-      str = str + inp[i];
-      if (i < inp.length - 1)
-        str = str + ',';
-    }
-    return str;
-  }
+// 转换数组为字符串 Convert Array to String
+function toString(input) {
+    return Array.isArray(input) ? input.join(',') : (input || '');
 }
 
-function toArray(inp) {
-  if (typeof (inp) == 'undefined' || inp == null) return "";
-  if (typeof (inp) == 'string') {
-    return inp.split(',');
-  }
+// 转换字符串为数组 Convert String to Array
+function toArray(input) {
+    return input ? input.split(',') : [];
 }

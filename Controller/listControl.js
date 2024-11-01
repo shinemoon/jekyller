@@ -1,25 +1,17 @@
-/* Element & Parameters */
-var listCnt = 6;
-var plist = null;
-var clist = [];
-var slist = []; // Search
-var curpost = null;
-var curpage = 0;
-var totalpage = 1;
-var searchStr = '';
+/* Element & Parameters 元素和参数 */
+var listCnt = 6; // 每页显示的项目数量 Number of items per page
+var plist = null; // 用于存储博客列表的主列表 Primary list for storing blog posts
+var clist = []; // 当前显示的博客项目列表 List of current blog posts displayed
+var slist = []; // 搜索结果列表 List for search results
+var curpost = null; // 当前显示的博客文章 Current blog post being displayed
+var curpage = 0; // 当前页码 Current page number
+var totalpage = 1; // 总页数 Total number of pages
+var searchStr = ''; // 当前搜索的字符串 Current search string
 
-
+// 日期操作的工具对象 Utility object for date operations
 var dates = {
+  // 将不同格式的输入转换为日期对象 Converts various formats into a date object
   convert: function (d) {
-    // Converts the date in d to a date-object. The input can be:
-    //   a date object: returned without modification
-    //  an array      : Interpreted as [year,month,day]. NOTE: month is 0-11.
-    //   a number     : Interpreted as number of milliseconds
-    //                  since 1 Jan 1970 (a timestamp) 
-    //   a string     : Any format supported by the javascript engine, like
-    //                  "YYYY/MM/DD", "MM/DD/YYYY", "Jan 31 2009" etc.
-    //  an object     : Interpreted as an object with year, month and date
-    //                  attributes.  **NOTE** month is 0-11.
     return (
       d.constructor === Date ? d :
         d.constructor === Array ? new Date(d[0], d[1], d[2]) :
@@ -29,14 +21,8 @@ var dates = {
                 NaN
     );
   },
+  // 比较两个日期，返回 -1，0 或 1 Compare two dates, returns -1, 0, or 1
   compare: function (a, b) {
-    // Compare two dates (could be of any type supported by the convert
-    // function above) and returns:
-    //  -1 : if a < b
-    //   0 : if a = b
-    //   1 : if a > b
-    // NaN : if a or b is an illegal date
-    // NOTE: The code inside isFinite does an assignment (=).
     return (
       isFinite(a = this.convert(a).valueOf()) &&
         isFinite(b = this.convert(b).valueOf()) ?
@@ -44,13 +30,8 @@ var dates = {
         NaN
     );
   },
+  // 检查日期是否在指定范围内 Checks if a date is within a specified range
   inRange: function (d, start, end) {
-    // Checks if date in d is between dates in start and end.
-    // Returns a boolean or NaN:
-    //    true  : if d is between start and end (inclusive)
-    //    false : if d is before start or after end
-    //    NaN   : if one or more of the dates is illegal.
-    // NOTE: The code inside isFinite does an assignment (=).
     return (
       isFinite(d = this.convert(d).valueOf()) &&
         isFinite(start = this.convert(start).valueOf()) &&
@@ -61,11 +42,10 @@ var dates = {
   }
 }
 
-
-//Popping the Frame for blog list
+// 弹出博客列表的框架 Pop-up the frame for blog list
 async function listPop(toggle) {
   if (plist == null) {
-    // If Plist not refreshed manually, use previous one
+    // 如果 plist 未手动刷新，使用上一次的列表 Use previous list if plist is not manually refreshed
     [plist, clist, curpage, searchStr] = await new Promise((resolve) => {
       chrome.storage.local.get({ 'plist': [], 'clist': [], 'curpage': 0, 'searchStr': '' }, function (result) {
         resolve([result.plist, result.clist, result.curpage, result.searchStr]);
@@ -74,11 +54,11 @@ async function listPop(toggle) {
     });
   }
   popFrame('list', toggle, function () {
-    //-> Get needed info
+    // 获取需要的信息 Get needed info
     $('.frame-pop').html('<div class=ajax-loader><img src="/assets/loader.gif"/></div>');
     $('.frame-pop .ajax-loader').hide();
     $('.frame-pop').append('<div id="tool-banner"><img id="refresh" src="/assets/refresh.png"/ title="Refesh the List"></div>');
-    //Search Area!
+    // 搜索区域 Search area
     $('.frame-pop').append("<div id='list-type'></div>");
     $('.frame-pop').append("<div  id='search-pannel'></div>");
     $('#search-pannel').append("<textarea id='txt-search' οnfοcus='this.select()' οnmοuseοver='this.focus()' spellcheck=false></textarea>");
@@ -86,47 +66,43 @@ async function listPop(toggle) {
     $('#txt-search').val(searchStr);
 
     if (searchStr == '') {
-      $('#list-type').text('All');
+      $('#list-type').text('All'); // 全部列表 All list
     } else {
-      $('#list-type').text('Search');
+      $('#list-type').text('Search'); // 搜索结果 Search results
     }
 
-
-
+    // 刷新按钮事件 Refresh button event
     $('img#refresh').click(function () {
       $('#txt-search').val('');
       chrome.storage.local.set({ searchStr: $('#txt-search').val() }, function (result) {
-        getPostList(getPostDetails, type = 'all'); //Compare with processList, getPostList will refresh the full post list from github
+        getPostList(getPostDetails, type = 'all'); // 刷新全列表 Refresh the full list from GitHub
         $('.frame-pop .ajax-loader').show();
       });
     });
 
+    // 搜索按钮事件 Search button event
     $('#search').click(function () {
       $('.frame-pop .ajax-loader').show();
       searchStr = $('#txt-search').val();
-      chrome.storage.local.set({ searchStr: searchStr}, function (result) {
-        getPostList(getPostDetails, type = 'search'); //Compare with processList, getPostList will refresh the full post list from github
+      chrome.storage.local.set({ searchStr: searchStr }, function (result) {
+        getPostList(getPostDetails, type = 'search'); // 搜索并刷新列表 Search and refresh the list
       });
     });
 
-
     $('#txt-search').on('keydown', function (event) {
-      // 如果按下了回车键
-      if (event.keyCode === 13) {
-        event.preventDefault(); // 阻止默认的回车行为
-        // 在此处添加你希望的处理逻辑
+      if (event.keyCode === 13) { // 按下回车键 Enter key pressed
+        event.preventDefault();
         $(this).blur();
         $('#search').click();
-      };
+      }
     });
 
-
-    //Refresh list
+    // 刷新列表 Refresh the list
     processList(curpage);
   });
 }
 
-//To Remotely Fetch blog list
+// 远程获取博客列表 Fetch blog list remotely
 function getPostList(cb, type = 'all') {
   clist = [];
   if (typeof (user_info) == "undefined") {
@@ -134,7 +110,7 @@ function getPostList(cb, type = 'all') {
     return;
   } else {
     if (type == 'all') {
-      $('#list-type').text('All');
+      $('#list-type').text('All'); // 显示全部 Show all
       gh.fetchPostListTree(user_info.login, function (e, s, r) {
         curpage = 0;
         plist = JSON.parse(r);
@@ -146,15 +122,16 @@ function getPostList(cb, type = 'all') {
       }, gh.onLogInFailed);
     };
     if (type == 'search') {
-      $('#list-type').text('Search ');
+      $('#list-type').text('Search '); // 显示搜索结果 Show search results
       gh.searchPost(user_info.login, $('#txt-search').val(), function (e, s, r) {
         slist = JSON.parse(r);
-        if (slist['total_count'] >= 0) { //Save the search string & the list!
+        if (slist['total_count'] >= 0) { // 保存搜索字符串和结果 Save search string and results
           curpage = 0;
           slist = slist['items'];
           rlist = [];
           console.log(slist);
-          //To sort rlist info
+
+          // 处理搜索结果数据 Process search results data
           function processData(slist) {
             return new Promise(function (resolve, reject) {
               var rlist = [];
@@ -172,11 +149,10 @@ function getPostList(cb, type = 'all') {
           processData(slist)
             .then(function (rlist) {
               plist = rlist;
-              // 处理 plist 数组
               if (typeof (cb) != 'undefined') cb();
             })
             .catch(function (error) {
-              // 处理错误
+              // 处理错误 Handle errors
             });
         }
       }, gh.onLogInFailed);
@@ -184,8 +160,7 @@ function getPostList(cb, type = 'all') {
   }
 }
 
-
-// Construct the blog list
+// 构建博客列表 Construct the blog list
 function refreshPostList() {
   function constructUI() {
     $('#plist-table').remove();
@@ -206,7 +181,7 @@ function refreshPostList() {
       return true;
     });
 
-    //Pagination Mark
+    // 添加分页标记 Add pagination markers
     $('.frame-pop').append("<div  id='list-page'></div>");
     $('#list-page').append("<span class='nav icon-first' id='first'></span>");
     $('#list-page').append("<span class='nav icon-previous2' id='next'></span>");
@@ -214,206 +189,93 @@ function refreshPostList() {
     $('#list-page').append("<span class='nav icon-next2' id='prev'></span>");
     $('#list-page').append("<span class='nav icon-last' id='last'></span>");
 
-
     $('#pnumber textarea').val(curpage + 1);
     $('#pnumber textarea').on('input', function (event) {
-      // 获取输入的文本内容
       const text = $(this).val();
-
-      // 用正则表达式匹配文本内容，只保留前4个数字
       const digits = text.match(/^\d{0,4}/)[0];
-
-      // 如果输入的文本内容超过4个数字，则更新textarea的值为前4个数字
       if (digits !== text) {
         $(this).val(digits);
       }
     });
 
     $('#pnumber textarea').on('keydown', function (event) {
-      // 如果按下了回车键
       if (event.keyCode === 13) {
-        event.preventDefault(); // 阻止默认的回车行为
-        // 在此处添加你希望的处理逻辑
+        event.preventDefault();
         $(this).blur();
       }
     });
 
-
-    $('#pnumber textarea').on('blur', function (event) {
-      // Meanwhile we need to ensure this is legal number
-      if ($(this).val() < 1)
-        $(this).val(1);
-      if ($(this).val() > totalpage)
-        $(this).val(totalpage);
-      if ($(this).val() != curpage)
-        processList($(this).val() - 1);
-    });
-  }
-  function bindPageAction() {
-    totalpage = Math.ceil(plist.length / 6);
-    $('#first').click(function () {
-      if (!$('.frame-pop .ajax-loader').is(':hidden')) {
-        return;
-      }
-      $('#pnumber textarea').val(1);
-
-      processList(0);
-    })
-    $('#last').click(function () {
-      if (!$('.frame-pop .ajax-loader').is(':hidden')) {
-        return;
-      }
-      $('#pnumber textarea').val(totalpage);
-      processList(totalpage - 1);
-    })
-
-    $('#prev').click(function () {
-      if (!$('.frame-pop .ajax-loader').is(':hidden')) {
-        return;
-      }
-      if (curpage < totalpage - 1) {
-        $('#pnumber textarea').val(curpage + 2);
-        processList(curpage + 1);
-      }
-    })
-
-    $('#next').click(function () {
-      if (!$('.frame-pop .ajax-loader').is(':hidden')) {
-        return;
-      }
-      if (curpage > 0) {
-        $('#pnumber textarea').val(curpage);
-        processList(curpage - 1);
-      }
-    })
-
-
-    $('td.ind').confirmOn({
-      questionText: 'Are You Sure to Delete This Post?',
-      textYes: 'Yes, I\'m sure',
-      textNo: 'No, I\'m not sure'
-    }, 'click', function (e, confirmed) {
-      if (confirmed) {
-        //console.log($('#plist-table').data('curind'));
-        $('.top-masker').show();
-        deletePost($('#plist-table').data('curind'), function () {
-          $('.top-masker').hide();
-        });
-      }
-    });
-    $('td.ind').click(function () {
-      $('#plist-table').data('curind', $(this).parent().find('td.title').data('index'));
+    $('#pnumber textarea').on('blur', function () {
+      const page = Math.min(totalpage, Math.max(1, $('#pnumber textarea').val()));
+      if (page != curpage) processList(page - 1);
     });
 
-    $('td.title').click(function () {
-      $('#plist-table').data('curind', $(this).data('index'));
-    });
-    $('td.title').confirmOn({
-      questionText: gm('emptyblog'),
-      textYes: gm('yes'),
-      textNo:gm('cancel') 
-    }, 'click', function (e, confirmed) {
-      if (confirmed)
-        loadText($('#plist-table').data('curind'));
-    })
+    bindPageAction();
   }
 
-  // Execution
   constructUI();
-  bindPageAction();
 }
 
-// To sort & filter post per blog file name 
-function getPostDetails() {
-  processList(curpage, true);
-}
+// 为分页控件绑定事件 Bind events to pagination controls
+function bindPageAction() {
+  totalpage = Math.ceil(plist.length / listCnt);
 
-/* Thanks For ChatGPT, you know such promise & await & async is always my headache, but it well helped me to re-coded */
-async function processList(page = 0, forcerefesh = false) {
-  var force = forcerefesh;
-  clist = []
-  var nlist = plist.sort(function (a, b) {
-    a.name = a.path;
-    b.name = b.path;
-    //refine name
-    var adate = refineDate(a.name).replace(/(\d+-\d+-\d+)-.*\.md/, "$1");
-    var bdate = refineDate(b.name).replace(/(\d+-\d+-\d+)-.*\.md/, "$1");
-
-    //For invalid post
-    if (adate == a.name)
-      adate = "1900-01-01";
-
-    if (bdate == b.name)
-      bdate = "1900-01-01";
-
-    var ret = dates.compare(adate, bdate);
-    if (ret == NaN) {
-      ret = -1;
-    }
-    return ret;
+  // 点击首页按钮 First page button click
+  $('#first').click(function () {
+    if (!isLoaderVisible()) processList(0);
   });
 
-  var nnlist = [];
-  for (var i = 0; i < nlist.length; i++) {
-    if (nlist[i].name.match(/^\d+-\d+-\d+-.*\.md/) != null) {
-      nnlist.push(nlist[i]);
-    }
-  }
+  // 点击末页按钮 Last page button click
+  $('#last').click(function () {
+    if (!isLoaderVisible()) processList(totalpage - 1);
+  });
 
-  if (page != curpage || force) { //New fetch needed, since page switched
-    var startIndex = page * listCnt
-    $('.frame-pop .ajax-loader').show();
-    for (var i = startIndex; i < startIndex + listCnt; i++) {
-      if (i == nnlist.length) break;
-      console.log(nnlist[nnlist.length - 1 - i].path);
-      var c = await gh.getContentAsync("_posts/" + nnlist[nnlist.length - 1 - i].path);
-      var pcontent = postParse(c.content);
-      if (c.date.match(/\d+-\d+-\d+/) == null) {
-        continue;
-      }
-      pcontent['date'] = c.date;
-      pcontent['sha'] = c.sha;
-      pcontent['slug'] = c.url.replace(/^.*\//, '');
-      if (clist.length < listCnt) {
-        clist.push(pcontent);
-        curpage = page;
-      }
-    }
-    await new Promise((resolve) => {
-      chrome.storage.local.set({ clist: clist, plist: plist, curpage: page }, function (result) {
-        resolve(result);
-      })
-    });
-    $('.frame-pop .ajax-loader').hide();
+  // 点击下一页按钮 Next page button click
+  $('#prev').click(function () {
+    if (!isLoaderVisible() && curpage < totalpage - 1) processList(curpage + 1);
+  });
+
+  // 点击上一页按钮 Previous page button click
+  $('#next').click(function () {
+    if (!isLoaderVisible() && curpage > 0) processList(curpage - 1);
+  });
+}
+
+// 判断加载器是否可见 Helper function to check if loader is visible
+function isLoaderVisible() {
+  return !$('.frame-pop .ajax-loader').is(':hidden');
+}
+
+// 处理分页列表 Process pagination list
+async function processList(page = 0, forcerefresh = false) {
+  if (page != curpage || forcerefresh == true) {
+    curpage = page;
+    clist = await fetchPageContent(plist, page * listCnt, listCnt);
+    chrome.storage.local.set({ clist: clist, plist: plist, curpage: curpage });
     refreshPostList();
-  }
-  // Just refresh 
-  chrome.storage.local.get({ "clist": [] }, function (obj) {
-    if (typeof (obj.clist) != 'undefined' && obj.clist.length > 0) {
+  } else {
+    chrome.storage.local.get({ 'clist': [] }, function (obj) {
       clist = obj.clist;
       refreshPostList();
-    }
-  });
-};
-
-
-/* Funciton to load the post content after click the title */
-function loadText(ind) {
-  //-> The Post are loaded inside!
-  console.info(clist[ind]);
-  loadPost(clist[ind].content);
-  //Title
-  $('.posttitle').text(clist[ind].title);
-  curpost = clist[ind];
-  storePost();
+    });
+  }
 }
 
-// Some util to refine the date format 
-function refineDate(dstr) {
-  if (dstr.match(/-(\d)-/) == null) {
-    return dstr;
-  } else {
-    nstr = dstr.replace(/-(\d)-/g, "-0$1-");
-    return refineDate(nstr);
+// 加载指定页面内容 Fetch content for specified page
+async function fetchPageContent(list, start, count) {
+  $('.frame-pop .ajax-loader').show();
+  const contentList = [];
+  for (let i = start; i < start + count && i < list.length; i++) {
+    const content = await gh.getContentAsync("_posts/" + list[i].path);
+    if (content.date.match(/\d+-\d+-\d+/)) {
+      contentList.push({
+        ...postParse(content.content),
+        date: content.date,
+        sha: content.sha,
+        slug: content.url.split('/').pop()
+      });
+    }
   }
+  $('.frame-pop .ajax-loader').hide();
+  return contentList;
 }

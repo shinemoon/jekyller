@@ -1,72 +1,62 @@
+/* Token 相关功能 - 可移至其他文件 */
 
-
-/* Token Relevant - to be move to other file */
-
+// 弹出 Token 配置框 Token Pop-up
 function tokenPop(toggle) {
-    popFrame('token', toggle, function () {
-        //-> Get needed info
-        refreshTokenInfo();
-    });
-};
+    popFrame('token', toggle, refreshTokenInfo);
+}
+
+// 刷新并填充 Token 信息 Refresh and Populate Token Information
 function refreshTokenInfo() {
-    //refresh pop
-    //-> Get needed info
     chrome.storage.local.get("ltoken", function (obj) {
-        if (typeof (obj.ltoken) != 'undefined') {
-            ltoken = obj.ltoken;
-        } else {
-            ltoken = '';
-        }
-        $('.frame-pop').append('<div id="token-input" class="config-input">\
-  										<div class="config-title">'+gm('tokenSet')+'\
-										<textarea spellcheck="false" class="config-content">'+ ltoken + '</textarea> \
-										<span title="'+gm('saveToken')+'" class="save-token icon icon-checkmark"></span>\
-										 <span title="'+gm('cleartoken')+'" class="remove-token icon icon-cross"></span>\
-										</div></div>');
+        let ltoken = obj.ltoken || '';
 
-        var noteStr = gm('tokenHelp');
+        const tokenInputHTML = `
+            <div id="token-input" class="config-input">
+                <div class="config-title">${gm('tokenSet')}</div>
+                <textarea spellcheck="false" class="config-content">${ltoken}</textarea>
+                <span title="${gm('saveToken')}" class="save-token icon icon-checkmark"></span>
+                <span title="${gm('cleartoken')}" class="remove-token icon icon-cross"></span>
+            </div>
+        `;
+        const noteHTML = `<div class="popping-note">${gm('tokenHelp')}</div>`;
 
-        $('.frame-pop').append('<div class="popping-note">' + noteStr + '</div>');
+        $('.frame-pop').append(tokenInputHTML, noteHTML);
+
+        // 更新图标状态 Update Icon State
         function refreshIcon() {
-            if (ltoken != "") {
-                $(".remove-token").addClass('active');
-            }
-        };
+            $(".remove-token").toggleClass('active', ltoken !== "");
+        }
         refreshIcon();
 
-        $('.save-token').click(function () {
+        // 保存 Token Save Token
+        $('.save-token').on('click', function () {
             if ($(this).hasClass('active')) {
-                console.log("Token to Saved.")
-                $(this).removeClass('active');
                 ltoken = $('.config-content').val();
                 chrome.storage.local.set({ 'ltoken': ltoken }, function () {
-                    console.log("Token Saved.")
+                    console.log("Token Saved.");
                     refreshIcon();
                     gh.access_token(ltoken);
                     gh.getUserInfo(false);
                 });
+                $(this).removeClass('active');
             }
         });
 
-        $('.remove-token').click(function () {
-            if ($(this).hasClass('active')) {
-                if (confirm("Remove Token?")) {
-                    $(this).removeClass('active');
-                    ltoken = "";
-                    chrome.storage.local.set({ 'ltoken': ltoken }, function () {
-                        console.log("Token Cleared.")
-                        tokenPop(false);
-                    });
-                }
+        // 清除 Token Remove Token
+        $('.remove-token').on('click', function () {
+            if ($(this).hasClass('active') && confirm(gm('confirmRemoveToken'))) {
+                ltoken = "";
+                chrome.storage.local.set({ 'ltoken': ltoken }, function () {
+                    console.log("Token Cleared.");
+                    tokenPop(false);  // Close the token popup
+                });
             }
         });
 
-        $('.config-content').keyup(function () {
-            if ($(this).val() != ltoken && $(this).val() != '') {
-                $('.save-token').addClass('active');
-            } else {
-                $('.save-token').removeClass('active');
-            }
-        })
+        // 检测 Token 输入内容变更 Detect Changes in Token Input
+        $('.config-content').on('keyup', function () {
+            const isChanged = $(this).val() !== ltoken && $(this).val() !== '';
+            $('.save-token').toggleClass('active', isChanged);
+        });
     });
 }
