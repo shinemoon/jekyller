@@ -4,8 +4,21 @@
 
 body {
   margin: 0;
-  background: #eae8e8;
+  background: rgba(234, 232, 232, 0.2862745098);
   overflow-y: hidden;
+}
+body .tooltip {
+  position: fixed;
+  right: 400px;
+  top: 0px;
+  background: rgba(234, 232, 232, 0.2862745098);
+  opacity: 0.8;
+  border-left: 2px solid rgba(255, 149, 0, 0.5607843137);
+  text-align: left;
+  z-index: 1002;
+  width: 120px;
+  padding: 5px 0px 5px 10px;
+  color: #666;
 }
 body #user_info {
   font-size: 10px;
@@ -14,7 +27,7 @@ body #user_info {
   font-weight: normal;
   font-family: "Georgia", "Arial", "Kesong", "PingFang SC", "Microsoft YaHei", sans-serif;
   position: fixed;
-  bottom: 6px;
+  top: 6px;
 }
 body #user_info a {
   color: gray;
@@ -35,13 +48,13 @@ body #user_info .ajax-loader img {
   height: 12px;
   text-align: left;
   font-size: 16px;
-  background: #dad8d8;
+  background: rgba(234, 232, 232, 0.2862745098);
   padding: 1px 20px 10px;
   border-left: 4px solid #ff9500;
   position: fixed;
-  bottom: 0;
+  top: 0;
   right: 0;
-  z-index: 1003;
+  z-index: 1103;
   width: 400px;
   box-shadow: rgba(20, 20, 20, 0.8) 2px -2px 4px;
 }
@@ -51,7 +64,7 @@ body #user_info .ajax-loader img {
   float: right;
   margin-right: 10px;
   margin-top: 3px;
-  color: white;
+  color: #000;
   cursor: pointer;
   -webkit-app-region: no-drag;
 }
@@ -63,38 +76,10 @@ body #user_info .ajax-loader img {
 }
 .top-banner .frame-icon.op.focus {
   color: #ff9500;
-  text-shadow: 1px 1px black;
+  text-shadow: 1px 1px #000;
 }
 .top-banner .frame-icon.op:hover {
   opacity: 0.3;
-}
-
-.frame-pop {
-  right: 10px;
-  bottom: 40px;
-  color: black;
-  width: 390px;
-  height: 320px;
-  z-index: 1002;
-  position: fixed;
-  display: block;
-  border: 2px solid #eae8e8;
-  box-shadow: rgba(20, 20, 20, 0.8) 2px 2px 4px;
-  border-radius: 10px;
-  padding-left: 20px;
-  display: none;
-  background-color: white;
-  background-image: url("assets/Mark.png");
-  background-repeat: no-repeat;
-  background-position: 5% 120%;
-}
-.frame-pop .ajax-loader img {
-  position: fixed;
-  bottom: 205px;
-  right: 190px;
-  opacity: 0.6;
-  width: 50px;
-  height: 12px;
 }
 
 .top-masker,
@@ -125,12 +110,13 @@ body #user_info .ajax-loader img {
   border-radius: 0;
   color: rgb(111, 107, 107);
   right: 0;
-  top: 0;
+  bottom: 0;
   font-size: 12px;
   opacity: 0.8;
 }
 .notification.info {
   background: rgb(136, 243, 132);
+  color: grey;
 }
 .notification.error {
   background: lightpink;
@@ -151,8 +137,8 @@ body #user_info .ajax-loader img {
 }
 #post-table tr td.label {
   padding-left: 10px;
-  color: #333;
-  text-shadow: white 1px 1px;
+  color: #000;
+  text-shadow: rgba(234, 232, 232, 0.2862745098) 1px 1px;
   font-size: 11px;
   width: 100px;
   background: rgba(100, 100, 100, 0.05);
@@ -164,11 +150,11 @@ body #user_info .ajax-loader img {
 }
 #post-table td.submit .send {
   display: block;
-  background: #3FAE5F;
+  background: #3fae5f;
   text-transform: uppercase;
   text-align: center;
   font-size: 12px;
-  color: #fff;
+  color: white;
   padding: 6px 28px 10px;
   border: none;
   outline: none;
@@ -177,15 +163,176 @@ body #user_info .ajax-loader img {
   margin-right: -4px;
 }
 #post-table td.submit .send:hover {
-  background: #333;
+  background: #333333;
   cursor: pointer;
 }
 
+#container {
+  display: flex;
+}
+#container #editor,
+#container #preview {
+  width: 50%;
+  height: 100vh;
+  margin-top: 28px;
+}
+#container #editor {
+  line-height: 1.6em;
+  margin-bottom: 10px;
+  overflow-y: hidden;
+}
+#container #preview {
+  padding: 0px 28px 15px 20px;
+  line-height: 1.6em;
+  font-size: 1.4em;
+  color: #45505a;
+  font-family: Kesong, Arial, Helvetica, sans-serif;
+  overflow-y: auto;
+  background: rgba(234, 232, 232, 0.2862745098);
+  border-left: 8px solid white;
+}
+
+.posttitle {
+  text-align: right;
+  padding-right: 30px;
+  font-size: 18px;
+  padding: 4px 20px;
+  font-family: "KESONG";
+  border-right: 2px solid #ff9500;
+  width: auto;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  background: rgba(234, 232, 232, 0.2862745098);
+  box-shadow: rgba(20, 20, 20, 0.8) 2px -2px 4px;
+}
+
+#post-table {
+  margin: 20px 0 0 10px;
+  border: 0 solid rgb(136, 243, 132);
+  width: 90%;
+}
+#post-table table {
+  width: 100%;
+}
+#post-table tr {
+  background: rgba(0, 0, 0, 0);
+  height: 18px;
+}
+#post-table td.label {
+  padding-left: 10px;
+  color: #333333;
+  text-shadow: 1px 1px white;
+  font-size: 11px;
+  width: 100px;
+  background: rgba(100, 100, 100, 0.05);
+  border-radius: 4px;
+  cursor: pointer;
+}
+#post-table td.submit {
+  text-align: center;
+}
+#post-table td .send {
+  display: block;
+  background: #3fae5f;
+  text-transform: uppercase;
+  text-align: center;
+  font-size: 12px;
+  color: white;
+  padding: 6px 28px 10px;
+  border: none;
+  outline: none;
+  float: right;
+  margin-top: 5px;
+  height: 11px;
+  margin-right: -4px;
+}
+#post-table td .send:hover {
+  background: #333333;
+  cursor: pointer;
+}
+#post-table input,
+#post-table select,
+#post-table textarea {
+  padding: 5px 5px 4px;
+  width: 100%;
+  color: #333333;
+  font-size: 12px;
+  border: 1px solid #dfdfdf;
+}
+#post-table input:hover, #post-table input:focus,
+#post-table select:hover,
+#post-table select:focus,
+#post-table textarea:hover,
+#post-table textarea:focus {
+  outline: none;
+  border-radius: 4px;
+  cursor: pointer;
+  background: rgba(255, 203, 0, 0.1);
+}
+#post-table input[type=checkbox] {
+  width: auto;
+  margin-top: 8px;
+  border-radius: 4px;
+}
+
+#plist-table {
+  width: 90px;
+  margin-left: 10px;
+}
+#plist-table a {
+  color: grey;
+  text-decoration: none;
+  cursor: pointer;
+}
+#plist-table table {
+  width: 360px;
+}
+#plist-table table tr {
+  width: 100%;
+  padding-top: 3px;
+  height: 30px;
+}
+#plist-table table tr:nth-child(even) td {
+  background: rgba(100, 100, 100, 0.05);
+  border: 0 solid white;
+}
+#plist-table td {
+  width: 160px;
+  text-align: center;
+  font-size: 12px;
+  color: #333333;
+}
+#plist-table td div {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 240px;
+  cursor: pointer;
+  color: #333333;
+  text-shadow: 1px 1px rgb(250, 247, 247);
+  text-align: right;
+}
+#plist-table td.ind {
+  width: 10px;
+  background: white !important;
+  color: rgb(255, 149, 0);
+}
+#plist-table td.ind:hover {
+  border-radius: 1px;
+  color: pink;
+}
+#plist-table td.date {
+  width: 80px;
+  text-align: left;
+  padding-left: 20px;
+  font-size: 11px;
+  color: #666;
+}
+
+/* Search Pannel */
 #search-pannel {
   height: 18px;
-  position: fixed;
-  right: 50px;
-  bottom: 320px;
   font-size: 16px;
   color: rgb(241, 70, 70);
   opacity: 0.7;
@@ -197,35 +344,181 @@ body #user_info .ajax-loader img {
   opacity: 0.5;
 }
 #search-pannel textarea {
-  color: #888;
+  color: #333333;
   font-size: 11px;
   width: 140px;
   display: inline-block;
+  text-align: left;
   border: none;
   resize: none;
   height: 14px;
   outline: none;
-  background: rgba(255, 203, 0, 0.1);
+  overflow: hidden;
+  background: rgba(255, 149, 0, 0.4509803922);
   border-radius: 3px;
   font-family: Calibri;
-  color: #333;
   margin-right: 10px;
   padding-left: 10px;
 }
 
-#container {
+.config-input {
+  margin: 30px auto 0;
+  width: 100%;
+  vertical-align: middle;
+}
+.config-input .config-title {
+  font-size: 11px;
+  color: #666;
+  width: 50px;
+  display: inline;
+  vertical-align: middle;
+}
+.config-input textarea {
+  margin-left: 20px;
+  padding: 5px 5px 4px;
+  width: 240px;
+  resize: none;
+  color: #dfdfdf;
+  height: 12px;
+  font-size: 12px;
+  font-family: Arial, Helvetica, sans-serif;
+  outline: 1px solid #dad8d8;
+  border: none;
+  border-radius: 2px;
+  vertical-align: middle;
+}
+.config-input textarea:focus {
+  background: rgba(255, 203, 0, 0.1);
+}
+.config-input .icon {
+  margin: 0 8px 0 4px;
+  vertical-align: middle;
+  color: #dfdfdf;
+  cursor: auto;
+}
+.config-input .icon.active {
+  color: #5959dc;
+  cursor: pointer;
+}
+.config-input .icon.active:hover {
+  color: #3FAE5F;
+}
+.config-input .icon.disabled {
+  cursor: default;
+  color: #666;
+}
+.config-input .icon.disabled:hover {
+  color: #ccc;
+}
+
+.popping-note {
+  margin-top: 12px;
+  width: 350px;
+  height: 170px;
+  background: rgba(0, 0, 0, 0.03);
+  border: 1px dotted #ccc;
+  border-radius: 10px;
+  padding: 10px;
+  font-size: 12px;
+  color: #ccc;
+  white-space: pre-wrap;
+}
+.popping-note a {
+  -webkit-text-decoration: dotted;
+          text-decoration: dotted;
+  color: #aaa;
+  font-weight: bold;
+}
+.popping-note a:hover {
+  color: #ccc;
+}
+
+.frame-pop {
+  right: 10px;
+  top: 40px;
+  color: black;
+  width: 390px;
+  height: 320px;
+  z-index: 1102;
+  position: fixed;
+  border: 2px solid rgba(234, 232, 232, 0.2862745098);
+  box-shadow: rgba(20, 20, 20, 0.8) 2px 2px 4px;
+  border-radius: 10px;
+  padding-left: 20px;
+  display: none;
+  background-color: white;
+  background-image: url("assets/Mark.png");
+  background-repeat: no-repeat;
+  background-position: 5% 120%;
+}
+.frame-pop .ajax-loader img {
+  position: absolute;
+  bottom: 50%;
+  right: 50%;
+  opacity: 0.6;
+  width: 50px;
+  height: 12px;
+}
+.frame-pop #top-row {
   display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  height: 50px;
+  flex-direction: row-reverse;
 }
-#container #editor,
-#container #preview {
-  width: 50%;
-  height: 100vh;
-  overflow-y: hidden;
-  padding-top: 40px;
+.frame-pop #top-row #tool-banner {
+  border: 0px solid #666;
+  height: 80px;
+  width: auto;
 }
-#container #editor.preview,
-#container #preview.preview {
-  padding: 20px;
-  padding-top: 50px;
-  box-sizing: border-box;
+.frame-pop #list-page {
+  font-size: 14px;
+  color: #c0360c;
+  opacity: 0.7;
+  height: 18px;
+}
+.frame-pop #list-page #pnumber textarea {
+  color: #ccc;
+  font-size: 16px;
+  font-weight: bold;
+  width: 40px;
+  display: inline-block;
+  text-align: center;
+  border: none;
+  resize: none;
+  height: 13px;
+  outline: none;
+  overflow: hidden;
+}
+.frame-pop #list-page #pnumber textarea:focus {
+  color: #5959dc;
+}
+.frame-pop #list-page .nav {
+  cursor: pointer;
+}
+.frame-pop #list-page .nav:hover {
+  opacity: 0.5;
+}
+.frame-pop #list-type {
+  position: absolute;
+  right: 180px;
+  bottom: 10px;
+  font-size: 24px;
+  color: #ccc;
+  font-style: italic;
+}
+.frame-pop #refresh {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  width: 30px;
+  height: 30px;
+  opacity: 0.8;
+  cursor: pointer;
+  margin-top: 10px;
+  margin-left: 12px;
+}
+.frame-pop #refresh:hover {
+  opacity: 0.7;
 }/*# sourceMappingURL=styles-dark.css.map */

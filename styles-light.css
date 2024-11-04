@@ -4,7 +4,7 @@
 
 body {
   margin: 0;
-  background: white;
+  background: rgba(234, 232, 232, 0.2862745098);
   overflow-y: hidden;
 }
 body .tooltip {
@@ -64,7 +64,7 @@ body #user_info .ajax-loader img {
   float: right;
   margin-right: 10px;
   margin-top: 3px;
-  color: black;
+  color: #000;
   cursor: pointer;
   -webkit-app-region: no-drag;
 }
@@ -76,7 +76,7 @@ body #user_info .ajax-loader img {
 }
 .top-banner .frame-icon.op.focus {
   color: #ff9500;
-  text-shadow: 1px 1px black;
+  text-shadow: 1px 1px #000;
 }
 .top-banner .frame-icon.op:hover {
   opacity: 0.3;
@@ -116,6 +116,7 @@ body #user_info .ajax-loader img {
 }
 .notification.info {
   background: rgb(136, 243, 132);
+  color: grey;
 }
 .notification.error {
   background: lightpink;
@@ -136,8 +137,8 @@ body #user_info .ajax-loader img {
 }
 #post-table tr td.label {
   padding-left: 10px;
-  color: #333;
-  text-shadow: white 1px 1px;
+  color: #000;
+  text-shadow: rgba(234, 232, 232, 0.2862745098) 1px 1px;
   font-size: 11px;
   width: 100px;
   background: rgba(100, 100, 100, 0.05);
@@ -149,11 +150,11 @@ body #user_info .ajax-loader img {
 }
 #post-table td.submit .send {
   display: block;
-  background: #3FAE5F;
+  background: #3fae5f;
   text-transform: uppercase;
   text-align: center;
   font-size: 12px;
-  color: #fff;
+  color: white;
   padding: 6px 28px 10px;
   border: none;
   outline: none;
@@ -162,7 +163,7 @@ body #user_info .ajax-loader img {
   margin-right: -4px;
 }
 #post-table td.submit .send:hover {
-  background: #333;
+  background: #333333;
   cursor: pointer;
 }
 
@@ -208,7 +209,7 @@ body #user_info .ajax-loader img {
 
 #post-table {
   margin: 20px 0 0 10px;
-  border: 0 solid grey;
+  border: 0 solid rgb(136, 243, 132);
   width: 90%;
 }
 #post-table table {
@@ -220,7 +221,7 @@ body #user_info .ajax-loader img {
 }
 #post-table td.label {
   padding-left: 10px;
-  color: #333;
+  color: #333333;
   text-shadow: 1px 1px white;
   font-size: 11px;
   width: 100px;
@@ -233,11 +234,11 @@ body #user_info .ajax-loader img {
 }
 #post-table td .send {
   display: block;
-  background: #3FAE5F;
+  background: #3fae5f;
   text-transform: uppercase;
   text-align: center;
   font-size: 12px;
-  color: #fff;
+  color: white;
   padding: 6px 28px 10px;
   border: none;
   outline: none;
@@ -247,7 +248,7 @@ body #user_info .ajax-loader img {
   margin-right: -4px;
 }
 #post-table td .send:hover {
-  background: #333;
+  background: #333333;
   cursor: pointer;
 }
 #post-table input,
@@ -255,9 +256,9 @@ body #user_info .ajax-loader img {
 #post-table textarea {
   padding: 5px 5px 4px;
   width: 100%;
-  color: #333;
+  color: #333333;
   font-size: 12px;
-  border: 1px solid #ddd;
+  border: 1px solid #dfdfdf;
 }
 #post-table input:hover, #post-table input:focus,
 #post-table select:hover,
@@ -293,14 +294,14 @@ body #user_info .ajax-loader img {
   height: 30px;
 }
 #plist-table table tr:nth-child(even) td {
-  background: rgba(200, 200, 200, 0.15);
+  background: rgba(100, 100, 100, 0.05);
   border: 0 solid white;
 }
 #plist-table td {
   width: 160px;
   text-align: center;
   font-size: 12px;
-  color: #333;
+  color: #333333;
 }
 #plist-table td div {
   white-space: nowrap;
@@ -308,7 +309,7 @@ body #user_info .ajax-loader img {
   text-overflow: ellipsis;
   width: 240px;
   cursor: pointer;
-  color: #333;
+  color: #333333;
   text-shadow: 1px 1px rgb(250, 247, 247);
   text-align: right;
 }
@@ -326,7 +327,7 @@ body #user_info .ajax-loader img {
   text-align: left;
   padding-left: 20px;
   font-size: 11px;
-  color: rgb(98, 99, 101);
+  color: #666;
 }
 
 /* Search Pannel */
@@ -343,7 +344,7 @@ body #user_info .ajax-loader img {
   opacity: 0.5;
 }
 #search-pannel textarea {
-  color: #333;
+  color: #333333;
   font-size: 11px;
   width: 140px;
   display: inline-block;
@@ -367,7 +368,7 @@ body #user_info .ajax-loader img {
 }
 .config-input .config-title {
   font-size: 11px;
-  color: grey;
+  color: #666;
   width: 50px;
   display: inline;
   vertical-align: middle;
@@ -377,11 +378,11 @@ body #user_info .ajax-loader img {
   padding: 5px 5px 4px;
   width: 240px;
   resize: none;
-  color: #ccc;
+  color: #dfdfdf;
   height: 12px;
   font-size: 12px;
   font-family: Arial, Helvetica, sans-serif;
-  outline: 1px solid #ddd;
+  outline: 1px solid #dad8d8;
   border: none;
   border-radius: 2px;
   vertical-align: middle;
@@ -392,7 +393,7 @@ body #user_info .ajax-loader img {
 .config-input .icon {
   margin: 0 8px 0 4px;
   vertical-align: middle;
-  color: lightgrey;
+  color: #dfdfdf;
   cursor: auto;
 }
 .config-input .icon.active {
@@ -404,10 +405,10 @@ body #user_info .ajax-loader img {
 }
 .config-input .icon.disabled {
   cursor: default;
-  color: #aaa;
+  color: #666;
 }
 .config-input .icon.disabled:hover {
-  color: #aaa;
+  color: #ccc;
 }
 
 .popping-note {
@@ -415,11 +416,11 @@ body #user_info .ajax-loader img {
   width: 350px;
   height: 170px;
   background: rgba(0, 0, 0, 0.03);
-  border: 1px dotted #888;
+  border: 1px dotted #ccc;
   border-radius: 10px;
   padding: 10px;
   font-size: 12px;
-  color: #888;
+  color: #ccc;
   white-space: pre-wrap;
 }
 .popping-note a {
@@ -429,7 +430,7 @@ body #user_info .ajax-loader img {
   font-weight: bold;
 }
 .popping-note a:hover {
-  color: #888;
+  color: #ccc;
 }
 
 .frame-pop {
@@ -467,18 +468,18 @@ body #user_info .ajax-loader img {
   flex-direction: row-reverse;
 }
 .frame-pop #top-row #tool-banner {
-  border: 0px solid grey;
+  border: 0px solid #666;
   height: 80px;
   width: auto;
 }
 .frame-pop #list-page {
   font-size: 14px;
-  color: rgb(241, 70, 70);
+  color: #c0360c;
   opacity: 0.7;
   height: 18px;
 }
 .frame-pop #list-page #pnumber textarea {
-  color: #888;
+  color: #ccc;
   font-size: 16px;
   font-weight: bold;
   width: 40px;
@@ -504,7 +505,7 @@ body #user_info .ajax-loader img {
   right: 180px;
   bottom: 10px;
   font-size: 24px;
-  color: #ddd;
+  color: #ccc;
   font-style: italic;
 }
 .frame-pop #refresh {

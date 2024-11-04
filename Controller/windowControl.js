@@ -177,9 +177,17 @@ function popClose() {
 
 /** 切换皮肤主题 Toggle Theme Skin */
 function switchSkin() {
-    skin = (skin === 'dark') ? 'light' : 'dark';
-    chrome.storage.local.set({ skin }, () => {
+    console.log(skin);
+    if (skin == 'dark')
+        skin = 'light';
+    else
+        skin = 'dark';
+    chrome.storage.local.set({ skin: skin }, function () {
+        //Editor
         const theme = (skin === 'dark') ? "ace/theme/tomorrow_night_eighties" : "ace/theme/tomorrow";
         editor.setTheme(theme);  // 切换主题 Switch Theme
+        //Other
+        $('#stylehdl').remove();
+        $('head').append('<link id="stylehdl" rel="stylesheet"type="text/css"href="styles-' + skin + '.css"/>');
     });
 }
