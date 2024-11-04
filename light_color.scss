@@ -4,8 +4,8 @@ $highlight-light: #ff9500;
 $highlight-light-opacity: #ff95008f;
 $color-dark: #dfdfdf;
 $color-light: #333333;
-$bg-dark: #424f5a;
-$bg-light: #eae8e849;
+$bg-dark: #eaf373;
+$bg-light: #eaeae849;
 $titlebar-dark: #343f48;
 $titlebar-light: #dad8d8;
 
@@ -14,6 +14,10 @@ $fg-dark: #45505a;
 $fg-color-0:#000;
 $fg-color-1:#666;
 $fg-color-2:#ccc;
+$fg-color-invert:#222;
+$fg-color-invert-2:#333;
+
+
 
 $mask-bg:rgba(0,0,0,0.3);
 $visited-color:rgba(0,0,0,0.3);
@@ -27,6 +31,7 @@ $notify-error-fg:white;
 
 $transparent-bg:rgba(0,0,0,0);
 $label-bg:rgba(100,100,100,0.05);
+$label-bg-light:rgba(100,100,100,0.05);
 
 $highlight-button-bg:#3fae5f;
 $highlight-fg:white;
@@ -42,3 +47,6 @@ $search-field:#ff950073;
 
 $icon-active:#5959dc;
 $icon-hover:#3FAE5F;
+
+$preview-quote-bg:#ddd;
+$preview-quote-fg:#000;

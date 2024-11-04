@@ -35,6 +35,10 @@
         "message": "Clear Token",
         "description": "Clear Token"
     },
+    "confirmRemoveToken": {
+        "message": "Are you sure you want to delete current token?",
+        "description": "Clear Token Confirmation"
+    },
     "saveToken": {
         "message": "Save Token",
         "description": "Save Token"
@@ -103,6 +107,11 @@
         "message": "Update",
         "description": "Update"
     },
+    "Post": {
+        "message": "Post",
+        "description": "Post"
+    },
+
     "tokenHelp": {
         "message": "Before you begin, please apply for a token on Github (with read/write access to this repo) <br> <br> For more details and help, please refer to <a href='https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token'>Github's official documentation about tokens.</a>",
         "description": "ConfigHelp"

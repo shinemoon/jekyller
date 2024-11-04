@@ -4,14 +4,14 @@
 
 body {
   margin: 0;
-  background: rgba(234, 232, 232, 0.2862745098);
+  background: rgba(234, 234, 232, 0.2862745098);
   overflow-y: hidden;
 }
 body .tooltip {
   position: fixed;
   right: 400px;
   top: 0px;
-  background: rgba(234, 232, 232, 0.2862745098);
+  background: rgba(234, 234, 232, 0.2862745098);
   opacity: 0.8;
   border-left: 2px solid rgba(255, 149, 0, 0.5607843137);
   text-align: left;
@@ -25,12 +25,12 @@ body #user_info {
   color: #666;
   cursor: pointer;
   font-weight: normal;
-  font-family: "Georgia", "Arial", "Kesong", "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-family: "Georgia", "Arial", "Microsoft YaHei", sans-serif;
   position: fixed;
   top: 6px;
 }
 body #user_info a {
-  color: gray;
+  color: #666;
   font-size: 11px;
   text-decoration: none;
   font-style: italic;
@@ -48,7 +48,7 @@ body #user_info .ajax-loader img {
   height: 12px;
   text-align: left;
   font-size: 16px;
-  background: rgba(234, 232, 232, 0.2862745098);
+  background: rgba(234, 234, 232, 0.2862745098);
   padding: 1px 20px 10px;
   border-left: 4px solid #ff9500;
   position: fixed;
@@ -138,7 +138,7 @@ body #user_info .ajax-loader img {
 #post-table tr td.label {
   padding-left: 10px;
   color: #000;
-  text-shadow: rgba(234, 232, 232, 0.2862745098) 1px 1px;
+  text-shadow: rgba(234, 234, 232, 0.2862745098) 1px 1px;
   font-size: 11px;
   width: 100px;
   background: rgba(100, 100, 100, 0.05);
@@ -184,26 +184,50 @@ body #user_info .ajax-loader img {
 #container #preview {
   padding: 0px 28px 15px 20px;
   line-height: 1.6em;
-  font-size: 1.4em;
+  font-size: 1.2em;
   color: #45505a;
-  font-family: Kesong, Arial, Helvetica, sans-serif;
   overflow-y: auto;
-  background: rgba(234, 232, 232, 0.2862745098);
-  border-left: 8px solid white;
+  background: rgba(234, 234, 232, 0.2862745098);
+  border-left: 1px dotted #ccc;
+}
+#container #preview img {
+  width: 90%;
+  margin-left: 5%;
+  border-radius: 0px;
+  border: 5px solid rgba(155, 155, 155, 0.8);
+}
+#container #preview h1, #container #preview h2, #container #preview h3, #container #preview h4 {
+  font-size: 1.1em;
+  margin-bottom: 8px;
+  border-bottom: 1px dotted #ccc;
+  text-align: left;
+  padding: 3px;
+}
+#container #preview blockquote {
+  color: #000;
+  background: #ddd;
+  padding: 5px;
+}
+#container #preview a {
+  color: #222;
+  background-color: #eaf373;
+}
+#container #preview a:visited {
+  color: #333;
 }
 
 .posttitle {
+  color: #000;
   text-align: right;
   padding-right: 30px;
-  font-size: 18px;
+  font-size: 14px;
   padding: 4px 20px;
-  font-family: "KESONG";
   border-right: 2px solid #ff9500;
   width: auto;
   position: fixed;
   top: 0px;
   left: 0px;
-  background: rgba(234, 232, 232, 0.2862745098);
+  background: rgba(234, 234, 232, 0.2862745098);
   box-shadow: rgba(20, 20, 20, 0.8) 2px -2px 4px;
 }
 
@@ -310,12 +334,11 @@ body #user_info .ajax-loader img {
   width: 240px;
   cursor: pointer;
   color: #333333;
-  text-shadow: 1px 1px rgb(250, 247, 247);
   text-align: right;
 }
 #plist-table td.ind {
   width: 10px;
-  background: white !important;
+  background: rgba(0, 0, 0, 0) !important;
   color: rgb(255, 149, 0);
 }
 #plist-table td.ind:hover {
@@ -441,7 +464,7 @@ body #user_info .ajax-loader img {
   height: 320px;
   z-index: 1102;
   position: fixed;
-  border: 2px solid rgba(234, 232, 232, 0.2862745098);
+  border: 2px solid rgba(234, 234, 232, 0.2862745098);
   box-shadow: rgba(20, 20, 20, 0.8) 2px 2px 4px;
   border-radius: 10px;
   padding-left: 20px;
@@ -479,6 +502,7 @@ body #user_info .ajax-loader img {
   height: 18px;
 }
 .frame-pop #list-page #pnumber textarea {
+  background-color: white;
   color: #ccc;
   font-size: 16px;
   font-weight: bold;

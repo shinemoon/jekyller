@@ -33,6 +33,11 @@ chrome.storage.local.get({
 
     // 加载主题样式 Load theme stylesheet
     $('head').append(`<link id="stylehdl" rel="stylesheet" type="text/css" href="styles-${skin}.css"/>`);
+    if (skin == 'light')
+        editor.setTheme("ace/theme/tomorrow");
+    else
+        editor.setTheme("ace/theme/tomorrow_night_eighties");
+
 });
 
 // ==========================
@@ -58,7 +63,7 @@ function hashCode(s) {
 }
 
 // 数组移除元素 Remove elements from array
-Array.prototype.remove = function(from, to) {
+Array.prototype.remove = function (from, to) {
     const rest = this.slice((to || from) + 1 || this.length);
     this.length = from < 0 ? this.length + from : from;
     return this.push.apply(this, rest);
@@ -88,20 +93,28 @@ function sleep(ms) {
 // ==========================
 
 // 添加自定义字体样式 Add custom font style
+/*
 const fontPath = chrome.runtime.getURL('assets');
 const fontStr = `@font-face {font-family: 'Kesong'; src: url('${fontPath}/font.otf') format('truetype');}`;
 $('body').append(`<style>${fontStr}</style>`);
+*/
 
 // 初始化 Ace 编辑器 Initialize Ace editor
 const editor = ace.edit("editor");
-editor.setTheme("ace/theme/tomorrow");
+/*
+if (skin == 'light')
+    editor.setTheme("ace/theme/tomorrow");
+else
+    editor.setTheme("ace/theme/tomorrow_night_eighties");
+*/
+
 editor.session.setMode("ace/mode/markdown");
 editor.setKeyboardHandler("ace/keyboard/vim");
 editor.setOptions({
     fontSize: "14px",
     showPrintMargin: false,
-	showLineNumbers:false,
-    wrap:true,
+    showLineNumbers: false,
+    wrap: true,
 });
 
 // ==========================
@@ -128,7 +141,7 @@ editor.getSession().on('change', updatePreview);
  */
 function setDivHeight() {
     document.getElementById("editor").style.height = `${window.innerHeight - 40}px`;
-    document.getElementById("preview").style.height = `${window.innerHeight - 50}px`;
+    document.getElementById("preview").style.height = `${window.innerHeight - 35}px`;
 }
 
 // 初次调用和窗口调整事件监听 Initial call and listen for window resize event

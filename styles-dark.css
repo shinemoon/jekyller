@@ -4,39 +4,39 @@
 
 body {
   margin: 0;
-  background: rgba(234, 232, 232, 0.2862745098);
+  background: rgba(112, 105, 105, 0.91);
   overflow-y: hidden;
 }
 body .tooltip {
   position: fixed;
   right: 400px;
   top: 0px;
-  background: rgba(234, 232, 232, 0.2862745098);
+  background: rgba(112, 105, 105, 0.91);
   opacity: 0.8;
-  border-left: 2px solid rgba(255, 149, 0, 0.5607843137);
+  border-left: 2px solid rgba(13, 247, 24, 0.5607843137);
   text-align: left;
   z-index: 1002;
   width: 120px;
   padding: 5px 0px 5px 10px;
-  color: #666;
+  color: #bebaba;
 }
 body #user_info {
   font-size: 10px;
-  color: #666;
+  color: #bebaba;
   cursor: pointer;
   font-weight: normal;
-  font-family: "Georgia", "Arial", "Kesong", "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-family: "Georgia", "Arial", "Microsoft YaHei", sans-serif;
   position: fixed;
   top: 6px;
 }
 body #user_info a {
-  color: gray;
+  color: #bebaba;
   font-size: 11px;
   text-decoration: none;
   font-style: italic;
 }
 body #user_info a:hover, body #user_info a:active, body #user_info a:visited {
-  color: rgba(0, 0, 0, 0.3);
+  color: rgba(248, 243, 243, 0.3);
 }
 body #user_info .ajax-loader img {
   width: 50px;
@@ -48,15 +48,15 @@ body #user_info .ajax-loader img {
   height: 12px;
   text-align: left;
   font-size: 16px;
-  background: rgba(234, 232, 232, 0.2862745098);
+  background: rgba(112, 105, 105, 0.91);
   padding: 1px 20px 10px;
-  border-left: 4px solid #ff9500;
+  border-left: 4px solid #0df718;
   position: fixed;
   top: 0;
   right: 0;
   z-index: 1103;
   width: 400px;
-  box-shadow: rgba(20, 20, 20, 0.8) 2px -2px 4px;
+  box-shadow: rgba(228, 221, 221, 0.8) 2px -2px 4px;
 }
 .top-banner .frame-icon {
   width: 16px;
@@ -64,7 +64,7 @@ body #user_info .ajax-loader img {
   float: right;
   margin-right: 10px;
   margin-top: 3px;
-  color: #000;
+  color: #fff;
   cursor: pointer;
   -webkit-app-region: no-drag;
 }
@@ -75,8 +75,8 @@ body #user_info .ajax-loader img {
   opacity: 0.8;
 }
 .top-banner .frame-icon.op.focus {
-  color: #ff9500;
-  text-shadow: 1px 1px #000;
+  color: #0df718;
+  text-shadow: 1px 1px #fff;
 }
 .top-banner .frame-icon.op:hover {
   opacity: 0.3;
@@ -137,11 +137,11 @@ body #user_info .ajax-loader img {
 }
 #post-table tr td.label {
   padding-left: 10px;
-  color: #000;
-  text-shadow: rgba(234, 232, 232, 0.2862745098) 1px 1px;
+  color: #fff;
+  text-shadow: rgba(112, 105, 105, 0.91) 1px 1px;
   font-size: 11px;
   width: 100px;
-  background: rgba(100, 100, 100, 0.05);
+  background: rgba(100, 100, 100, 0.8);
   border-radius: 4px;
   cursor: pointer;
 }
@@ -150,11 +150,11 @@ body #user_info .ajax-loader img {
 }
 #post-table td.submit .send {
   display: block;
-  background: #3fae5f;
+  background: #3FAE5F;
   text-transform: uppercase;
   text-align: center;
   font-size: 12px;
-  color: white;
+  color: #eee;
   padding: 6px 28px 10px;
   border: none;
   outline: none;
@@ -163,7 +163,7 @@ body #user_info .ajax-loader img {
   margin-right: -4px;
 }
 #post-table td.submit .send:hover {
-  background: #333333;
+  background: #686464;
   cursor: pointer;
 }
 
@@ -184,27 +184,51 @@ body #user_info .ajax-loader img {
 #container #preview {
   padding: 0px 28px 15px 20px;
   line-height: 1.6em;
-  font-size: 1.4em;
-  color: #45505a;
-  font-family: Kesong, Arial, Helvetica, sans-serif;
+  font-size: 1.2em;
+  color: #fff;
   overflow-y: auto;
-  background: rgba(234, 232, 232, 0.2862745098);
-  border-left: 8px solid white;
+  background: rgba(112, 105, 105, 0.91);
+  border-left: 1px dotted #222;
+}
+#container #preview img {
+  width: 90%;
+  margin-left: 5%;
+  border-radius: 0px;
+  border: 5px solid rgba(155, 155, 155, 0.8);
+}
+#container #preview h1, #container #preview h2, #container #preview h3, #container #preview h4 {
+  font-size: 1.1em;
+  margin-bottom: 8px;
+  border-bottom: 1px dotted #222;
+  text-align: left;
+  padding: 3px;
+}
+#container #preview blockquote {
+  color: #333;
+  background: #eee;
+  padding: 5px;
+}
+#container #preview a {
+  color: #555;
+  background-color: rgba(238, 237, 182, 0.7882352941);
+}
+#container #preview a:visited {
+  color: #888;
 }
 
 .posttitle {
+  color: #fff;
   text-align: right;
   padding-right: 30px;
-  font-size: 18px;
+  font-size: 14px;
   padding: 4px 20px;
-  font-family: "KESONG";
-  border-right: 2px solid #ff9500;
+  border-right: 2px solid #0df718;
   width: auto;
   position: fixed;
   top: 0px;
   left: 0px;
-  background: rgba(234, 232, 232, 0.2862745098);
-  box-shadow: rgba(20, 20, 20, 0.8) 2px -2px 4px;
+  background: rgba(112, 105, 105, 0.91);
+  box-shadow: rgba(228, 221, 221, 0.8) 2px -2px 4px;
 }
 
 #post-table {
@@ -221,11 +245,11 @@ body #user_info .ajax-loader img {
 }
 #post-table td.label {
   padding-left: 10px;
-  color: #333333;
-  text-shadow: 1px 1px white;
+  color: #686464;
+  text-shadow: 1px 1px #eee;
   font-size: 11px;
   width: 100px;
-  background: rgba(100, 100, 100, 0.05);
+  background: rgba(100, 100, 100, 0.8);
   border-radius: 4px;
   cursor: pointer;
 }
@@ -234,11 +258,11 @@ body #user_info .ajax-loader img {
 }
 #post-table td .send {
   display: block;
-  background: #3fae5f;
+  background: #3FAE5F;
   text-transform: uppercase;
   text-align: center;
   font-size: 12px;
-  color: white;
+  color: #eee;
   padding: 6px 28px 10px;
   border: none;
   outline: none;
@@ -248,7 +272,7 @@ body #user_info .ajax-loader img {
   margin-right: -4px;
 }
 #post-table td .send:hover {
-  background: #333333;
+  background: #686464;
   cursor: pointer;
 }
 #post-table input,
@@ -256,7 +280,7 @@ body #user_info .ajax-loader img {
 #post-table textarea {
   padding: 5px 5px 4px;
   width: 100%;
-  color: #333333;
+  color: #686464;
   font-size: 12px;
   border: 1px solid #dfdfdf;
 }
@@ -294,14 +318,14 @@ body #user_info .ajax-loader img {
   height: 30px;
 }
 #plist-table table tr:nth-child(even) td {
-  background: rgba(100, 100, 100, 0.05);
-  border: 0 solid white;
+  background: rgba(100, 100, 100, 0.1);
+  border: 0 solid #eee;
 }
 #plist-table td {
   width: 160px;
   text-align: center;
   font-size: 12px;
-  color: #333333;
+  color: #686464;
 }
 #plist-table td div {
   white-space: nowrap;
@@ -309,13 +333,12 @@ body #user_info .ajax-loader img {
   text-overflow: ellipsis;
   width: 240px;
   cursor: pointer;
-  color: #333333;
-  text-shadow: 1px 1px rgb(250, 247, 247);
+  color: #686464;
   text-align: right;
 }
 #plist-table td.ind {
   width: 10px;
-  background: white !important;
+  background: rgba(0, 0, 0, 0) !important;
   color: rgb(255, 149, 0);
 }
 #plist-table td.ind:hover {
@@ -327,7 +350,7 @@ body #user_info .ajax-loader img {
   text-align: left;
   padding-left: 20px;
   font-size: 11px;
-  color: #666;
+  color: #bebaba;
 }
 
 /* Search Pannel */
@@ -344,7 +367,7 @@ body #user_info .ajax-loader img {
   opacity: 0.5;
 }
 #search-pannel textarea {
-  color: #333333;
+  color: #686464;
   font-size: 11px;
   width: 140px;
   display: inline-block;
@@ -368,7 +391,7 @@ body #user_info .ajax-loader img {
 }
 .config-input .config-title {
   font-size: 11px;
-  color: #666;
+  color: #bebaba;
   width: 50px;
   display: inline;
   vertical-align: middle;
@@ -405,10 +428,10 @@ body #user_info .ajax-loader img {
 }
 .config-input .icon.disabled {
   cursor: default;
-  color: #666;
+  color: #bebaba;
 }
 .config-input .icon.disabled:hover {
-  color: #ccc;
+  color: #222;
 }
 
 .popping-note {
@@ -416,11 +439,11 @@ body #user_info .ajax-loader img {
   width: 350px;
   height: 170px;
   background: rgba(0, 0, 0, 0.03);
-  border: 1px dotted #ccc;
+  border: 1px dotted #222;
   border-radius: 10px;
   padding: 10px;
   font-size: 12px;
-  color: #ccc;
+  color: #222;
   white-space: pre-wrap;
 }
 .popping-note a {
@@ -430,7 +453,7 @@ body #user_info .ajax-loader img {
   font-weight: bold;
 }
 .popping-note a:hover {
-  color: #ccc;
+  color: #222;
 }
 
 .frame-pop {
@@ -441,12 +464,12 @@ body #user_info .ajax-loader img {
   height: 320px;
   z-index: 1102;
   position: fixed;
-  border: 2px solid rgba(234, 232, 232, 0.2862745098);
+  border: 2px solid rgba(112, 105, 105, 0.91);
   box-shadow: rgba(20, 20, 20, 0.8) 2px 2px 4px;
   border-radius: 10px;
   padding-left: 20px;
   display: none;
-  background-color: white;
+  background-color: #eee;
   background-image: url("assets/Mark.png");
   background-repeat: no-repeat;
   background-position: 5% 120%;
@@ -468,7 +491,7 @@ body #user_info .ajax-loader img {
   flex-direction: row-reverse;
 }
 .frame-pop #top-row #tool-banner {
-  border: 0px solid #666;
+  border: 0px solid #bebaba;
   height: 80px;
   width: auto;
 }
@@ -479,7 +502,8 @@ body #user_info .ajax-loader img {
   height: 18px;
 }
 .frame-pop #list-page #pnumber textarea {
-  color: #ccc;
+  background-color: #eee;
+  color: #222;
   font-size: 16px;
   font-weight: bold;
   width: 40px;
@@ -505,7 +529,7 @@ body #user_info .ajax-loader img {
   right: 180px;
   bottom: 10px;
   font-size: 24px;
-  color: #ccc;
+  color: #222;
   font-style: italic;
 }
 .frame-pop #refresh {

@@ -35,6 +35,10 @@
         "message": "清除令牌",
         "description": "Clear Token"
     },
+    "confirmRemoveToken": {
+        "message": "你确认要删除当前令牌？",
+        "description": "Clear Token Confirmation"
+    },
     "saveToken": {
         "message": "保存令牌",
         "description": "Save Token"
@@ -102,6 +106,10 @@
     "Update": {
         "message": "更新",
         "description": "Update"
+    },
+    "Post": {
+        "message": "发布",
+        "description": "Post"
     },
     "tokenHelp": {
         "message": "开始使用之前，请先于Github中申请一个Token（要求对本Repo的内容具备读写权限） <br> <br>需要更多的细节和帮助，请<a href='https://docs.github.com/zh/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token'>参考Github的关于Token的官方帮助。 </a>",

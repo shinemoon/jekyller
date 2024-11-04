@@ -30,13 +30,13 @@ body {
     color: $fg-color-1;
     cursor: pointer;
     font-weight: normal;
-    font-family: "Georgia", "Arial", "Kesong", "PingFang SC", "Microsoft YaHei", sans-serif;
+    font-family: "Georgia", "Arial", "Microsoft YaHei", sans-serif;
     position: fixed;
     top: 6px;
 
 
     a {
-      color: gray;
+      color: $fg-color-1;
       font-size: 11px;
       text-decoration: none;
       font-style: italic;
@@ -44,7 +44,7 @@ body {
       &:hover,
       &:active,
       &:visited {
-        color:$visited-color;
+        color: $visited-color;
       }
     }
 
@@ -109,7 +109,7 @@ body {
   position: fixed;
   top: 0;
   left: 0;
-  background: $mask-bg; 
+  background: $mask-bg;
   cursor: pointer;
   display: none;
 
@@ -136,7 +136,7 @@ body {
 
   &.info {
     background: $notify-info-bg;
-    color:$notify-info-fg;
+    color: $notify-info-fg;
   }
 
   &.error {
@@ -176,7 +176,7 @@ body {
 
     .send {
       display: block;
-      background:  $highlight-button-bg;
+      background: $highlight-button-bg;
       text-transform: uppercase;
       text-align: center;
       font-size: 12px;
@@ -217,23 +217,51 @@ body {
   #preview {
     padding: 0px 28px 15px 20px;
     line-height: 1.6em;
-    font-size: 1.4em;
+    font-size: 1.2em;
     color: $fg-dark;
-    font-family: Kesong, Arial, Helvetica, sans-serif;
+    //font-family: Kesong, Arial, Helvetica, sans-serif;
     overflow-y: auto;
     background: $bg-light;
-    border-left: 8px solid $highlight-fg;
+    border-left: 1px dotted $fg-color-2;
+
+    img {
+      width: 90%;
+      margin-left: 5%;
+      border-radius: 0px;
+      border: 5px solid rgba(155, 155, 155, 0.8);
+    }
+    h1,h2,h3,h4 {
+      font-size:1.1em;
+      margin-bottom:8px;
+      border-bottom:1px dotted $fg-color-2;
+      text-align:left;
+      padding:3px;
+    }
+    blockquote {
+      color: $preview-quote-fg;
+      background: $preview-quote-bg;
+      padding:5px;
+    }
+    a {
+      color: $fg-color-invert;
+      background-color: $bg-dark;
+
+      &:visited {
+        color: $fg-color-invert-2;
+
+      }
+    }
   }
 }
 
 
 // Other components and utility styles...
 .posttitle {
+  color: $fg-color-0;
   text-align: right;
   padding-right: 30px;
-  font-size: 18px;
+  font-size: 14px;
   padding: 4px 20px;
-  font-family: 'KESONG';
   border-right: 2px solid $highlight-light;
   width: auto;
   position: fixed;
@@ -348,7 +376,7 @@ body {
     }
 
     tr:nth-child(even) td {
-      background: $label-bg;
+      background: $label-bg-light;
       border: 0 solid $highlight-fg;
     }
   }
@@ -365,14 +393,14 @@ body {
       text-overflow: ellipsis;
       width: 240px;
       cursor: pointer;
-      color:$color-light;
-      text-shadow: 1px 1px $text-shadow;
+      color: $color-light;
+      //text-shadow: 1px 1px $text-shadow;
       text-align: right;
     }
 
     &.ind {
       width: 10px;
-      background: $notify-error-fg!important;
+      background: $transparent-bg!important;
       color: $delete-icon;
 
       &:hover {
@@ -399,7 +427,7 @@ body {
   // right: 50px;
   // bottom: 320px;
   font-size: 16px;
-  color:$search-color;
+  color: $search-color;
   opacity: 0.7;
 
   .nav {
@@ -475,7 +503,7 @@ body {
       cursor: pointer;
 
       &:hover {
-        color:$icon-hover
+        color: $icon-hover
       }
     }
 
@@ -572,6 +600,7 @@ body {
     height: 18px;
 
     #pnumber textarea {
+      background-color: $highlight-fg;
       color: $fg-color-2;
       font-size: 16px;
       font-weight: bold;
