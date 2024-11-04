@@ -246,6 +246,7 @@ function bindPageAction() {
 
   // 删除 Delete 
   $('td.ind').click(function () {
+    var curind = $(this).parent().find('td.title').data('index');
     // Confirm?
     $.confirm({
       title: "Delete Post?",
@@ -253,7 +254,7 @@ function bindPageAction() {
       buttons: {
         confirm: function () {
           $('.top-masker').show();
-          //deletePost($(this).parent().find('td.title').data('index'), function () {$('.top-masker').hide();});
+          deletePost(curind, function () { $('.top-masker').hide(); });
           popClose();
         },
         cancel: function () {
