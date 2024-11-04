@@ -36,11 +36,10 @@ function createNewPost() {
 
 // 导出帖子数据为 Markdown 格式 Dump Post Data as Markdown
 function dumpPost() {
-    const shadowpost = { ...curpost };  // 创建内容副本 Create Copy of Post
-    const metastr = YAML.stringify(shadowpost);
-    const contentstr = shadowpost.content;
+    var shadowpost = { ...curpost };  // 创建内容副本 Create Copy of Post
+    var contentstr = shadowpost.content;
     delete shadowpost.content;
-
+    var metastr = YAML.stringify(shadowpost);
     return `---\n${metastr}\n---\n${contentstr}`;
 }
 
@@ -61,30 +60,30 @@ function updatePost(cb) {
     gh.updateContent(path, content, sha, (e, r, s) => {
         const responseContent = JSON.parse(s);
         
-        if (r === '200') { // 更新成功 Successfully Updated
+        if (r == '200') { // 更新成功 Successfully Updated
             logInfo(gm('postUpdated'));
             updateLocalList(responseContent.content.sha);
             storePost();
 
-        } else if (r === '201') { // 已创建 Created
+        } else if (r == '201') { // 已创建 Created
             logInfo(gm('postCreated'));
             curpost.sha = responseContent.content.sha;
             clist.push({ ...curpost });
             storePost();
 
         } else { // 出现冲突或错误 Conflict or General Error
-            logError(r === '409' ? gm('ErrVersion') : gm('ErrGeneral'));
+            logError(r== '409' ? gm('ErrVersion') : gm('ErrGeneral'));
         }
 
         chrome.storage.local.set({ clist }, () => $('.frame-mask').click());
-        if (typeof cb !== 'undefined') cb();
+        if (typeof cb != 'undefined') cb();
     });
 }
 
 // 更新本地帖子列表 Update Local Post List with SHA
 function updateLocalList(newSha) {
     for (let i = 0; i < clist.length; i++) {
-        if (clist[i].sha === curpost.sha) {
+        if (clist[i].sha == curpost.sha) {
             clist[i] = { ...curpost, sha: newSha };
             curpost.sha = newSha;
             break;
@@ -99,10 +98,10 @@ function deletePost(index, cb) {
     const path = `_posts/${name}.md`;
 
     gh.deleteContent(path, delpost.sha, (e, r, s) => {
-        if (r === '200') { // 删除成功 Successfully Deleted
+        if (r == '200') { // 删除成功 Successfully Deleted
             logInfo(gm('postDeleted'));
-            const deleteIndex = clist.findIndex(item => item.sha === delpost.sha);
-            if (deleteIndex !== -1) clist.splice(deleteIndex, 1);
+            const deleteIndex = clist.findIndex(item => item.sha == delpost.sha);
+            if (deleteIndex != -1) clist.splice(deleteIndex, 1);
 
             chrome.storage.local.set({ clist }, () => $('.frame-mask').click());
         } else {
@@ -110,7 +109,7 @@ function deletePost(index, cb) {
             $('.frame-mask').click();
         }
 
-        if (typeof cb !== 'undefined') cb();
+        if (typeof cb != 'undefined') cb();
     });
 }
 

@@ -19,7 +19,7 @@ $('.img#create').click(() => {
         content: gm('emptyblogdetails'),
         buttons: {
             confirm: function () {
-                if (confirmed) createNewPost();
+                createNewPost();
             },
             cancel: function () {
                 //
@@ -168,6 +168,7 @@ function logError(str) {
 function popClose() {
     $('.frame-pop, .frame-mask').remove();
     $('.frame-icon.focus').removeClass('focus');
+    $('.top-masker').hide();
 }
 
 // ==========================

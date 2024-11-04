@@ -58,7 +58,6 @@ async function listPop(toggle) {
     $('.frame-pop').html('');
     $('.frame-pop .ajax-loader').hide();
     $('.frame-pop').append('<div id="top-row"></div>');
-    $('.frame-pop #top-row').append('<div id="tool-banner"><img id="refresh" src="/assets/refresh.png"/ title="Refesh the List"></div>');
     // 搜索区域 Search area
     $('.frame-pop #top-row').append("<div  id='search-pannel'></div>");
     $('#search-pannel').append("<textarea id='txt-search' οnfοcus='this.select()' οnmοuseοver='this.focus()' spellcheck=false></textarea>");
@@ -68,6 +67,7 @@ async function listPop(toggle) {
 
     $('.frame-pop').append('<div class=ajax-loader><img src="/assets/loader.gif"/></div>');
     $('.frame-pop').append("<div id='list-type'></div>");
+    $('.frame-pop').append('<div id="tool-banner"><img id="refresh" src="/assets/refresh.png"/ title="Refesh the List"></div>');
 
     if (searchStr == '') {
       $('#list-type').text('All'); // 全部列表 All list
@@ -213,14 +213,13 @@ function refreshPostList() {
       const page = Math.min(totalpage, Math.max(1, $('#pnumber textarea').val()));
       if (page != curpage) processList(page - 1);
     });
-
     bindPageAction();
   }
 
   constructUI();
 }
 
-// 为分页控件绑定事件 Bind events to pagination controls
+// 为控件绑定事件 Bind events to pagination controls & list items
 function bindPageAction() {
   totalpage = Math.ceil(plist.length / listCnt);
 
@@ -243,7 +242,47 @@ function bindPageAction() {
   $('#next').click(function () {
     if (!isLoaderVisible() && curpage > 0) processList(curpage - 1);
   });
+
+
+  // 删除 Delete 
+  $('td.ind').click(function () {
+    // Confirm?
+    $.confirm({
+      title: "Delete Post?",
+      content: "Are you sure?",
+      buttons: {
+        confirm: function () {
+          $('.top-masker').show();
+          //deletePost($(this).parent().find('td.title').data('index'), function () {$('.top-masker').hide();});
+          popClose();
+        },
+        cancel: function () {
+          popClose();
+        },
+      }
+    });
+
+  });
+
+  // 加载文章 Load Post
+  $('td.title').click(function () {
+    var curind = $(this).data('index');
+    $.confirm({
+      title: gm('emptyblog'),
+      content: gm('emptyblogdetails'),
+      buttons: {
+        confirm: function () {
+          popClose();
+          loadText(curind);
+        },
+        cancel: function () {
+          popClose();
+        },
+      }
+    });
+  });
 }
+
 
 // 判断加载器是否可见 Helper function to check if loader is visible
 function isLoaderVisible() {
