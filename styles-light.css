@@ -510,7 +510,10 @@ body #user_info .ajax-loader img {
   opacity: 0.5;
 }
 .frame-pop #list-type {
+  position: absolute;
+  right: 180px;
+  bottom: 10px;
   font-size: 24px;
-  color: #eee;
+  color: #ddd;
   font-style: italic;
 }/*# sourceMappingURL=styles-light.css.map */

@@ -621,11 +621,11 @@ body {
   }
 
   #list-type {
-    //    position: fixed;
-    //    right: 190px;
-    //    top: 55px;
+        position: absolute;
+        right: 180px;
+        bottom: 10px;
     font-size: 24px;
-    color: #eee;
+    color: #ddd;
     font-style: italic;
-  }
+  } 
 }

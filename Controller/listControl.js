@@ -60,18 +60,20 @@ async function listPop(toggle) {
     $('.frame-pop').append('<div id="top-row"></div>');
     $('.frame-pop #top-row').append('<div id="tool-banner"><img id="refresh" src="/assets/refresh.png"/ title="Refesh the List"></div>');
     // 搜索区域 Search area
-    $('.frame-pop #top-row').append("<div id='list-type'></div>");
     $('.frame-pop #top-row').append("<div  id='search-pannel'></div>");
     $('#search-pannel').append("<textarea id='txt-search' οnfοcus='this.select()' οnmοuseοver='this.focus()' spellcheck=false></textarea>");
     $('#search-pannel').append("<span class='nav icon-search' id='search' title='Search Blog'></span>");
     $('#txt-search').val(searchStr);
+
+
+    $('.frame-pop').append('<div class=ajax-loader><img src="/assets/loader.gif"/></div>');
+    $('.frame-pop').append("<div id='list-type'></div>");
 
     if (searchStr == '') {
       $('#list-type').text('All'); // 全部列表 All list
     } else {
       $('#list-type').text('Search'); // 搜索结果 Search results
     }
-    $('.frame-pop').append('<div class=ajax-loader><img src="/assets/loader.gif"/></div>');
 
     // 刷新按钮事件 Refresh button event
     $('img#refresh').click(function () {
@@ -120,7 +122,7 @@ function getPostList(cb, type = 'all') {
           plist = plist['tree']
         } catch {
         }
-        if (typeof (cb) != 'undefined') cb(curpage,true);
+        if (typeof (cb) != 'undefined') cb(curpage, true);
       }, gh.onLogInFailed);
     };
     if (type == 'search') {
@@ -248,36 +250,93 @@ function isLoaderVisible() {
   return !$('.frame-pop .ajax-loader').is(':hidden');
 }
 
-// 处理分页列表 Process pagination list
-async function processList(page = 0, forcerefresh = false) {
-  if (page != curpage || forcerefresh == true) {
-    curpage = page;
-    clist = await fetchPageContent(plist, page * listCnt, listCnt);
-    chrome.storage.local.set({ clist: clist, plist: plist, curpage: curpage });
-    refreshPostList();
-  } else {
-    chrome.storage.local.get({ 'clist': [] }, function (obj) {
-      clist = obj.clist;
-      refreshPostList();
-    });
-  }
-}
+// 处理post列表的显示 Handle the list showing
+/* Thanks For ChatGPT, you know such promise & await & async is always my headache, but it well helped me to re-coded */
+async function processList(page = 0, forcerefesh = false) {
+  var force = forcerefesh;
+  clist = []
+  var nlist = plist.sort(function (a, b) {
+    a.name = a.path;
+    b.name = b.path;
+    //refine name
+    var adate = refineDate(a.name).replace(/(\d+-\d+-\d+)-.*\.md/, "$1");
+    var bdate = refineDate(b.name).replace(/(\d+-\d+-\d+)-.*\.md/, "$1");
 
-// 加载指定页面内容 Fetch content for specified page
-async function fetchPageContent(list, start, count) {
-  $('.frame-pop .ajax-loader').show();
-  const contentList = [];
-  for (let i = start; i < start + count && i < list.length; i++) {
-    const content = await gh.getContentAsync("_posts/" + list[i].path);
-    if (content.date.match(/\d+-\d+-\d+/)) {
-      contentList.push({
-        ...postParse(content.content),
-        date: content.date,
-        sha: content.sha,
-        slug: content.url.split('/').pop()
-      });
+    //For invalid post
+    if (adate == a.name)
+      adate = "1900-01-01";
+
+    if (bdate == b.name)
+      bdate = "1900-01-01";
+
+    var ret = dates.compare(adate, bdate);
+    if (ret == NaN) {
+      ret = -1;
+    }
+    return ret;
+  });
+
+  var nnlist = [];
+  for (var i = 0; i < nlist.length; i++) {
+    if (nlist[i].name.match(/^\d+-\d+-\d+-.*\.md/) != null) {
+      nnlist.push(nlist[i]);
     }
   }
-  $('.frame-pop .ajax-loader').hide();
-  return contentList;
+
+  if (page != curpage || force) { //New fetch needed, since page switched
+    var startIndex = page * listCnt
+    $('.frame-pop .ajax-loader').show();
+    for (var i = startIndex; i < startIndex + listCnt; i++) {
+      if (i == nnlist.length) break;
+      console.log(nnlist[nnlist.length - 1 - i].path);
+      var c = await gh.getContentAsync("_posts/" + nnlist[nnlist.length - 1 - i].path);
+      var pcontent = postParse(c.content);
+      if (c.date.match(/\d+-\d+-\d+/) == null) {
+        continue;
+      }
+      pcontent['date'] = c.date;
+      pcontent['sha'] = c.sha;
+      pcontent['slug'] = c.url.replace(/^.*\//, '');
+      if (clist.length < listCnt) {
+        clist.push(pcontent);
+        curpage = page;
+      }
+    }
+    await new Promise((resolve) => {
+      chrome.storage.local.set({ clist: clist, plist: plist, curpage: page }, function (result) {
+        resolve(result);
+      })
+    });
+    $('.frame-pop .ajax-loader').hide();
+    refreshPostList();
+  }
+  // Just refresh 
+  chrome.storage.local.get({ "clist": [] }, function (obj) {
+    if (typeof (obj.clist) != 'undefined' && obj.clist.length > 0) {
+      clist = obj.clist;
+      refreshPostList();
+    }
+  });
+};
+
+
+/* 用于显示文章内容 Funciton to load the post content after click the title */
+function loadText(ind) {
+  //-> The Post are loaded inside!
+  console.info(clist[ind]);
+  loadPost(clist[ind].content);
+  //Title
+  $('.posttitle').text(clist[ind].title);
+  curpost = clist[ind];
+  storePost();
+}
+
+// 日期格式 Some util to refine the date format 
+function refineDate(dstr) {
+  if (dstr.match(/-(\d)-/) == null) {
+    return dstr;
+  } else {
+    nstr = dstr.replace(/-(\d)-/g, "-0$1-");
+    return refineDate(nstr);
+  }
 }
