@@ -111,6 +111,10 @@
         "message": "当前草稿将被删除，请确认：",
         "description": "Blog Empitied"
     },
+    "emptyblogdetails": {
+        "message": "请确认不要误删有用数据。",
+        "description": "Blog Empitied Details"
+    },
     "yes": {
         "message": "确认",
         "description": "Yes"

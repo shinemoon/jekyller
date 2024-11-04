@@ -111,6 +111,11 @@
         "message": "Local Post Will Be Emptied , Is It OK?",
         "description": "Blog Empitied"
     },
+    "emptyblogdetails": {
+        "message": "Please confirm you will not delete useful post content.",
+        "description": "Blog Empitied Details"
+    },
+
     "yes": {
         "message": "Yes, sure",
         "description": "Yes"

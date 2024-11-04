@@ -54,7 +54,7 @@ body #user_info .ajax-loader img {
   position: fixed;
   top: 0;
   right: 0;
-  z-index: 1003;
+  z-index: 1103;
   width: 400px;
   box-shadow: rgba(20, 20, 20, 0.8) 2px -2px 4px;
 }
@@ -80,34 +80,6 @@ body #user_info .ajax-loader img {
 }
 .top-banner .frame-icon.op:hover {
   opacity: 0.3;
-}
-
-.frame-pop {
-  right: 10px;
-  bottom: 40px;
-  color: black;
-  width: 390px;
-  height: 320px;
-  z-index: 1002;
-  position: fixed;
-  display: block;
-  border: 2px solid rgba(234, 232, 232, 0.2862745098);
-  box-shadow: rgba(20, 20, 20, 0.8) 2px 2px 4px;
-  border-radius: 10px;
-  padding-left: 20px;
-  display: none;
-  background-color: white;
-  background-image: url("assets/Mark.png");
-  background-repeat: no-repeat;
-  background-position: 5% 120%;
-}
-.frame-pop .ajax-loader img {
-  position: fixed;
-  bottom: 205px;
-  right: 190px;
-  opacity: 0.6;
-  width: 50px;
-  height: 12px;
 }
 
 .top-masker,
@@ -194,38 +166,6 @@ body #user_info .ajax-loader img {
   cursor: pointer;
 }
 
-#search-pannel {
-  height: 18px;
-  position: fixed;
-  right: 50px;
-  bottom: 320px;
-  font-size: 16px;
-  color: rgb(241, 70, 70);
-  opacity: 0.7;
-}
-#search-pannel .nav {
-  cursor: pointer;
-}
-#search-pannel .nav:hover {
-  opacity: 0.5;
-}
-#search-pannel textarea {
-  color: #888;
-  font-size: 11px;
-  width: 140px;
-  display: inline-block;
-  border: none;
-  resize: none;
-  height: 14px;
-  outline: none;
-  background: rgba(255, 203, 0, 0.1);
-  border-radius: 3px;
-  font-family: Calibri;
-  color: #333;
-  margin-right: 10px;
-  padding-left: 10px;
-}
-
 #container {
   display: flex;
 }
@@ -264,4 +204,313 @@ body #user_info .ajax-loader img {
   left: 0px;
   background: rgba(234, 232, 232, 0.2862745098);
   box-shadow: rgba(20, 20, 20, 0.8) 2px -2px 4px;
+}
+
+#post-table {
+  margin: 20px 0 0 10px;
+  border: 0 solid grey;
+  width: 90%;
+}
+#post-table table {
+  width: 100%;
+}
+#post-table tr {
+  background: rgba(0, 0, 0, 0);
+  height: 18px;
+}
+#post-table td.label {
+  padding-left: 10px;
+  color: #333;
+  text-shadow: 1px 1px white;
+  font-size: 11px;
+  width: 100px;
+  background: rgba(100, 100, 100, 0.05);
+  border-radius: 4px;
+  cursor: pointer;
+}
+#post-table td.submit {
+  text-align: center;
+}
+#post-table td .send {
+  display: block;
+  background: #3FAE5F;
+  text-transform: uppercase;
+  text-align: center;
+  font-size: 12px;
+  color: #fff;
+  padding: 6px 28px 10px;
+  border: none;
+  outline: none;
+  float: right;
+  margin-top: 5px;
+  height: 11px;
+  margin-right: -4px;
+}
+#post-table td .send:hover {
+  background: #333;
+  cursor: pointer;
+}
+#post-table input,
+#post-table select,
+#post-table textarea {
+  padding: 5px 5px 4px;
+  width: 100%;
+  color: #333;
+  font-size: 12px;
+  border: 1px solid #ddd;
+}
+#post-table input:hover, #post-table input:focus,
+#post-table select:hover,
+#post-table select:focus,
+#post-table textarea:hover,
+#post-table textarea:focus {
+  outline: none;
+  border-radius: 4px;
+  cursor: pointer;
+  background: rgba(255, 203, 0, 0.1);
+}
+#post-table input[type=checkbox] {
+  width: auto;
+  margin-top: 8px;
+  border-radius: 4px;
+}
+
+#plist-table {
+  width: 90px;
+  margin-left: 10px;
+}
+#plist-table a {
+  color: grey;
+  text-decoration: none;
+  cursor: pointer;
+}
+#plist-table table {
+  width: 360px;
+}
+#plist-table table tr {
+  width: 100%;
+  padding-top: 3px;
+  height: 30px;
+}
+#plist-table table tr:nth-child(even) td {
+  background: rgba(200, 200, 200, 0.15);
+  border: 0 solid white;
+}
+#plist-table td {
+  width: 160px;
+  text-align: center;
+  font-size: 12px;
+  color: #333;
+}
+#plist-table td div {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 240px;
+  cursor: pointer;
+  color: #333;
+  text-shadow: 1px 1px rgb(250, 247, 247);
+  text-align: right;
+}
+#plist-table td.ind {
+  width: 10px;
+  background: white !important;
+  color: rgb(255, 149, 0);
+}
+#plist-table td.ind:hover {
+  border-radius: 1px;
+  color: pink;
+}
+#plist-table td.date {
+  width: 80px;
+  text-align: left;
+  padding-left: 20px;
+  font-size: 11px;
+  color: rgb(98, 99, 101);
+}
+
+/* Search Pannel */
+#search-pannel {
+  height: 18px;
+  font-size: 16px;
+  color: rgb(241, 70, 70);
+  opacity: 0.7;
+}
+#search-pannel .nav {
+  cursor: pointer;
+}
+#search-pannel .nav:hover {
+  opacity: 0.5;
+}
+#search-pannel textarea {
+  color: #333;
+  font-size: 11px;
+  width: 140px;
+  display: inline-block;
+  text-align: left;
+  border: none;
+  resize: none;
+  height: 14px;
+  outline: none;
+  overflow: hidden;
+  background: rgba(255, 149, 0, 0.4509803922);
+  border-radius: 3px;
+  font-family: Calibri;
+  margin-right: 10px;
+  padding-left: 10px;
+}
+
+.config-input {
+  margin: 30px auto 0;
+  width: 100%;
+  vertical-align: middle;
+}
+.config-input .config-title {
+  font-size: 11px;
+  color: grey;
+  width: 50px;
+  display: inline;
+  vertical-align: middle;
+}
+.config-input textarea {
+  margin-left: 20px;
+  padding: 5px 5px 4px;
+  width: 240px;
+  resize: none;
+  color: #ccc;
+  height: 12px;
+  font-size: 12px;
+  font-family: Arial, Helvetica, sans-serif;
+  outline: 1px solid #ddd;
+  border: none;
+  border-radius: 2px;
+  vertical-align: middle;
+}
+.config-input textarea:focus {
+  background: rgba(255, 203, 0, 0.1);
+}
+.config-input .icon {
+  margin: 0 8px 0 4px;
+  vertical-align: middle;
+  color: lightgrey;
+  cursor: auto;
+}
+.config-input .icon.active {
+  color: #5959dc;
+  cursor: pointer;
+}
+.config-input .icon.active:hover {
+  color: #3FAE5F;
+}
+.config-input .icon.disabled {
+  cursor: default;
+  color: #aaa;
+}
+.config-input .icon.disabled:hover {
+  color: #aaa;
+}
+
+.popping-note {
+  margin-top: 12px;
+  width: 350px;
+  height: 170px;
+  background: rgba(0, 0, 0, 0.03);
+  border: 1px dotted #888;
+  border-radius: 10px;
+  padding: 10px;
+  font-size: 12px;
+  color: #888;
+  white-space: pre-wrap;
+}
+.popping-note a {
+  -webkit-text-decoration: dotted;
+          text-decoration: dotted;
+  color: #aaa;
+  font-weight: bold;
+}
+.popping-note a:hover {
+  color: #888;
+}
+
+.frame-pop {
+  right: 10px;
+  top: 40px;
+  color: black;
+  width: 390px;
+  height: 320px;
+  z-index: 1102;
+  position: fixed;
+  border: 2px solid rgba(234, 232, 232, 0.2862745098);
+  box-shadow: rgba(20, 20, 20, 0.8) 2px 2px 4px;
+  border-radius: 10px;
+  padding-left: 20px;
+  display: none;
+  background-color: white;
+  background-image: url("assets/Mark.png");
+  background-repeat: no-repeat;
+  background-position: 5% 120%;
+}
+.frame-pop .ajax-loader img {
+  position: absolute;
+  bottom: 50%;
+  right: 50%;
+  opacity: 0.6;
+  width: 50px;
+  height: 12px;
+}
+.frame-pop #top-row {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  flex-direction: row-reverse;
+}
+.frame-pop #top-row #tool-banner {
+  border: 0px solid grey;
+  height: 50px;
+  width: auto;
+}
+.frame-pop #top-row #tool-banner #refresh {
+  width: 30px;
+  height: 30px;
+  opacity: 0.8;
+  cursor: pointer;
+  margin-top: 10px;
+  margin-left: 12px;
+}
+.frame-pop #top-row #tool-banner #refresh:hover {
+  opacity: 0.7;
+}
+.frame-pop #list-page {
+  font-size: 14px;
+  color: rgb(241, 70, 70);
+  opacity: 0.7;
+  height: 18px;
+}
+.frame-pop #list-page #pnumber textarea {
+  color: #888;
+  font-size: 16px;
+  font-weight: bold;
+  width: 40px;
+  display: inline-block;
+  text-align: center;
+  border: none;
+  resize: none;
+  height: 13px;
+  outline: none;
+  overflow: hidden;
+}
+.frame-pop #list-page #pnumber textarea:focus {
+  color: #5959dc;
+}
+.frame-pop #list-page .nav {
+  cursor: pointer;
+}
+.frame-pop #list-page .nav:hover {
+  opacity: 0.5;
+}
+.frame-pop #list-type {
+  font-size: 24px;
+  color: #eee;
+  font-style: italic;
 }/*# sourceMappingURL=styles-light.css.map */

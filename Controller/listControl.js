@@ -55,12 +55,13 @@ async function listPop(toggle) {
   }
   popFrame('list', toggle, function () {
     // 获取需要的信息 Get needed info
-    $('.frame-pop').html('<div class=ajax-loader><img src="/assets/loader.gif"/></div>');
+    $('.frame-pop').html('');
     $('.frame-pop .ajax-loader').hide();
-    $('.frame-pop').append('<div id="tool-banner"><img id="refresh" src="/assets/refresh.png"/ title="Refesh the List"></div>');
+    $('.frame-pop').append('<div id="top-row"></div>');
+    $('.frame-pop #top-row').append('<div id="tool-banner"><img id="refresh" src="/assets/refresh.png"/ title="Refesh the List"></div>');
     // 搜索区域 Search area
-    $('.frame-pop').append("<div id='list-type'></div>");
-    $('.frame-pop').append("<div  id='search-pannel'></div>");
+    $('.frame-pop #top-row').append("<div id='list-type'></div>");
+    $('.frame-pop #top-row').append("<div  id='search-pannel'></div>");
     $('#search-pannel').append("<textarea id='txt-search' οnfοcus='this.select()' οnmοuseοver='this.focus()' spellcheck=false></textarea>");
     $('#search-pannel').append("<span class='nav icon-search' id='search' title='Search Blog'></span>");
     $('#txt-search').val(searchStr);
@@ -70,12 +71,13 @@ async function listPop(toggle) {
     } else {
       $('#list-type').text('Search'); // 搜索结果 Search results
     }
+    $('.frame-pop').append('<div class=ajax-loader><img src="/assets/loader.gif"/></div>');
 
     // 刷新按钮事件 Refresh button event
     $('img#refresh').click(function () {
       $('#txt-search').val('');
       chrome.storage.local.set({ searchStr: $('#txt-search').val() }, function (result) {
-        getPostList(getPostDetails, type = 'all'); // 刷新全列表 Refresh the full list from GitHub
+        getPostList(processList, type = 'all'); // 刷新全列表 Refresh the full list from GitHub
         $('.frame-pop .ajax-loader').show();
       });
     });
@@ -85,7 +87,7 @@ async function listPop(toggle) {
       $('.frame-pop .ajax-loader').show();
       searchStr = $('#txt-search').val();
       chrome.storage.local.set({ searchStr: searchStr }, function (result) {
-        getPostList(getPostDetails, type = 'search'); // 搜索并刷新列表 Search and refresh the list
+        getPostList(processList, type = 'search'); // 搜索并刷新列表 Search and refresh the list
       });
     });
 
@@ -118,7 +120,7 @@ function getPostList(cb, type = 'all') {
           plist = plist['tree']
         } catch {
         }
-        if (typeof (cb) != 'undefined') cb();
+        if (typeof (cb) != 'undefined') cb(curpage,true);
       }, gh.onLogInFailed);
     };
     if (type == 'search') {
@@ -149,7 +151,7 @@ function getPostList(cb, type = 'all') {
           processData(slist)
             .then(function (rlist) {
               plist = rlist;
-              if (typeof (cb) != 'undefined') cb();
+              if (typeof (cb) != 'undefined') cb(curpage, true);
             })
             .catch(function (error) {
               // 处理错误 Handle errors
@@ -182,7 +184,7 @@ function refreshPostList() {
     });
 
     // 添加分页标记 Add pagination markers
-    $('.frame-pop').append("<div  id='list-page'></div>");
+    $('.frame-pop #top-row').append("<div  id='list-page'></div>");
     $('#list-page').append("<span class='nav icon-first' id='first'></span>");
     $('#list-page').append("<span class='nav icon-previous2' id='next'></span>");
     $('#list-page').append("<span class='nav number' id='pnumber'><textarea οnfοcus='this.select()' οnmοuseοver='this.focus()'></textarea></span>");

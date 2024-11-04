@@ -12,12 +12,20 @@ function gm(str) {
 // ==========================
 
 // 创建新帖子 Create New Post
-$('.img#create').confirmOn({
-    questionText: gm('emptyblog'),
-    textYes: gm('yes'),
-    textNo: gm('cancel')
-}, 'click', (e, confirmed) => {
-    if (confirmed) createNewPost();
+$('.img#create').click(() => {
+    popClose();
+    $.confirm({
+        title: gm('emptyblog'),
+        content: gm('emptyblogdetails'),
+        buttons: {
+            confirm: function () {
+                if (confirmed) createNewPost();
+            },
+            cancel: function () {
+                //
+            },
+        }
+    });
 });
 
 // 显示 Meta 信息 Show Meta Information
@@ -105,7 +113,7 @@ function storePost(cb) {
         if ($('.content.title input').val() !== curpost['title']) {
             $('.posttitle').text($('.content.title input').val());
         }
-        
+
         // 自动保存元数据 Auto-Saving Metadata
         Object.assign(curpost, {
             title: $('.content.title input').val(),

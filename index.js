@@ -100,8 +100,8 @@ editor.setKeyboardHandler("ace/keyboard/vim");
 editor.setOptions({
     fontSize: "14px",
     showPrintMargin: false,
+	showLineNumbers:false,
     wrap:true,
-    wrapMethod:"text",
 });
 
 // ==========================
