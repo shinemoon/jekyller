@@ -50,18 +50,67 @@ function refreshEditorCfg() {
           </div>
         </td>
         </tr>
-       <tr>
-        <td class="cfgEditor label">${gm("yes")}</td>
-        <td class="cfgEditor content"><div class="send">${gm("Update")}</div></td>
-      </tr>
-
-
     </table>
   </div>
+  <div class="send">${gm("Update")}</div>
 `;
 
         $('.frame-pop').append(htmlStr);
+        // Refresh the data and fill those rows...
+        //Vim
+        if (editorcfg.mode == 'vim') {
+            //Set the radio button
+            $('input[name="cfgEditorMode"][value="vim"]').prop('checked', true);
+            $('input[name="cfgEditorMode"][value="normal"]').prop('checked', false);
+        }
+        else {
+            // set the normal button
+            $('input[name="cfgEditorMode"][value="vim"]').prop('checked', false);
+            $('input[name="cfgEditorMode"][value="normal"]').prop('checked', true);
+        }
+
+        //Show number
+        $('input[name="cfgEditorNumber"]').prop('checked', editorcfg.shownumber);
+
+        //Vim
+        if (editorcfg.layout == 'full') {
+            //Set the radio button
+            $('input[name="cfgEditorLayout"][value="full"]').prop('checked', true);
+            $('input[name="cfgEditorLayout"][value="single"]').prop('checked', false);
+        }
+        else {
+            // set the normal button
+            $('input[name="cfgEditorLayout"][value="full"]').prop('checked', false);
+            $('input[name="cfgEditorLayout"][value="single"]').prop('checked', true);
+        }
     });
+
+    // Update action:
+    $('.cfgEditor .send').click(() => {
+        //Sort the  editor config
+        if ($('input[name="cfgEditorMode"][value="vim"]').prop('checked') == true)
+            editorcfg.mode = 'vim';
+        else
+            editorcfg.mode = 'normal';
+
+        if ($('input[name="cfgEditorNumber"]').prop('checked') == true)
+            editorcfg.shownumber = true;
+        else
+            editorcfg.shownumber = false;
+
+        if ($('input[name="cfgEditorLayout"][value="full"]').prop('checked') == true)
+            editorcfg.layout = 'full';
+        else
+            editorcfg.layout = 'single';
+
+        // Save config
+        chrome.storage.local.set({ 'editorconfig': editorcfg}, function () {
+            logInfo('DONE');
+        });
+
+    })
+
+
 }
 // 刷新并填充 Token 信息 Refresh and Populate Token Information
 function refreshTokenInfo() {

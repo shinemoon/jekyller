@@ -8,6 +8,8 @@ let curpostLocal;           // 当前本地帖子 Local post content
 let picCacheList = {};      // 图片缓存列表 Image cache list
 let skin = 'dark';          // 主题皮肤 Skin theme
 
+let editorcfg = {};       //编辑器配置  Editor Config
+
 // ==========================
 // 设置和初始化界面 Setup and Initialize Interface
 // ==========================
@@ -19,10 +21,17 @@ chrome.storage.local.get({
         sha: null,
         title: 'Untitled'
     },
+    //Editor Option!
+    'editorconfig': {
+        mode: "normal", //vim, normal
+        shownumber: false, //true, false
+        layout: 'full'//full, single
+    },
     'skin': 'dark'
 }, (obj) => {
     curpostLocal = obj.workingpost;
     skin = obj.skin;
+    editorcfg = obj.editorconfig;
     $('.posttitle').text(obj.workingpost['title']);
 
     // 获取本地帖子内容 Get local post content
@@ -30,6 +39,24 @@ chrome.storage.local.get({
         curpost = localPost || curpostLocal;
         loadPost(curpost.content);
     });
+    //Vim Mode or not
+    if (editorcfg.mode == "vim")
+        editor.setKeyboardHandler("ace/keyboard/vim");
+    editor.setOptions({
+        fontSize: "14px",
+        showPrintMargin: false,
+        showLineNumbers: editorcfg.shownumber,
+        wrap: true,
+    });
+
+    // 初始化内容和监听编辑器内容变化 Initialize content and monitor editor content changes
+    updatePreview();
+    editor.getSession().on('change', updatePreview);
+
+    // 初次调用和窗口调整事件监听 Initial call and listen for window resize event
+    setDivHeight();
+    window.addEventListener("resize", setDivHeight);
+
 
     // 加载主题样式 Load theme stylesheet
     $('head').append(`<link id="stylehdl" rel="stylesheet" type="text/css" href="styles-${skin}.css"/>`);
@@ -88,6 +115,7 @@ function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
+
 // ==========================
 // 字体和编辑器初始化 Font and Editor Initialization
 // ==========================
@@ -109,14 +137,6 @@ else
 */
 
 editor.session.setMode("ace/mode/markdown");
-editor.setKeyboardHandler("ace/keyboard/vim");
-editor.setOptions({
-    fontSize: "14px",
-    showPrintMargin: false,
-    showLineNumbers: false,
-    wrap: true,
-});
-
 // ==========================
 // Markdown 预览功能 Markdown Preview
 // ==========================
@@ -127,10 +147,6 @@ const preview = document.getElementById("preview");
 function updatePreview() {
     preview.innerHTML = marked.parse(editor.getValue());
 }
-
-// 初始化内容和监听编辑器内容变化 Initialize content and monitor editor content changes
-updatePreview();
-editor.getSession().on('change', updatePreview);
 
 // ==========================
 // 页面布局调整 Adjust Layout
@@ -144,9 +160,6 @@ function setDivHeight() {
     document.getElementById("preview").style.height = `${window.innerHeight - 35}px`;
 }
 
-// 初次调用和窗口调整事件监听 Initial call and listen for window resize event
-setDivHeight();
-window.addEventListener("resize", setDivHeight);
 
 // ==========================
 // 初始化检查 GitHub 令牌 Initialize GitHub Token Check

@@ -77,23 +77,6 @@ body {
 #post-table td.submit {
   text-align: center;
 }
-#post-table td.submit .send {
-  display: block;
-  background: #3fae5f;
-  text-transform: uppercase;
-  text-align: center;
-  font-size: 12px;
-  color: white;
-  padding: 6px 28px 10px;
-  border: none;
-  outline: none;
-  height: 11px;
-  margin-right: -4px;
-}
-#post-table td.submit .send:hover {
-  background: #333333;
-  cursor: pointer;
-}
 
 #top-banner-row {
   display: flex;
@@ -268,6 +251,29 @@ body {
   cursor: pointer;
   border-radius: 3px;
 }
+#top-banner-row .top-banner .frame-pop .send {
+  display: block;
+  background: #3fae5f;
+  text-transform: uppercase;
+  text-align: center;
+  font-size: 12px;
+  color: white;
+  padding: 6px 28px 10px;
+  border: none;
+  outline: none;
+  float: right;
+  height: 11px;
+  margin-right: -4px;
+}
+#top-banner-row .top-banner .frame-pop .send:hover {
+  background: #333333;
+  cursor: pointer;
+}
+#top-banner-row .top-banner .frame-pop.cfgEditor .send {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+}
 #top-banner-row .top-banner #user_info {
   font-size: 10px;
   color: #666;
@@ -386,24 +392,6 @@ body {
 }
 #post-table td.submit {
   text-align: center;
-}
-#post-table td .send {
-  display: block;
-  background: #3fae5f;
-  text-transform: uppercase;
-  text-align: center;
-  font-size: 12px;
-  color: white;
-  padding: 6px 28px 10px;
-  border: none;
-  outline: none;
-  float: right;
-  height: 11px;
-  margin-right: -4px;
-}
-#post-table td .send:hover {
-  background: #333333;
-  cursor: pointer;
 }
 #post-table input,
 #post-table select,
