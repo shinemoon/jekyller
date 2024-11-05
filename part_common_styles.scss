@@ -10,94 +10,10 @@ body {
   background: $bg-light;
   overflow-y: hidden;
 
-  //Tool tip
-  .tooltip {
-    position: fixed;
-    right: 400px;
-    top: 0px;
-    background: $bg-light;
-    opacity: 0.8;
-    border-left: 2px solid $highlight-light-opacity;
-    text-align: left;
-    z-index: 1002;
-    width: 120px;
-    padding: 5px 0px 5px 10px;
-    color: $fg-color-1;
-  }
-
-  #user_info {
-    font-size: 10px;
-    color: $fg-color-1;
-    cursor: pointer;
-    font-weight: normal;
-    font-family: "Georgia", "Arial", "Microsoft YaHei", sans-serif;
-    position: fixed;
-    top: 6px;
 
 
-    a {
-      color: $fg-color-1;
-      font-size: 11px;
-      text-decoration: none;
-      font-style: italic;
-
-      &:hover,
-      &:active,
-      &:visited {
-        color: $visited-color;
-      }
-    }
-
-    .ajax-loader img {
-      width: 50px;
-      height: 10px;
-      opacity: 0.3;
-    }
-  }
 }
 
-// Top banner
-.top-banner {
-  height: 12px;
-  text-align: left;
-  font-size: 16px;
-  background: $bg-light;
-  padding: 1px 20px 10px;
-  border-left: 4px solid $highlight-light;
-  position: fixed;
-  top: 0;
-  right: 0;
-  z-index: 1103;
-  width: 400px;
-  box-shadow: $box-shadow 2px -2px 4px;
-
-  .frame-icon {
-    width: 16px;
-    height: 16px;
-    float: right;
-    margin-right: 10px;
-    margin-top: 3px;
-    color: $fg-color-0;
-    cursor: pointer;
-    -webkit-app-region: no-drag;
-
-    &.op {
-      width: 20px;
-      height: 20px;
-      font-size: 14px;
-      opacity: 0.8;
-
-      &.focus {
-        color: $highlight-light;
-        text-shadow: 1px 1px $fg-color-0;
-      }
-
-      &:hover {
-        opacity: 0.3;
-      }
-    }
-  }
-}
 
 
 // Masking layers
@@ -196,16 +112,248 @@ body {
   }
 }
 
+#top-banner-row {
+  display: flex;
+  width: 100%;
+  max-width: 1400px;
+  margin-left: auto;
+  margin-right: auto;
+  justify-content: space-between;
+
+  //Tool tip
+  .tooltip {
+    position: fixed;
+    right: calc(50% - 35px);
+    top: -5px;
+    background: $tooltip-bg;
+    opacity: 1;
+    text-align: center;
+    z-index: 1002;
+    width: 120px;
+    padding: 10px 0px 5px 10px;
+    color: $tooltip-fg;
+
+    height: 20px;
+    border-radius: 5px;
+  }
+
+  // Top banner
+  .top-banner {
+
+    height: 20px;
+    text-align: left;
+    font-size: 16px;
+    background: $bg-light;
+    padding: 10px 20px 10px;
+    border-bottom: 4px solid $highlight-light;
+    // position: fixed;
+    //top: 0;
+    //right: 0;
+    z-index: 1103;
+    width: 400px;
+    box-shadow: $box-shadow 2px -2px 4px;
+
+
+
+    .frame-icon {
+      width: 16px;
+      height: 16px;
+      float: right;
+      margin-right: 10px;
+      margin-top: 3px;
+      color: $fg-color-0;
+      cursor: pointer;
+      -webkit-app-region: no-drag;
+
+      &.op {
+        width: 20px;
+        height: 20px;
+        font-size: 14px;
+        opacity: 0.8;
+
+        &.focus {
+          color: $highlight-light;
+          text-shadow: 1px 1px $fg-color-0;
+        }
+
+        &:hover {
+          opacity: 0.3;
+        }
+      }
+    }
+
+    .frame-pop {
+
+      left: 0px;
+      top: 15px;
+
+      color: black;
+      width: 390px;
+      height: 320px;
+
+      z-index: 1102;
+      position: relative;
+      border: 2px solid $bg-light;
+      box-shadow: rgba(20, 20, 20, 0.8) 2px 2px 4px;
+      border-radius: 10px;
+      padding-left: 20px;
+
+      display: none;
+      background-color: $highlight-fg;
+      background-image: url("assets/Mark.png");
+      background-repeat: no-repeat;
+      background-position: 5% 120%;
+
+      .ajax-loader img {
+        position: absolute;
+        bottom: 50%;
+        right: 50%;
+        opacity: 0.6;
+        width: 50px;
+        height: 12px;
+      }
+
+      #top-row {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        width: 100%;
+        height: 50px;
+        flex-direction: row-reverse;
+
+        #tool-banner {
+          border: 0px solid $fg-color-1;
+          height: 80px;
+          width: auto;
+          //position: fixed;
+          //bottom: 15px;
+          //right: 5px;
+
+
+        }
+      }
+
+
+      #list-page {
+        font-size: 14px;
+        color: $highlight-dark;
+        opacity: 0.7;
+        height: 18px;
+
+        #pnumber textarea {
+          background-color: $highlight-fg;
+          color: $fg-color-2;
+          font-size: 16px;
+          font-weight: bold;
+          width: 40px;
+          display: inline-block;
+          text-align: center;
+          border: none;
+          resize: none;
+          height: 13px;
+          outline: none;
+          overflow: hidden;
+
+          &:focus {
+            color: $icon-active;
+          }
+        }
+
+        .nav {
+          cursor: pointer;
+
+          &:hover {
+            opacity: 0.5;
+          }
+        }
+      }
+
+      #list-type {
+        position: absolute;
+        right: 180px;
+        bottom: 10px;
+        font-size: 24px;
+        color: $fg-color-2;
+        font-style: italic;
+      }
+
+      #refresh {
+        position: absolute;
+        right: 10px;
+        bottom: 10px;
+        width: 30px;
+        height: 30px;
+        opacity: 0.8;
+        cursor: pointer;
+        margin-top: 10px;
+        margin-left: 12px;
+
+        &:hover {
+          opacity: 0.7;
+        }
+      }
+    }
+
+    #user_info {
+      font-size: 10px;
+      color: $fg-color-1;
+      cursor: pointer;
+      font-weight: normal;
+      font-family: "Georgia", "Arial", "Microsoft YaHei", sans-serif;
+      width: 150px;
+
+      a {
+        color: $fg-color-1;
+        font-size: 11px;
+        text-decoration: none;
+        font-style: italic;
+
+        &:hover,
+        &:active,
+        &:visited {
+          color: $visited-color;
+        }
+      }
+
+      .ajax-loader img {
+        width: 50px;
+        height: 10px;
+        opacity: 0.3;
+      }
+    }
+  }
+
+  .posttitle {
+    height: 20px;
+    color: $fg-color-0;
+    text-align: right;
+    padding-right: 30px;
+    font-size: 14px;
+    padding: 10px 20px;
+    border-bottom: 2px solid $highlight-light;
+    width: auto;
+    // position: fixed;
+    //top: 0px;
+    //left: 0px;
+    background: $bg-light;
+    box-shadow: $box-shadow 2px -2px 4px;
+  }
+
+
+}
+
 
 // Container styles
 #container {
   display: flex;
+  justify-content: center;
 
   #editor,
   #preview {
     width: 50%;
     height: 100vh;
-    margin-top: 28px;
+    margin-top: 8px;
+    max-width: 680px;
   }
 
   #editor {
@@ -223,6 +371,7 @@ body {
     overflow-y: auto;
     background: $bg-light;
     border-left: 1px dotted $fg-color-2;
+    margin-left: 2px;
 
     img {
       width: 90%;
@@ -230,18 +379,24 @@ body {
       border-radius: 0px;
       border: 5px solid rgba(155, 155, 155, 0.8);
     }
-    h1,h2,h3,h4 {
-      font-size:1.1em;
-      margin-bottom:8px;
-      border-bottom:1px dotted $fg-color-2;
-      text-align:left;
-      padding:3px;
+
+    h1,
+    h2,
+    h3,
+    h4 {
+      font-size: 1.1em;
+      margin-bottom: 8px;
+      border-bottom: 1px dotted $fg-color-2;
+      text-align: left;
+      padding: 3px;
     }
+
     blockquote {
       color: $preview-quote-fg;
       background: $preview-quote-bg;
-      padding:5px;
+      padding: 5px;
     }
+
     a {
       color: $fg-color-invert;
       background-color: $bg-dark;
@@ -256,21 +411,6 @@ body {
 
 
 // Other components and utility styles...
-.posttitle {
-  color: $fg-color-0;
-  text-align: right;
-  padding-right: 30px;
-  font-size: 14px;
-  padding: 4px 20px;
-  border-right: 2px solid $highlight-light;
-  width: auto;
-  position: fixed;
-  top: 0px;
-  left: 0px;
-  background: $bg-light;
-  box-shadow: $box-shadow 2px -2px 4px;
-}
-
 //Config table style
 #post-table {
   margin: 20px 0 0 10px;
@@ -400,7 +540,7 @@ body {
 
     &.ind {
       width: 10px;
-      background: $transparent-bg!important;
+      background: $transparent-bg !important;
       color: $delete-icon;
 
       &:hover {
@@ -537,118 +677,6 @@ body {
 
     &:hover {
       color: $fg-color-2;
-    }
-  }
-}
-
-.frame-pop {
-
-  right: 10px;
-  top: 40px;
-
-  color: black;
-  width: 390px;
-  height: 320px;
-
-  z-index: 1102;
-  position: fixed;
-  border: 2px solid $bg-light;
-  box-shadow: rgba(20, 20, 20, 0.8) 2px 2px 4px;
-  border-radius: 10px;
-  padding-left: 20px;
-
-  display: none;
-  background-color: $highlight-fg;
-  background-image: url("assets/Mark.png");
-  background-repeat: no-repeat;
-  background-position: 5% 120%;
-
-  .ajax-loader img {
-    position: absolute;
-    bottom: 50%;
-    right: 50%;
-    opacity: 0.6;
-    width: 50px;
-    height: 12px;
-  }
-
-  #top-row {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    width: 100%;
-    height: 50px;
-    flex-direction: row-reverse;
-
-    #tool-banner {
-      border: 0px solid $fg-color-1;
-      height: 80px;
-      width: auto;
-      //position: fixed;
-      //bottom: 15px;
-      //right: 5px;
-
-
-    }
-  }
-
-
-  #list-page {
-    font-size: 14px;
-    color: $highlight-dark;
-    opacity: 0.7;
-    height: 18px;
-
-    #pnumber textarea {
-      background-color: $highlight-fg;
-      color: $fg-color-2;
-      font-size: 16px;
-      font-weight: bold;
-      width: 40px;
-      display: inline-block;
-      text-align: center;
-      border: none;
-      resize: none;
-      height: 13px;
-      outline: none;
-      overflow: hidden;
-
-      &:focus {
-        color: $icon-active;
-      }
-    }
-
-    .nav {
-      cursor: pointer;
-
-      &:hover {
-        opacity: 0.5;
-      }
-    }
-  }
-
-  #list-type {
-    position: absolute;
-    right: 180px;
-    bottom: 10px;
-    font-size: 24px;
-    color: $fg-color-2;
-    font-style: italic;
-  }
-
-  #refresh {
-    position: absolute;
-    right: 10px;
-    bottom: 10px;
-    width: 30px;
-    height: 30px;
-    opacity: 0.8;
-    cursor: pointer;
-    margin-top: 10px;
-    margin-left: 12px;
-
-    &:hover {
-      opacity: 0.7;
     }
   }
 }

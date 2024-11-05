@@ -19,12 +19,16 @@ $('.img#create').click(() => {
         content: gm('emptyblogdetails'),
         theme: 'supervan', // 使用内置的主题
         buttons: {
-            confirm: function () {
+            confirm: {
+                text:gm("yes"),
+                action:function () {
                 createNewPost();
-            },
-            cancel: function () {
+            }},
+            cancel: {
+                text:gm("cancel"),
+                action:function () {
                 //
-            },
+            }},
         }
     });
 });
@@ -89,7 +93,8 @@ function popFrame(id, toggle = true, cb) {
     $(`#${id}`).addClass('focus');
     const frame = $(`<div class="frame-pop ${id}"></div>`);
     const mask = $('<div class="frame-mask"></div>');
-    $('body').append(frame, mask);
+    $('body').append(mask);
+    $('body .top-banner').append(frame);
     cb();
     bindListAction();
     $('.frame-mask').show();

@@ -49,17 +49,21 @@ function refreshTokenInfo() {
                 content: gm('confirmRemoveTokenDetails'),
                 theme: 'supervan', // 使用内置的主题
                 buttons: {
-                    confirm: function () {
+                    confirm: {
+                        text:gm("yes"),
+                        action:function () {
                         ltoken = "";
                         chrome.storage.local.set({ 'ltoken': ltoken }, function () {
                             console.log("Token Cleared.");
                             tokenPop(false);  // Close the token popup
                             popClose();
                         });
-                    },
-                    cancel: function () {
+                    }},
+                    cancel: {
+                        text:gm("cancel"),
+                        action:function () {
                         popClose();
-                    },
+                    }},
                 }
             });
 

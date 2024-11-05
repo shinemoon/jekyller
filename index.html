@@ -32,29 +32,30 @@
 </head>
 
 <body>
-   <div class="posttitle"></div>
-   <div class="top-banner">
-      <!--b>J</b>ekyller-->
+   <div id="top-banner-row">
+      <div class="posttitle"></div>
+      <div class="tooltip" style="display: none;;"><span class="tooltiptext"> </span></div>
+      <div class="top-banner">
+         <!--b>J</b>ekyller-->
+         <span class='frame-icon op icon-user img' style='display:none;opacity:0.6;'></span>
+         <span id="user_info"><span class='ajax-loader'><img src="/assets/loader.gif" /></span> </span>
+         <style>
+            .window-icon {
+               color: grey;
+            }
+         </style>
+         <span class='frame-icon op icon-github4 img ' id='token' val="ConfigToken"> </span>
 
-      <span class='frame-icon op icon-user img' style='display:none;opacity:0.6;'></span>
-      <span id="user_info"><span class='ajax-loader'><img src="/assets/loader.gif" /></span> </span>
-      <style>
-         .window-icon {
-            color: grey;
-         }
-      </style>
-      <span class='frame-icon op icon-github4 img ' id='token' val="ConfigToken"> </span>
-
-      <span class='frame-icon op icon-menu img ' id='list' val="ListRecent"></span>
-      <span class='frame-icon op icon-pen img ' id='meta' val="ConfigMeta"> </span>
-      <span class='frame-icon op icon-new-tab img ' id='create' val="CreatePost"> </span>
-      <span class='frame-icon op icon-sun img ' id='skin' val="switchDay"> </span>
-      <div class='op-span'>
-         &nbsp
+         <span class='frame-icon op icon-menu img ' id='list' val="ListRecent"></span>
+         <span class='frame-icon op icon-pen img ' id='meta' val="ConfigMeta"> </span>
+         <span class='frame-icon op icon-new-tab img ' id='create' val="CreatePost"> </span>
+         <span class='frame-icon op icon-sun img ' id='skin' val="switchDay"> </span>
+         <div class='op-span'>
+            &nbsp
+         </div>
       </div>
    </div>
 
-   <div class="tooltip" style="display: none;;"><span class="tooltiptext"> </span></div>
    <!-- Ace 编辑器容器 -->
    <div id="container">
       <div id="editor"></div>

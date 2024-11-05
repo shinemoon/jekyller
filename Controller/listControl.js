@@ -263,7 +263,7 @@ function bindPageAction() {
         },
         cancel: {
           text: gm("cancel"),
-          action:function() {
+          action: function () {
             popClose();
           },
         }
@@ -280,12 +280,18 @@ function bindPageAction() {
       content: gm('emptyblogdetails'),
       theme: 'supervan', // 使用内置的主题
       buttons: {
-        confirm: function () {
-          popClose();
-          loadText(curind);
+        confirm: {
+          text: gm("yes"),
+          action: function () {
+            popClose();
+            loadText(curind);
+          }
         },
-        cancel: function () {
-          popClose();
+        cancel: {
+          text: gm("cancel"),
+          action: function () {
+            popClose();
+          }
         },
       }
     });
