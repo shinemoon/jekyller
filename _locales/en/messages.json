@@ -23,6 +23,14 @@
         "message": "Create Post",
         "description": "Create Post"
     },
+    "DeletePost": {
+        "message": "Delete Post",
+        "description": "Delete Post"
+    },
+    "DeletePostDes": {
+        "message": "Delete Post in GitHub, Are u Sure?",
+        "description": "Delete Post Des"
+    },
     "ConfigToken": {
         "message": "Configure Token",
         "description": "ConfigToken"
@@ -38,6 +46,10 @@
     "confirmRemoveToken": {
         "message": "Are you sure you want to delete current token?",
         "description": "Clear Token Confirmation"
+    },
+    "confirmRemoveTokenDetails": {
+        "message": "It will remove token and logout.",
+        "description": "Clear Token Confirmation Details"
     },
     "saveToken": {
         "message": "Save Token",

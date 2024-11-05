@@ -17,6 +17,7 @@ $('.img#create').click(() => {
     $.confirm({
         title: gm('emptyblog'),
         content: gm('emptyblogdetails'),
+        theme: 'supervan', // 使用内置的主题
         buttons: {
             confirm: function () {
                 createNewPost();

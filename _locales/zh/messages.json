@@ -23,6 +23,15 @@
         "message": "创建博文",
         "description": "Create Post"
     },
+    "DeletePost": {
+        "message": "删除文章",
+        "description": "Delete Post"
+    },
+    "DeletePostDes": {
+        "message": "请确认要在Github中删除本文?",
+        "description": "Delete Post Des"
+    },
+
     "ConfigToken": {
         "message": "配置令牌",
         "description": "ConfigToken"
@@ -38,6 +47,10 @@
     "confirmRemoveToken": {
         "message": "你确认要删除当前令牌？",
         "description": "Clear Token Confirmation"
+    },
+    "confirmRemoveTokenDetails": {
+        "message": "该动作将删除令牌，等同于退出登录。",
+        "description": "Clear Token Confirmation Details"
     },
     "saveToken": {
         "message": "保存令牌",

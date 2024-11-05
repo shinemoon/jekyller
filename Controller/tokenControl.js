@@ -44,13 +44,25 @@ function refreshTokenInfo() {
 
         // 清除 Token Remove Token
         $('.remove-token').on('click', function () {
-            if ($(this).hasClass('active') && confirm(gm('confirmRemoveToken'))) {
-                ltoken = "";
-                chrome.storage.local.set({ 'ltoken': ltoken }, function () {
-                    console.log("Token Cleared.");
-                    tokenPop(false);  // Close the token popup
-                });
-            }
+            $.confirm({
+                title: gm('confirmRemoveToken'),
+                content: gm('confirmRemoveTokenDetails'),
+                theme: 'supervan', // 使用内置的主题
+                buttons: {
+                    confirm: function () {
+                        ltoken = "";
+                        chrome.storage.local.set({ 'ltoken': ltoken }, function () {
+                            console.log("Token Cleared.");
+                            tokenPop(false);  // Close the token popup
+                            popClose();
+                        });
+                    },
+                    cancel: function () {
+                        popClose();
+                    },
+                }
+            });
+
         });
 
         // 检测 Token 输入内容变更 Detect Changes in Token Input

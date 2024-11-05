@@ -249,18 +249,25 @@ function bindPageAction() {
     var curind = $(this).parent().find('td.title').data('index');
     // Confirm?
     $.confirm({
-      title: "Delete Post?",
-      content: "Are you sure?",
+      title: gm('DeletePost'),
+      content: gm('DeletePostDes'),
+      theme: 'supervan', // 使用内置的主题
       buttons: {
-        confirm: function () {
-          $('.top-masker').show();
-          deletePost(curind, function () { $('.top-masker').hide(); });
-          popClose();
+        confirm: {
+          text: gm("yes"),
+          action: function () {
+            $('.top-masker').show();
+            deletePost(curind, function () { $('.top-masker').hide(); });
+            popClose();
+          }
         },
-        cancel: function () {
-          popClose();
-        },
-      }
+        cancel: {
+          text: gm("cancel"),
+          action:function() {
+            popClose();
+          },
+        }
+      },
     });
 
   });
@@ -271,6 +278,7 @@ function bindPageAction() {
     $.confirm({
       title: gm('emptyblog'),
       content: gm('emptyblogdetails'),
+      theme: 'supervan', // 使用内置的主题
       buttons: {
         confirm: function () {
           popClose();
