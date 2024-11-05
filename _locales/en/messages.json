@@ -181,6 +181,10 @@
         "message": "Normal Mode",
         "description": "Normal Mode"
     },
+    "configUpdated": {
+        "message": "Config Updated",
+        "description": "Config updated"
+    },
     "configEditor":{
         "message": "Editor Configuration",
         "description": "Editor Config"

@@ -56,6 +56,30 @@ function refreshEditorCfg() {
 `;
 
         $('.frame-pop').append(htmlStr);
+        // Update action:
+        $('.cfgEditor .send').click(() => {
+            //Sort the  editor config
+            if ($('input[name="cfgEditorMode"][value="vim"]').prop('checked') == true)
+                editorcfg.mode = 'vim';
+            else
+                editorcfg.mode = 'normal';
+
+            if ($('input[name="cfgEditorNumber"]').prop('checked') == true)
+                editorcfg.shownumber = true;
+            else
+                editorcfg.shownumber = false;
+
+            if ($('input[name="cfgEditorLayout"][value="full"]').prop('checked') == true)
+                editorcfg.layout = 'full';
+            else
+                editorcfg.layout = 'single';
+
+            // Save config
+            chrome.storage.local.set({ 'editorconfig': editorcfg }, function () {
+                logInfo(gm('configUpdated'));
+            });
+
+        })
         // Refresh the data and fill those rows...
         //Vim
         if (editorcfg.mode == 'vim') {
@@ -85,30 +109,7 @@ function refreshEditorCfg() {
         }
     });
 
-    // Update action:
-    $('.cfgEditor .send').click(() => {
-        //Sort the  editor config
-        if ($('input[name="cfgEditorMode"][value="vim"]').prop('checked') == true)
-            editorcfg.mode = 'vim';
-        else
-            editorcfg.mode = 'normal';
 
-        if ($('input[name="cfgEditorNumber"]').prop('checked') == true)
-            editorcfg.shownumber = true;
-        else
-            editorcfg.shownumber = false;
-
-        if ($('input[name="cfgEditorLayout"][value="full"]').prop('checked') == true)
-            editorcfg.layout = 'full';
-        else
-            editorcfg.layout = 'single';
-
-        // Save config
-        chrome.storage.local.set({ 'editorconfig': editorcfg}, function () {
-            logInfo('DONE');
-        });
-
-    })
 
 
 }

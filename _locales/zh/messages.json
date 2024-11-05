@@ -180,6 +180,10 @@
         "message": "普通模式",
         "description": "Normal Mode"
     },
+    "configUpdated": {
+        "message": "配置更新完毕",
+        "description": "Config updated"
+    },
     "configEditor":{
         "message": "编辑器选项",
         "description": "Editor Config"
