@@ -61,14 +61,17 @@ body {
   background: rgba(0, 0, 0, 0);
   height: 18px;
 }
+#post-table tr:nth-child(even) td {
+  background: rgba(100, 100, 100, 0.1);
+}
 #post-table tr td.label {
   padding-left: 10px;
   color: #fff;
   text-shadow: rgba(112, 105, 105, 0.91) 1px 1px;
   font-size: 11px;
   width: 100px;
-  background: rgba(100, 100, 100, 0.8);
-  border-radius: 4px;
+  background: rgba(100, 100, 100, 0.6);
+  border-radius: 0px;
   cursor: pointer;
 }
 #post-table td.submit {
@@ -84,7 +87,6 @@ body {
   padding: 6px 28px 10px;
   border: none;
   outline: none;
-  margin-top: 5px;
   height: 11px;
   margin-right: -4px;
 }
@@ -151,7 +153,6 @@ body {
 }
 #top-banner-row .top-banner .frame-pop {
   left: 0px;
-  top: 15px;
   color: black;
   width: 390px;
   height: 320px;
@@ -238,6 +239,34 @@ body {
 }
 #top-banner-row .top-banner .frame-pop #refresh:hover {
   opacity: 0.7;
+}
+#top-banner-row .top-banner .frame-pop .radio-group {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+#top-banner-row .top-banner .frame-pop .radio-group .radio-option {
+  margin: 0;
+  padding: 5px;
+  font-size: 10px;
+  display: flex;
+  align-items: center;
+}
+#top-banner-row .top-banner .frame-pop .radio-group .radio-option input[type=radio] {
+  width: 16px;
+  height: 16px;
+  margin-right: 5px;
+}
+#top-banner-row .top-banner .frame-pop .radio-group .send {
+  display: inline-block;
+  padding: 5px 10px;
+  margin-left: 15px;
+  background-color: #007bff;
+  color: #fff;
+  font-size: 14px;
+  text-align: center;
+  cursor: pointer;
+  border-radius: 3px;
 }
 #top-banner-row .top-banner #user_info {
   font-size: 10px;
@@ -341,14 +370,18 @@ body {
   background: rgba(0, 0, 0, 0);
   height: 18px;
 }
+#post-table td:has(input[type=checkbox]) {
+  display: flex;
+  justify-content: flex-end;
+}
 #post-table td.label {
   padding-left: 10px;
   color: #686464;
   text-shadow: 1px 1px #eee;
   font-size: 11px;
   width: 100px;
-  background: rgba(100, 100, 100, 0.8);
-  border-radius: 4px;
+  background: rgba(100, 100, 100, 0.6);
+  border-radius: 0px;
   cursor: pointer;
 }
 #post-table td.submit {
@@ -365,7 +398,6 @@ body {
   border: none;
   outline: none;
   float: right;
-  margin-top: 5px;
   height: 11px;
   margin-right: -4px;
 }

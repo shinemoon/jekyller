@@ -138,8 +138,12 @@
     },
 
     "yes": {
-        "message": "Yes, sure",
+        "message": "Yes",
         "description": "Yes"
+    },
+    "no": {
+        "message": "No",
+        "description": "No"
     },
     "cancel": {
         "message": "No, Thanks",
@@ -148,5 +152,38 @@
     "blogName": {
         "message": "Blog: ",
         "description": "Blog Owner"
+    },
+    "shownumber":{
+        "message": "Show Number",
+        "description": "Show Number"
+    },
+    "editorLayout":{
+        "message": "Default Layout",
+        "description": "Editor Layout"
+    },
+    "fulllayout":{
+        "message": "Full View",
+        "description": "FullView"
+    },
+    "singlelayout":{
+        "message": "Focus",
+        "description": "SingleView"
+    },
+    "editormode":{
+        "message": "Editor Mode：",
+        "description": "Editor Mode"
+    },
+    "vimmode": {
+        "message": "Vim Mode",
+        "description": "Vim Mode"
+    },
+    "normalmode": {
+        "message": "Normal Mode",
+        "description": "Normal Mode"
+    },
+    "configEditor":{
+        "message": "Editor Configuration",
+        "description": "Editor Config"
     }
+
 }

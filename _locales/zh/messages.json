@@ -129,7 +129,7 @@
         "description": "ConfigHelp"
     },
     "emptyblog": {
-        "message": "当前草稿将被删除，请确认：",
+        "message": "当前草稿将被删除，请确认",
         "description": "Blog Empitied"
     },
     "emptyblogdetails": {
@@ -140,12 +140,48 @@
         "message": "确认",
         "description": "Yes"
     },
+    "no": {
+        "message": "不用",
+        "description": "No"
+    },
     "cancel": {
         "message": "取消",
         "description": "cancel"
     },
     "blogName": {
-        "message": "博客：",
+        "message": "博客",
         "description": "Blog Owner"
+    },
+    "editorLayout":{
+        "message": "默认版式",
+        "description": "Editor Layout"
+    },
+    "fulllayout":{
+        "message": "预览模式",
+        "description": "FullView"
+    },
+    "singlelayout":{
+        "message": "专注模式",
+        "description": "SingleView"
+    },
+    "editormode":{
+        "message": "编辑器模式",
+        "description": "Editor Mode"
+    },
+    "shownumber":{
+        "message": "显示序号",
+        "description": "Show Number"
+    },
+    "vimmode": {
+        "message": "Vim模式",
+        "description": "Vim Mode"
+    },
+    "normalmode": {
+        "message": "普通模式",
+        "description": "Normal Mode"
+    },
+    "configEditor":{
+        "message": "编辑器选项",
+        "description": "Editor Config"
     }
 }

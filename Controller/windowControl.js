@@ -59,6 +59,14 @@ $('.img#token').click(() => {
     tokenPop(true);
 });
 
+// 编辑器操作 Editor Config
+$('.img#cfgEditor').click(() => {
+    $('.focus').removeClass('focus');
+    editorPop(true);
+});
+
+
+
 // ==========================
 // 提示操作 Tooltip Actions
 // ==========================

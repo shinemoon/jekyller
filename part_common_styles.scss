@@ -75,6 +75,10 @@ body {
     background: $transparent-bg;
     height: 18px;
 
+    &:nth-child(even) td {
+      background: $label-bg-light;
+    }
+
     td.label {
       padding-left: 10px;
       color: $fg-color-0;
@@ -82,7 +86,7 @@ body {
       font-size: 11px;
       width: 100px;
       background: $label-bg;
-      border-radius: 4px;
+      border-radius: 0px;
       cursor: pointer;
     }
   }
@@ -100,7 +104,6 @@ body {
       padding: 6px 28px 10px;
       border: none;
       outline: none;
-      margin-top: 5px;
       height: 11px;
       margin-right: -4px;
 
@@ -185,7 +188,7 @@ body {
     .frame-pop {
 
       left: 0px;
-      top: 15px;
+      // top: 15px;
 
       color: black;
       width: 390px;
@@ -292,6 +295,39 @@ body {
           opacity: 0.7;
         }
       }
+
+      .radio-group {
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+
+        .radio-option {
+          margin: 0;
+          padding: 5px;
+          font-size: 10px;
+          display: flex;
+          align-items: center;
+
+          input[type="radio"] {
+            width: 16px;
+            height: 16px;
+            margin-right: 5px; // 控制按钮与文本间距
+          }
+        }
+
+        .send {
+          display: inline-block;
+          padding: 5px 10px;
+          margin-left: 15px; // 控制按钮与提交div间距
+          background-color: #007bff;
+          color: #fff;
+          font-size: 14px;
+          text-align: center;
+          cursor: pointer;
+          border-radius: 3px;
+        }
+      }
+
     }
 
     #user_info {
@@ -427,6 +463,12 @@ body {
   }
 
   td {
+
+    &:has(input[type="checkbox"]) {
+      display: flex;
+      justify-content: flex-end;
+    }
+
     &.label {
       padding-left: 10px;
       color: $color-light;
@@ -434,7 +476,7 @@ body {
       font-size: 11px;
       width: 100px;
       background: $label-bg;
-      border-radius: 4px;
+      border-radius: 0px;
       cursor: pointer;
     }
 
@@ -453,7 +495,6 @@ body {
       border: none;
       outline: none;
       float: right;
-      margin-top: 5px;
       height: 11px;
       margin-right: -4px;
 
@@ -487,6 +528,7 @@ body {
     margin-top: 8px;
     border-radius: 4px;
   }
+
 }
 
 
