@@ -55,6 +55,24 @@ $('.img#skin').click(() => {
     switchSkin();
 });
 
+// 切换编辑器 Switch Editor 
+$('.img#layout').click(() => {
+    $('.focus').removeClass('focus');
+    if(editorcfg.layout=='full')
+        editorcfg.layout ='single';
+    else
+        editorcfg.layout ='full';
+
+    chrome.storage.local.set({ 'editorconfig': editorcfg }, function () {
+        logInfo(gm('configUpdated'));
+        //And transform the  editgor
+        //Focus & other view relevant refresh
+        setView();
+    });
+});
+
+
+
 // 令牌操作 Token Action
 $('.img#token').click(() => {
     $('.focus').removeClass('focus');

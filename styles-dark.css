@@ -120,7 +120,7 @@ body {
   height: 16px;
   float: right;
   margin-right: 10px;
-  margin-top: 3px;
+  margin-top: 5px;
   color: #fff;
   cursor: pointer;
   -webkit-app-region: no-drag;
@@ -156,7 +156,7 @@ body {
   background-position: 5% 120%;
 }
 #top-banner-row .top-banner .frame-pop .ajax-loader img {
-  position: absolute;
+  position: fixed;
   bottom: 50%;
   right: 50%;
   opacity: 0.6;
@@ -296,9 +296,16 @@ body {
   color: rgba(248, 243, 243, 0.3);
 }
 #top-banner-row .top-banner #user_info .ajax-loader img {
+  position: relative;
+  left: 20px;
+  top: 5px;
   width: 50px;
   height: 10px;
   opacity: 0.3;
+}
+#top-banner-row .top-banner .right-split {
+  border-right: 1px solid grey;
+  padding-right: 10px;
 }
 #top-banner-row .posttitle {
   height: 20px;

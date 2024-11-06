@@ -19,6 +19,10 @@
         "message": "日夜模式",
         "description": "Switch Day Night"
     },
+    "switchLayout": {
+        "message": "布局切换",
+        "description": "Switch Layout"
+    },
     "CreatePost": {
         "message": "创建博文",
         "description": "Create Post"

@@ -19,6 +19,10 @@
         "message": "Day/Night Mode",
         "description": "Switch Day Night"
     },
+    "switchLayout": {
+        "message": "Layout Switch",
+        "description": "Switch Layout"
+    },
     "CreatePost": {
         "message": "Create Post",
         "description": "Create Post"
