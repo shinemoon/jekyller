@@ -173,11 +173,19 @@
         "description": "Show Number"
     },
     "vimmode": {
-        "message": "Vim模式",
+        "message": "Vim",
         "description": "Vim Mode"
     },
+    "emacsmode": {
+        "message": "Emacs",
+        "description": "Emacs Mode"
+    },
+    "sublimemode": {
+        "message": "Sublime",
+        "description": "Sublime Mode"
+    },
     "normalmode": {
-        "message": "普通模式",
+        "message": "默认",
         "description": "Normal Mode"
     },
     "configUpdated": {

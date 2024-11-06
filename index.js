@@ -40,8 +40,10 @@ chrome.storage.local.get({
         loadPost(curpost.content);
     });
     //Vim Mode or not
-    if (editorcfg.mode == "vim")
-        editor.setKeyboardHandler("ace/keyboard/vim");
+    if (editorcfg.mode == "normal")
+        editor.setKeyboardHandler(null);
+    else
+        editor.setKeyboardHandler("ace/keyboard/" + editorcfg.mode);
     editor.setOptions({
         fontSize: "14px",
         showPrintMargin: false,
@@ -54,8 +56,8 @@ chrome.storage.local.get({
     editor.getSession().on('change', updatePreview);
 
     // 初次调用和窗口调整事件监听 Initial call and listen for window resize event
-    setDivHeight();
-    window.addEventListener("resize", setDivHeight);
+    setView();
+    window.addEventListener("resize", setView);
 
 
     // 加载主题样式 Load theme stylesheet
@@ -155,9 +157,21 @@ function updatePreview() {
 /**
  * 动态调整编辑器和预览区域高度 Dynamically adjust the height of the editor and preview area
  */
-function setDivHeight() {
-    document.getElementById("editor").style.height = `${window.innerHeight - 40}px`;
-    document.getElementById("preview").style.height = `${window.innerHeight - 35}px`;
+function setView() {
+    //Width
+    //Focus mode
+    if (editorcfg.layout == "single") {
+        $('body').addClass('single');
+        //Height
+        document.getElementById("editor").style.height = `${window.innerHeight - 25}px`;
+        document.getElementById("preview").style.height = `${window.innerHeight - 50}px`;
+    } else {
+        //Height
+        document.getElementById("editor").style.height = `${window.innerHeight - 55}px`;
+        document.getElementById("preview").style.height = `${window.innerHeight - 70}px`;
+        $('body').removeClass('single');
+    }
+
 }
 
 

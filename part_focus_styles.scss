@@ -1,0 +1,25 @@
+body.single {
+
+    /* 初始隐藏 banner */
+    #top-banner-row {
+//        transition: opacity 0.5s ease;
+        /* 添加透明度过渡效果 */
+        opacity: 0;
+        &:hover {
+            opacity: 1;
+
+        }
+    }
+
+    #container {
+        #preview {
+            display: none;
+        }
+
+        #editor {
+            width: 1024px;
+            max-width: 1024px;
+            margin-top: -30px;
+        }
+    }
+}

@@ -78,7 +78,6 @@ body {
     &:nth-child(even) td {
       background: $label-bg-light;
     }
-
     td.label {
       padding-left: 10px;
       color: $fg-color-0;
@@ -88,6 +87,9 @@ body {
       background: $label-bg;
       border-radius: 0px;
       cursor: pointer;
+      &.cfgEditor {
+        width:80px;
+      }
     }
   }
 
@@ -129,7 +131,7 @@ body {
     height: 20px;
     text-align: left;
     font-size: 16px;
-    background: $bg-light;
+    background: $titlebar-light;
     padding: 10px 20px 10px;
     border-bottom: 4px solid $highlight-light;
     // position: fixed;
@@ -399,13 +401,11 @@ body {
   #preview {
     width: 50%;
     height: 100vh;
-    margin-top: 8px;
-    max-width: 680px;
+    max-width: 720px;
   }
 
   #editor {
     line-height: 1.6em;
-    margin-bottom: 10px;
     overflow-y: hidden;
   }
 

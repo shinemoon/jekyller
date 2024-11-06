@@ -174,11 +174,19 @@
         "description": "Editor Mode"
     },
     "vimmode": {
-        "message": "Vim Mode",
+        "message": "Vim",
         "description": "Vim Mode"
     },
+    "emacsmode": {
+        "message": "Emacs",
+        "description": "Emacs Mode"
+    },
+    "sublimemode": {
+        "message": "Sublime",
+        "description": "Sublime Mode"
+    },
     "normalmode": {
-        "message": "Normal Mode",
+        "message": "Normal",
         "description": "Normal Mode"
     },
     "configUpdated": {

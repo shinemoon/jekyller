@@ -1,3 +1,4 @@
+@charset "UTF-8";
 ::-webkit-scrollbar {
   display: none;
 }
@@ -74,6 +75,9 @@ body {
   border-radius: 0px;
   cursor: pointer;
 }
+#post-table tr td.label.cfgEditor {
+  width: 80px;
+}
 #post-table td.submit {
   text-align: center;
 }
@@ -104,7 +108,7 @@ body {
   height: 20px;
   text-align: left;
   font-size: 16px;
-  background: rgba(112, 105, 105, 0.91);
+  background: rgb(112, 105, 105);
   padding: 10px 20px 10px;
   border-bottom: 4px solid #0df718;
   z-index: 1103;
@@ -317,12 +321,10 @@ body {
 #container #preview {
   width: 50%;
   height: 100vh;
-  margin-top: 8px;
-  max-width: 680px;
+  max-width: 720px;
 }
 #container #editor {
   line-height: 1.6em;
-  margin-bottom: 10px;
   overflow-y: hidden;
 }
 #container #preview {
@@ -523,7 +525,7 @@ body {
   height: 12px;
   font-size: 12px;
   font-family: Arial, Helvetica, sans-serif;
-  outline: 1px solid #dad8d8;
+  outline: 1px solid rgb(112, 105, 105);
   border: none;
   border-radius: 2px;
   vertical-align: middle;
@@ -572,4 +574,23 @@ body {
 }
 .popping-note a:hover {
   color: #222;
+}
+
+body.single {
+  /* 初始隐藏 banner */
+}
+body.single #top-banner-row {
+  /* 添加透明度过渡效果 */
+  opacity: 0;
+}
+body.single #top-banner-row:hover {
+  opacity: 1;
+}
+body.single #container #preview {
+  display: none;
+}
+body.single #container #editor {
+  width: 1024px;
+  max-width: 1024px;
+  margin-top: -30px;
 }/*# sourceMappingURL=styles-dark.css.map */

@@ -22,10 +22,16 @@ function refreshEditorCfg() {
         <td class="cfgEditor content">
           <div class="radio-group">
             <label class="radio-option">
+              <input type="radio" name="cfgEditorMode" value="normal"> ${gm("normalmode")}
+            </label>
+            <label class="radio-option">
               <input type="radio" name="cfgEditorMode" value="vim"> ${gm("vimmode")}
             </label>
             <label class="radio-option">
-              <input type="radio" name="cfgEditorMode" value="normal"> ${gm("normalmode")}
+              <input type="radio" name="cfgEditorMode" value="emacs"> ${gm("emacsmode")}
+            </label>
+            <label class="radio-option">
+              <input type="radio" name="cfgEditorMode" value="sublime"> ${gm("sublimemode")}
             </label>
           </div>
         </td>
@@ -56,13 +62,11 @@ function refreshEditorCfg() {
 `;
 
         $('.frame-pop').append(htmlStr);
+
         // Update action:
         $('.cfgEditor .send').click(() => {
-            //Sort the  editor config
-            if ($('input[name="cfgEditorMode"][value="vim"]').prop('checked') == true)
-                editorcfg.mode = 'vim';
-            else
-                editorcfg.mode = 'normal';
+            // 获取被选中的 radio button 的 value
+            editorcfg.mode = document.querySelector('input[name="cfgEditorMode"]:checked').value;
 
             if ($('input[name="cfgEditorNumber"]').prop('checked') == true)
                 editorcfg.shownumber = true;
@@ -77,21 +81,29 @@ function refreshEditorCfg() {
             // Save config
             chrome.storage.local.set({ 'editorconfig': editorcfg }, function () {
                 logInfo(gm('configUpdated'));
+                //And transform the  editgor
+                //Special Mode or not
+                if (editorcfg.mode == "normal")
+                    editor.setKeyboardHandler(null);
+                else
+                    editor.setKeyboardHandler("ace/keyboard/" + editorcfg.mode);
+
+                //Number
+                editor.setOptions({
+                    showLineNumbers: editorcfg.shownumber,
+                });
+
+                //Focus & other view relevant refresh
+                setView();
+
+                popClose();
             });
 
         })
         // Refresh the data and fill those rows...
         //Vim
-        if (editorcfg.mode == 'vim') {
-            //Set the radio button
-            $('input[name="cfgEditorMode"][value="vim"]').prop('checked', true);
-            $('input[name="cfgEditorMode"][value="normal"]').prop('checked', false);
-        }
-        else {
-            // set the normal button
-            $('input[name="cfgEditorMode"][value="vim"]').prop('checked', false);
-            $('input[name="cfgEditorMode"][value="normal"]').prop('checked', true);
-        }
+        //Set the radio button
+        document.querySelector(`input[name="cfgEditorMode"][value="${editorcfg.mode}"]`).checked = true;
 
         //Show number
         $('input[name="cfgEditorNumber"]').prop('checked', editorcfg.shownumber);
