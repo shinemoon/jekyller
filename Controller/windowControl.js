@@ -20,15 +20,17 @@ $('.img#create').click(() => {
         theme: 'supervan', // 使用内置的主题
         buttons: {
             confirm: {
-                text:gm("yes"),
-                action:function () {
-                createNewPost();
-            }},
+                text: gm("yes"),
+                action: function () {
+                    createNewPost();
+                }
+            },
             cancel: {
-                text:gm("cancel"),
-                action:function () {
-                //
-            }},
+                text: gm("cancel"),
+                action: function () {
+                    //
+                }
+            },
         }
     });
 });
@@ -191,17 +193,12 @@ function popClose() {
 
 /** 切换皮肤主题 Toggle Theme Skin */
 function switchSkin() {
-    console.log(skin);
     if (skin == 'dark')
         skin = 'light';
     else
         skin = 'dark';
     chrome.storage.local.set({ skin: skin }, function () {
-        //Editor
-        const theme = (skin === 'dark') ? "ace/theme/tomorrow_night_eighties" : "ace/theme/tomorrow";
-        editor.setTheme(theme);  // 切换主题 Switch Theme
         //Other
-        $('#stylehdl').remove();
-        $('head').append('<link id="stylehdl" rel="stylesheet"type="text/css"href="styles-' + skin + '.css"/>');
+        setView();
     });
 }

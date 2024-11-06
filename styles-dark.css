@@ -5,7 +5,7 @@
 
 body {
   margin: 0;
-  background: rgba(112, 105, 105, 0.91);
+  background: rgba(27, 26, 26, 0.89);
   overflow-y: hidden;
 }
 
@@ -68,7 +68,7 @@ body {
 #post-table tr td.label {
   padding-left: 10px;
   color: #fff;
-  text-shadow: rgba(112, 105, 105, 0.91) 1px 1px;
+  text-shadow: rgba(27, 26, 26, 0.89) 1px 1px;
   font-size: 11px;
   width: 100px;
   background: rgba(100, 100, 100, 0.6);
@@ -108,7 +108,7 @@ body {
   height: 20px;
   text-align: left;
   font-size: 16px;
-  background: rgb(112, 105, 105);
+  background: rgba(27, 26, 26, 0.89);
   padding: 10px 20px 10px;
   border-bottom: 4px solid #0df718;
   z-index: 1103;
@@ -145,7 +145,7 @@ body {
   height: 320px;
   z-index: 1102;
   position: relative;
-  border: 2px solid rgba(112, 105, 105, 0.91);
+  border: 2px solid rgba(27, 26, 26, 0.89);
   box-shadow: rgba(20, 20, 20, 0.8) 2px 2px 4px;
   border-radius: 10px;
   padding-left: 20px;
@@ -279,7 +279,7 @@ body {
   right: 20px;
 }
 #top-banner-row .top-banner #user_info {
-  font-size: 10px;
+  font-size: 14px;
   color: #bebaba;
   cursor: pointer;
   font-weight: normal;
@@ -309,7 +309,7 @@ body {
   padding: 10px 20px;
   border-bottom: 2px solid #0df718;
   width: auto;
-  background: rgba(112, 105, 105, 0.91);
+  background: rgba(27, 26, 26, 0.89);
   box-shadow: rgba(228, 221, 221, 0.8) 2px -2px 4px;
 }
 
@@ -333,7 +333,7 @@ body {
   font-size: 1.2em;
   color: #fff;
   overflow-y: auto;
-  background: rgba(112, 105, 105, 0.91);
+  background: rgba(27, 26, 26, 0.89);
   border-left: 1px dotted #222;
   margin-left: 2px;
 }
@@ -525,7 +525,7 @@ body {
   height: 12px;
   font-size: 12px;
   font-family: Arial, Helvetica, sans-serif;
-  outline: 1px solid rgb(112, 105, 105);
+  outline: 1px solid rgba(27, 26, 26, 0.89);
   border: none;
   border-radius: 2px;
   vertical-align: middle;

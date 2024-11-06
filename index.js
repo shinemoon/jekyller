@@ -59,14 +59,6 @@ chrome.storage.local.get({
     setView();
     window.addEventListener("resize", setView);
 
-
-    // 加载主题样式 Load theme stylesheet
-    $('head').append(`<link id="stylehdl" rel="stylesheet" type="text/css" href="styles-${skin}.css"/>`);
-    if (skin == 'light')
-        editor.setTheme("ace/theme/tomorrow");
-    else
-        editor.setTheme("ace/theme/tomorrow_night_eighties");
-
 });
 
 // ==========================
@@ -171,7 +163,13 @@ function setView() {
         document.getElementById("preview").style.height = `${window.innerHeight - 70}px`;
         $('body').removeClass('single');
     }
-
+    // 加载主题样式 Load theme stylesheet
+    $('#stylehdl').remove();
+    $('head').append(`<link id="stylehdl" rel="stylesheet" type="text/css" href="styles-${skin}.css"/>`);
+    if (skin == 'light')
+        editor.setTheme("ace/theme/kuroir");
+    else
+        editor.setTheme("ace/theme/tomorrow_night_eighties");
 }
 
 
