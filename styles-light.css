@@ -5,7 +5,7 @@
 
 body {
   margin: 0;
-  background: rgba(184, 184, 180, 0.2862745098);
+  background-color: rgba(184, 184, 180, 0.2862745098);
   overflow-y: hidden;
 }
 
@@ -329,41 +329,9 @@ body {
 }
 #container #preview {
   padding: 0px 28px 15px 20px;
-  line-height: 1.6em;
-  font-size: 1.2em;
-  color: #45505a;
   overflow-y: auto;
-  background: rgba(184, 184, 180, 0.2862745098);
   border-left: 1px dotted #ccc;
   margin-left: 2px;
-}
-#container #preview img {
-  width: 90%;
-  margin-left: 5%;
-  border-radius: 0px;
-  border: 5px solid rgba(155, 155, 155, 0.8);
-}
-#container #preview h1,
-#container #preview h2,
-#container #preview h3,
-#container #preview h4 {
-  font-size: 1.1em;
-  margin-bottom: 8px;
-  border-bottom: 1px dotted #ccc;
-  text-align: left;
-  padding: 3px;
-}
-#container #preview blockquote {
-  color: #000;
-  background: #ddd;
-  padding: 5px;
-}
-#container #preview a {
-  color: #222;
-  background-color: #eaf373;
-}
-#container #preview a:visited {
-  color: #333;
 }
 
 #post-table {
@@ -593,4 +561,41 @@ body.single #container #editor {
   width: 1024px;
   max-width: 1024px;
   margin-top: -30px;
+}
+
+#preview {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+  color: #24292e;
+  background-color: #e2e2e2;
+  line-height: 1.6;
+  font-size: 1em;
+}
+
+a {
+  color: #0366d6;
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+
+pre, code {
+  font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  background-color: #f6f8fa;
+  padding: 0.3em 0.5em;
+  border-radius: 3px;
+}
+
+blockquote {
+  color: #6a737d;
+  border-left: 4px solid #dfe2e5;
+  padding: 0.6em 1.2em;
+  margin: 0;
+  background-color: #f1f8ff;
+}
+
+img {
+  display: block;
+  margin: 1em auto;
+  width: 80%;
 }/*# sourceMappingURL=styles-light.css.map */

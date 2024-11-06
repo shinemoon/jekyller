@@ -5,7 +5,7 @@
 
 body {
   margin: 0;
-  background: rgba(27, 26, 26, 0.89);
+  background-color: #2d2d2d;
   overflow-y: hidden;
 }
 
@@ -68,7 +68,7 @@ body {
 #post-table tr td.label {
   padding-left: 10px;
   color: #fff;
-  text-shadow: rgba(27, 26, 26, 0.89) 1px 1px;
+  text-shadow: #2d2d2d 1px 1px;
   font-size: 11px;
   width: 100px;
   background: rgba(100, 100, 100, 0.6);
@@ -145,7 +145,7 @@ body {
   height: 320px;
   z-index: 1102;
   position: relative;
-  border: 2px solid rgba(27, 26, 26, 0.89);
+  border: 2px solid #2d2d2d;
   box-shadow: rgba(20, 20, 20, 0.8) 2px 2px 4px;
   border-radius: 10px;
   padding-left: 20px;
@@ -309,7 +309,7 @@ body {
   padding: 10px 20px;
   border-bottom: 2px solid #0df718;
   width: auto;
-  background: rgba(27, 26, 26, 0.89);
+  background: #2d2d2d;
   box-shadow: rgba(228, 221, 221, 0.8) 2px -2px 4px;
 }
 
@@ -329,41 +329,9 @@ body {
 }
 #container #preview {
   padding: 0px 28px 15px 20px;
-  line-height: 1.6em;
-  font-size: 1.2em;
-  color: #fff;
   overflow-y: auto;
-  background: rgba(27, 26, 26, 0.89);
   border-left: 1px dotted #222;
   margin-left: 2px;
-}
-#container #preview img {
-  width: 90%;
-  margin-left: 5%;
-  border-radius: 0px;
-  border: 5px solid rgba(155, 155, 155, 0.8);
-}
-#container #preview h1,
-#container #preview h2,
-#container #preview h3,
-#container #preview h4 {
-  font-size: 1.1em;
-  margin-bottom: 8px;
-  border-bottom: 1px dotted #222;
-  text-align: left;
-  padding: 3px;
-}
-#container #preview blockquote {
-  color: #333;
-  background: #eee;
-  padding: 5px;
-}
-#container #preview a {
-  color: #555;
-  background-color: rgba(238, 237, 182, 0.7882352941);
-}
-#container #preview a:visited {
-  color: #888;
 }
 
 #post-table {
@@ -593,4 +561,42 @@ body.single #container #editor {
   width: 1024px;
   max-width: 1024px;
   margin-top: -30px;
+}
+
+#preview {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+  background-color: #2a2a2a;
+  color: #d6deeb;
+  line-height: 1.6;
+  font-size: 1em;
+}
+
+a {
+  color: #82aaff;
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+
+pre, code {
+  font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  background-color: #1d3b53;
+  color: #addb67;
+  padding: 0.3em 0.5em;
+  border-radius: 3px;
+}
+
+blockquote {
+  color: #a1acc0;
+  border-left: 4px solid #5e6b8e;
+  padding: 0.6em 1.2em;
+  margin: 0;
+  background-color: #1d3b53;
+}
+
+img {
+  display: block;
+  margin: 1em auto;
+  width: 80%;
 }/*# sourceMappingURL=styles-dark.css.map */

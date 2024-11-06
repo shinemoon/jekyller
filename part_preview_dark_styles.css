@@ -1,0 +1,30 @@
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+  background-color: #011627;
+  color: #d6deeb;
+  line-height: 1.6;
+}
+
+a {
+  color: #82aaff;
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+
+pre, code {
+  font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  background-color: #1d3b53;
+  color: #addb67;
+  padding: 0.2em 0.4em;
+  border-radius: 3px;
+}
+
+blockquote {
+  color: #c792ea;
+  border-left: 4px solid #7e57c2;
+  padding: 0.5em 1em;
+  margin: 0;
+  background-color: #1d3b53;
+}/*# sourceMappingURL=part_preview_dark_styles.css.map */

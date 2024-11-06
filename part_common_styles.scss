@@ -7,7 +7,7 @@
 body {
   margin: 0;
   //background: $bg-light;
-  background: $bg-light;
+  background-color: $bg-light;
   overflow-y: hidden;
 
 
@@ -411,48 +411,9 @@ body {
 
   #preview {
     padding: 0px 28px 15px 20px;
-    line-height: 1.6em;
-    font-size: 1.2em;
-    color: $fg-dark;
-    //font-family: Kesong, Arial, Helvetica, sans-serif;
     overflow-y: auto;
-    background: $bg-light;
     border-left: 1px dotted $fg-color-2;
     margin-left: 2px;
-
-    img {
-      width: 90%;
-      margin-left: 5%;
-      border-radius: 0px;
-      border: 5px solid rgba(155, 155, 155, 0.8);
-    }
-
-    h1,
-    h2,
-    h3,
-    h4 {
-      font-size: 1.1em;
-      margin-bottom: 8px;
-      border-bottom: 1px dotted $fg-color-2;
-      text-align: left;
-      padding: 3px;
-    }
-
-    blockquote {
-      color: $preview-quote-fg;
-      background: $preview-quote-bg;
-      padding: 5px;
-    }
-
-    a {
-      color: $fg-color-invert;
-      background-color: $bg-dark;
-
-      &:visited {
-        color: $fg-color-invert-2;
-
-      }
-    }
   }
 }
 

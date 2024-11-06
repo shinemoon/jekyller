@@ -1,0 +1,49 @@
+// Night Owl Theme Variables
+$font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+$text-color: #d6deeb;
+$link-color: #82aaff;
+$code-bg: #1d3b53;
+$code-color: #addb67;
+$blockquote-color: #a1acc0; // 调整为更稳重的颜色
+$blockquote-border: #5e6b8e;
+$font-size: 1em; // 调整字体大小
+$image-width: 80%;
+
+#preview {
+    font-family: $font-family;
+    background-color: $preview-bg;
+    color: $text-color;
+    line-height: 1.6;
+    font-size: $font-size;
+}
+
+a {
+    color: $link-color;
+    text-decoration: none;
+
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+pre, code {
+    font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, Courier, monospace;
+    background-color: $code-bg;
+    color: $code-color;
+    padding: 0.3em 0.5em;
+    border-radius: 3px;
+}
+
+blockquote {
+    color: $blockquote-color;
+    border-left: 4px solid $blockquote-border;
+    padding: 0.6em 1.2em;
+    margin: 0;
+    background-color: $code-bg;
+}
+
+img {
+    display: block;
+    margin: 1em auto;
+    width: $image-width;
+}
