@@ -29,5 +29,8 @@ And after some days' effort, there are 3 major updates:
 
 
 ## History
++ 4.0.2:
+ * Refine format details  
+
 + 4.0:	
   * Critical Reconstruction with above statement

@@ -195,7 +195,7 @@ function setView() {
     }
     // 加载主题样式 Load theme stylesheet
     $('#stylehdl').remove();
-    $('head').append(`<link id="stylehdl" rel="stylesheet" type="text/css" href="styles-${skin}.css"/>`);
+    $('head').append(`<link id="stylehdl" rel="stylesheet" type="text/css" href="css/styles-${skin}.css"/>`);
     if (skin == 'light')
         editor.setTheme("ace/theme/kuroir");
     else
