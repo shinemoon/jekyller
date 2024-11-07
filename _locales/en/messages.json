@@ -181,6 +181,10 @@
         "message": "Vim",
         "description": "Vim Mode"
     },
+    "vimsave":{
+        "message": "Manual Save in Vim Done",
+        "description": "Vim Mode Save"
+    },
     "emacsmode": {
         "message": "Emacs",
         "description": "Emacs Mode"

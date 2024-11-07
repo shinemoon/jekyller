@@ -180,6 +180,10 @@
         "message": "Vim",
         "description": "Vim Mode"
     },
+    "vimsave":{
+        "message": "Vim手动保存完成",
+        "description": "Vim Mode Save"
+    },
     "emacsmode": {
         "message": "Emacs",
         "description": "Emacs Mode"

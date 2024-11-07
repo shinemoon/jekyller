@@ -151,11 +151,10 @@ $('body #editor').keyup(() => storePost());
 
 // 恢复博客内容 Restore Post Content
 function storePost(cb) {
-    if ($('.frame-pop.meta:visible').length > 0) {
+    if ($('.frame-pop.meta:visible').length > 0) { // In meta config
         if ($('.content.title input').val() !== curpost['title']) {
             $('.posttitle').text($('.content.title input').val());
         }
-
         // 自动保存元数据 Auto-Saving Metadata
         Object.assign(curpost, {
             title: $('.content.title input').val(),
@@ -168,11 +167,12 @@ function storePost(cb) {
             slug: $('.content.slug input').val(),
             content: editor.getValue()
         });
+    } else {    //In Editing
+        curpost.content=editor.getValue();
     }
 
     // 保存到本地存储 Save to Local Storage
     chrome.storage.local.set({ 'workingpost': curpost }, () => {
-        console.log('store');
         syncLocalPost();
         if (typeof cb !== 'undefined') cb();
     });
@@ -228,3 +228,6 @@ function switchSkin() {
         setView();
     });
 }
+
+
+//Save function

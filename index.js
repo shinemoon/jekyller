@@ -42,8 +42,10 @@ chrome.storage.local.get({
     //Vim Mode or not
     if (editorcfg.mode == "normal")
         editor.setKeyboardHandler(null);
-    else
+    else {
         editor.setKeyboardHandler("ace/keyboard/" + editorcfg.mode);
+
+    }
     editor.setOptions({
         fontSize: "14px",
         showPrintMargin: false,
@@ -59,6 +61,17 @@ chrome.storage.local.get({
     setView();
     window.addEventListener("resize", setView);
 
+
+    //存档功能
+    // 其余的都靠自动保存（key），Vim可以做手动……
+    //Vim => Pure for fun.. not necessary
+    ace.config.loadModule("ace/keyboard/vim", function (m) {
+        var VimApi = require("ace/keyboard/vim").CodeMirror.Vim
+        VimApi.defineEx("write", "w", function (cm, input) {
+            syncLocalPost();
+            logInfo(gm("vimsave"));
+        })
+    })
 });
 
 // ==========================
