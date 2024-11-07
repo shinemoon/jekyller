@@ -104,14 +104,6 @@ $('.frame-icon.op').mouseleave(function () {
     $('.tooltip').fadeOut(100);
 });
 
-$('.frame-mask').mouseover(function () {
-    // Single mode , mouse leave will automatically clean the mask
-    if (editorcfg.layout == 'single') {
-        popClose();
-    }
-});
-
-
 // ==========================
 // 弹框和蒙层控制 Pop-up and Overlay Control
 // ==========================
@@ -123,6 +115,7 @@ $('.frame-mask').mouseover(function () {
  * @param {function} cb 回调函数 Callback Function
  */
 function popFrame(id, toggle = true, cb) {
+
     if (toggle && $(`.frame-pop.${id}:visible`).length > 0) {
         popClose();
         return 0;
@@ -136,8 +129,12 @@ function popFrame(id, toggle = true, cb) {
     $('body .top-banner').append(frame);
     cb();
     bindListAction();
-    if (editorcfg.layout == 'full') $('.frame-mask').show(); //Only show frame-mask in 'full' mode.
+    //if (editorcfg.layout == 'full')
+    if (true)
+        $('.frame-mask').show(); //Only show frame-mask in 'full' mode.
     $('.frame-pop').show();
+    //Pop frame will remove 'autohide' in single mode 
+    $('#top-banner-row').removeClass('autohide');
 }
 
 // 绑定点击蒙层关闭所有弹窗 Bind Mask Click to Close All Pop-ups
@@ -214,6 +211,10 @@ function popClose() {
     $('.frame-pop, .frame-mask').remove();
     $('.frame-icon.focus').removeClass('focus');
     $('.top-masker').hide();
+    //Recover auto hide after popclose
+    if (editorcfg.layout == 'single') {
+        $('#top-banner-row').addClass('autohide');
+    }
 }
 
 // ==========================

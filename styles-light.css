@@ -157,9 +157,9 @@ body {
 }
 #top-banner-row .top-banner .frame-pop .ajax-loader img {
   position: fixed;
-  bottom: 50%;
-  right: 50%;
-  opacity: 0.6;
+  top: 10px;
+  right: calc(50% + 5px);
+  opacity: 0.8;
   width: 50px;
   height: 12px;
 }
@@ -555,11 +555,10 @@ body {
 body.single {
   /* 初始隐藏 banner */
 }
-body.single #top-banner-row {
-  /* 添加透明度过渡效果 */
+body.single #top-banner-row.autohide {
   opacity: 0;
 }
-body.single #top-banner-row:hover {
+body.single #top-banner-row.autohide:hover {
   opacity: 1;
 }
 body.single #container #preview {

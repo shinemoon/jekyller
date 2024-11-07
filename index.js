@@ -182,6 +182,7 @@ function setView() {
     //Focus mode
     if (editorcfg.layout == "single") {
         $('body').addClass('single');
+        $('#top-banner-row').addClass('autohide');
         //Height
         document.getElementById("editor").style.height = `${window.innerHeight - 25}px`;
         document.getElementById("preview").style.height = `${window.innerHeight - 50}px`;
@@ -190,6 +191,7 @@ function setView() {
         document.getElementById("editor").style.height = `${window.innerHeight - 55}px`;
         document.getElementById("preview").style.height = `${window.innerHeight - 70}px`;
         $('body').removeClass('single');
+        $('#top-banner-row').removeClass('autohide');
     }
     // 加载主题样式 Load theme stylesheet
     $('#stylehdl').remove();

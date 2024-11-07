@@ -40,7 +40,7 @@
         "description": "ConfigToken"
     },
     "TokenSet": {
-        "message": "Enter Token",
+        "message": "Token",
         "description": "tokenSet"
     },
     "clearToken": {
