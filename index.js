@@ -71,6 +71,9 @@ chrome.storage.local.get({
             syncLocalPost();
             logInfo(gm("vimsave"));
         })
+        VimApi.defineEx("quit", "q", function (cm, input) {
+            window.close();
+        })
     })
 });
 
