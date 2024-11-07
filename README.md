@@ -20,6 +20,12 @@ And after some days' effort, there are 2 major updates:
 - Add 'Focus Mode' on top of orginal 'Preview Mode';
 - Reconstruct the UI and (that might only meaningful for myself and possible developers) the mechanism for theme/UI;
 
+*NOTE on Vim ExCmd*:
+- q:  quit
+- w: manual save (not really meaningful just for fun.. since the 'save' action is automatically done for any keyup)
+- l: layout switch between preview & focus mode
+- s: dark/light skin switch
+
 
 
 ## History

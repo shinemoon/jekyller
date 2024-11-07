@@ -57,6 +57,10 @@ $('.img#skin').click(() => {
 
 // 切换编辑器 Switch Editor 
 $('.img#layout').click(() => {
+    switchLayout();
+});
+
+function switchLayout() {
     $('.focus').removeClass('focus');
     if (editorcfg.layout == 'full')
         editorcfg.layout = 'single';
@@ -69,8 +73,7 @@ $('.img#layout').click(() => {
         //Focus & other view relevant refresh
         setView();
     });
-});
-
+}
 
 
 // 令牌操作 Token Action
@@ -168,7 +171,7 @@ function storePost(cb) {
             content: editor.getValue()
         });
     } else {    //In Editing
-        curpost.content=editor.getValue();
+        curpost.content = editor.getValue();
     }
 
     // 保存到本地存储 Save to Local Storage

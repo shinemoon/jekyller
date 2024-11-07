@@ -67,13 +67,25 @@ chrome.storage.local.get({
     //Vim => Pure for fun.. not necessary
     ace.config.loadModule("ace/keyboard/vim", function (m) {
         var VimApi = require("ace/keyboard/vim").CodeMirror.Vim
+        //Write
         VimApi.defineEx("write", "w", function (cm, input) {
             syncLocalPost();
             logInfo(gm("vimsave"));
         })
+        //Quit
         VimApi.defineEx("quit", "q", function (cm, input) {
             window.close();
         })
+        //Switch full/single
+        VimApi.defineEx("layout", "l", function (cm, input) {
+            switchLayout();
+        })
+        //Switch day/night 
+        VimApi.defineEx("switch", "s", function (cm, input) {
+            switchSkin();
+        })
+
+
     })
 });
 

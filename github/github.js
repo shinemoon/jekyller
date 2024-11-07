@@ -19,6 +19,7 @@ gh = (function () {
       xhr.open(method, url);
       xhr.setRequestHeader('Authorization', 'Bearer ' + access_token);
       xhr.onload = requestComplete;
+      // 可能会抛出错误的代码
       xhr.send(data);
     }
 
@@ -80,27 +81,27 @@ gh = (function () {
     button.disabled = true;
   }
 
-    function onUserInfoFetched(error, status, response) {
-      if (!error && status == 200) {
-        //console.log("Got the following user info: " + response);
-        user_info = JSON.parse(response);
-        populateUserInfo(user_info);
-        showButton(revoke_button);
-        logInfo(gm("loginDone"));
-      } else {
-        // If failed
-      }
+  function onUserInfoFetched(error, status, response) {
+    if (!error && status == 200) {
+      //console.log("Got the following user info: " + response);
+      user_info = JSON.parse(response);
+      populateUserInfo(user_info);
+      showButton(revoke_button);
+      logInfo(gm("loginDone"));
+    } else {
+      // If failed
     }
-    function onLogInFailed(error, status, response) {
-      logError('loginFail');
-      tokenPop(false);
-    }
+  }
+  function onLogInFailed(error, status, response) {
+    logError('loginFail');
+    tokenPop(false);
+  }
 
   function populateUserInfo(user_info) {
     var elem = user_info_div;
     var nameElem = document.createElement('div');
     //console.info(user_info);
-    nameElem.innerHTML = gm("blogname")+": <a href='http://" + user_info.login + ".github.io' target=_blank>" + user_info.login + "</a>";
+    nameElem.innerHTML = gm("blogname") + ": <a href='http://" + user_info.login + ".github.io' target=_blank>" + user_info.login + "</a>";
     elem.innerHTML = nameElem.innerHTML;
   }
 
@@ -127,7 +128,7 @@ gh = (function () {
 
   // -> Search code
   function searchPost(user, qstr, cb) {
-    var queryString = 'q=' + encodeURIComponent(qstr+' repo:'+user + '/' + user + '.github.io path:_posts extension:md');
+    var queryString = 'q=' + encodeURIComponent(qstr + ' repo:' + user + '/' + user + '.github.io path:_posts extension:md');
     xhrWithAuth('GET',
       'https://api.github.com/search/code?' + queryString,
       true,
@@ -214,8 +215,8 @@ gh = (function () {
     fetchPostListTree: function (user, cb) {
       return fetchPostListTree(user, cb);
     },
-    searchPost: function (user,qstr, cb) {
-      return searchPost(user,qstr, cb);
+    searchPost: function (user, qstr, cb) {
+      return searchPost(user, qstr, cb);
     },
     /* The one to gate the login*/
     getUserInfo: function (type) {
@@ -227,12 +228,12 @@ gh = (function () {
       return onLogInFailed();
     },
 
-      // Got token
-      access_token: function (token=null) {
-        if(token!=null) 
-          access_token = token;
-        return access_token;
-      },
+    // Got token
+    access_token: function (token = null) {
+      if (token != null)
+        access_token = token;
+      return access_token;
+    },
 
     onload: function () {
       revoke_button = document.querySelector('#token');

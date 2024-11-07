@@ -41,7 +41,7 @@ function refreshPostMeta() {
     `);
 
     loadDataIntoFields();
-    
+
     $('.send').on('click', () => {
         if (user_info) {
             $('.top-masker').show();

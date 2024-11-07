@@ -70,7 +70,6 @@ function updatePost(cb) {
             curpost.sha = responseContent.content.sha;
             clist.push({ ...curpost });
             storePost();
-
         } else { // 出现冲突或错误 Conflict or General Error
             logError(r== '409' ? gm('ErrVersion') : gm('ErrGeneral'));
         }
