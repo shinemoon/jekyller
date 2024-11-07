@@ -391,11 +391,9 @@ body {
     padding: 10px 20px;
     border-bottom: 2px solid $highlight-light;
     width: auto;
-    // position: fixed;
-    //top: 0px;
-    //left: 0px;
-    background: $bg-light;
+    background: $titlebar-light;
     box-shadow: $box-shadow 2px -2px 4px;
+    z-index: 1103;
   }
 
 

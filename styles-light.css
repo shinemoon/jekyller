@@ -316,8 +316,9 @@ body {
   padding: 10px 20px;
   border-bottom: 2px solid #ff9500;
   width: auto;
-  background: rgba(184, 184, 180, 0.2862745098);
+  background: #dad8d8;
   box-shadow: rgba(20, 20, 20, 0.8) 2px -2px 4px;
+  z-index: 1103;
 }
 
 #container {
@@ -568,6 +569,11 @@ body.single #container #editor {
   width: 1024px;
   max-width: 1024px;
   margin-top: -30px;
+}
+body.single #container #editor .ace_active-line {
+  /* Change the background color */
+  /* Add a left border */
+  /* Optional: Adjust opacity for the line */
 }
 
 #preview {

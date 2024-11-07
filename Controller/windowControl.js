@@ -58,10 +58,10 @@ $('.img#skin').click(() => {
 // 切换编辑器 Switch Editor 
 $('.img#layout').click(() => {
     $('.focus').removeClass('focus');
-    if(editorcfg.layout=='full')
-        editorcfg.layout ='single';
+    if (editorcfg.layout == 'full')
+        editorcfg.layout = 'single';
     else
-        editorcfg.layout ='full';
+        editorcfg.layout = 'full';
 
     chrome.storage.local.set({ 'editorconfig': editorcfg }, function () {
         logInfo(gm('configUpdated'));
@@ -101,6 +101,14 @@ $('.frame-icon.op').mouseleave(function () {
     $('.tooltip').fadeOut(100);
 });
 
+$('.frame-mask').mouseover(function () {
+    // Single mode , mouse leave will automatically clean the mask
+    if (editorcfg.layout == 'single') {
+        popClose();
+    }
+});
+
+
 // ==========================
 // 弹框和蒙层控制 Pop-up and Overlay Control
 // ==========================
@@ -125,7 +133,7 @@ function popFrame(id, toggle = true, cb) {
     $('body .top-banner').append(frame);
     cb();
     bindListAction();
-    $('.frame-mask').show();
+    if (editorcfg.layout == 'full') $('.frame-mask').show(); //Only show frame-mask in 'full' mode.
     $('.frame-pop').show();
 }
 
