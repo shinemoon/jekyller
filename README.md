@@ -1,5 +1,3 @@
-# Github Jekyller Blog Editor V4
-
 Github Jekyll Editor is extension for Chrome Based Browsers  ([MS Store address][2] / [Google webstore address][1]). Hope to :
 
 1. Support Markdown Editor focusing on Jekyl (hosted in Github.io);
@@ -26,6 +24,8 @@ And after some days' effort, there are 2 major updates:
 - l: layout switch between preview & focus mode
 - s: dark/light skin switch
 
+[1]: https://chrome.google.com/webstore/detail/jekyller/lgdhgkhhglmhiacjecigalebiffjklec
+[2]: https://microsoftedge.microsoft.com/addons/detail/jekyller-blog-editor/blogcklanlfjglneidejdabdljnoohlc?hl=zh-CN
 
 
 ## History
