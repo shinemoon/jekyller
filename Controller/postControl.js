@@ -59,7 +59,7 @@ function updatePost(cb) {
 
     gh.updateContent(path, content, sha, (e, r, s) => {
         const responseContent = JSON.parse(s);
-        
+
         if (r == '200') { // 更新成功 Successfully Updated
             logInfo(gm('postUpdated'));
             updateLocalList(responseContent.content.sha);
@@ -71,10 +71,10 @@ function updatePost(cb) {
             clist.push({ ...curpost });
             storePost();
         } else { // 出现冲突或错误 Conflict or General Error
-            logError(r== '409' ? gm('ErrVersion') : gm('ErrGeneral'));
+            logError(r == '409' ? gm('ErrVersion') : gm('ErrGeneral'));
         }
 
-        chrome.storage.local.set({ clist }, () => $('.frame-mask').click());
+        chrome.storage.local.set({ clist:clist }, () => $('.frame-mask').click());
         if (typeof cb != 'undefined') cb();
     });
 }
@@ -102,7 +102,7 @@ function deletePost(index, cb) {
             const deleteIndex = clist.findIndex(item => item.sha == delpost.sha);
             if (deleteIndex != -1) clist.splice(deleteIndex, 1);
 
-            chrome.storage.local.set({ clist }, () => $('.frame-mask').click());
+            chrome.storage.local.set({ clist:clist }, () => $('.frame-mask').click());
         } else {
             logError(gm('ErrGeneral'));
             $('.frame-mask').click();
