@@ -8,6 +8,14 @@ body {
   background-color: rgba(184, 184, 180, 0.2862745098);
   overflow-y: hidden;
 }
+body .versioninfo {
+  font-size: 8px;
+  color: #666;
+  position: fixed;
+  left: 5px;
+  bottom: 5px;
+  opacity: 0.3;
+}
 
 .top-masker,
 .frame-mask {

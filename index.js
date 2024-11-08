@@ -9,6 +9,7 @@ let picCacheList = {};      // 图片缓存列表 Image cache list
 let skin = 'dark';          // 主题皮肤 Skin theme
 
 let editorcfg = {};       //编辑器配置  Editor Config
+const manifestData = chrome.runtime.getManifest();
 
 // ==========================
 // 设置和初始化界面 Setup and Initialize Interface
@@ -29,6 +30,7 @@ chrome.storage.local.get({
     },
     'skin': 'dark'
 }, (obj) => {
+
     curpostLocal = obj.workingpost;
     skin = obj.skin;
     editorcfg = obj.editorconfig;
@@ -53,6 +55,9 @@ chrome.storage.local.get({
         wrap: true,
     });
 
+    //Version info
+    $('body').append("<div class='versioninfo'>V"+manifestData.version+"</div>");
+
     // 初始化内容和监听编辑器内容变化 Initialize content and monitor editor content changes
     updatePreview();
     editor.getSession().on('change', updatePreview);
@@ -62,7 +67,7 @@ chrome.storage.local.get({
     window.addEventListener("resize", setView);
 
 
-    //存档功能
+    //Vim 增强设定
     // 其余的都靠自动保存（key），Vim可以做手动……
     //Vim => Pure for fun.. not necessary
     ace.config.loadModule("ace/keyboard/vim", function (m) {
@@ -84,8 +89,35 @@ chrome.storage.local.get({
         VimApi.defineEx("switch", "s", function (cm, input) {
             switchSkin();
         })
+        // Create!
+        VimApi.defineEx("new", "n", function (cm, input) {
+            if (user_info) {
+                $('.img#create').click();
+            }
+        })
 
-
+        // Post!
+        VimApi.defineEx("published", "pu", function (cm, input) {
+            if (user_info) {
+                //To mark publish as true
+                curpost.published = true;
+                $('.content.post input').prop('checked', curpost.published);
+                storePost(() => {
+                    updatePost(() => logInfo(gm("postUpdated")));
+                });
+            }
+        })
+        // Post!
+        VimApi.defineEx("unpublished", "un", function (cm, input) {
+            if (user_info) {
+                //To mark publish as true
+                curpost.published = false;
+                $('.content.post input').prop('checked', curpost.published);
+                storePost(() => {
+                    updatePost(() => logInfo(gm("postUpdated")));
+                });
+            }
+        })
     })
 });
 

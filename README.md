@@ -19,10 +19,12 @@ And after some days' effort, there are 3 major updates:
 - Reconstruct the UI and (that might only meaningful for myself and possible developers) the mechanism for theme/UI;
 
 *NOTE on Vim ExCmd*:
-- q:  quit
-- w: manual save (not really meaningful just for fun.. since the 'save' action is automatically done for any keyup)
-- l: layout switch between preview & focus mode
-- s: dark/light skin switch
+- `q`:  quit
+- `w`: manual save (not really meaningful just for fun.. since the 'save' action is automatically done for any keyup)
+- `l`: layout switch between preview & focus mode
+- `s`: dark/light skin switch
+- `pu`: publish
+- `un`: update but not published
 
 [2]: https://chrome.google.com/webstore/detail/jekyller/lgdhgkhhglmhiacjecigalebiffjklec
 [3]: https://microsoftedge.microsoft.com/addons/detail/jekyller-blog-editor/blogcklanlfjglneidejdabdljnoohlc?hl=zh-CN

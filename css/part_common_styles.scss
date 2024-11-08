@@ -10,11 +10,15 @@ body {
   background-color: $bg-light;
   overflow-y: hidden;
 
-
-
+  .versioninfo {
+    font-size: 8px;
+    color: $fg-color-1;
+    position:fixed;
+    left:5px;
+    bottom:5px;
+    opacity:0.3;
+  }
 }
-
-
 
 // Masking layers
 .top-masker,
