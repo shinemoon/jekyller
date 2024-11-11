@@ -160,7 +160,7 @@ body .versioninfo {
   padding-left: 20px;
   display: none;
   background-color: #eee;
-  background-image: url("assets/Mark.png");
+  background-image: url("/assets/Mark.png");
   background-repeat: no-repeat;
   background-position: 5% 120%;
 }
