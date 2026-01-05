@@ -210,20 +210,68 @@ function updatePreview() {
  * 动态调整编辑器和预览区域高度 Dynamically adjust the height of the editor and preview area
  */
 function setView() {
+    // 使用 documentElement.clientWidth 作为视口宽度
+    const viewportWidth = document.documentElement.clientWidth;
+    const isNarrowScreen = viewportWidth <= 768;
+    
+    console.log('setView called, viewportWidth:', viewportWidth, 'isNarrowScreen:', isNarrowScreen, 'layout:', editorcfg.layout);
+    
+    // 窄屏模式下，如果是 full 模式，强制转换为 single
+    if (isNarrowScreen && editorcfg.layout == 'full') {
+        console.log('Force converting full to single in narrow screen');
+        editorcfg.layout = 'single';
+        chrome.storage.local.set({ 'editorconfig': editorcfg });
+    }
+    
     //Width
     //Focus mode
     if (editorcfg.layout == "single") {
-        $('body').addClass('single');
+        console.log('Applying single mode');
+        $('body').addClass('single').removeClass('preview-mode');
         $('#top-banner-row').addClass('autohide');
+        // posttitle 由 hotspot 点击控制，默认隐藏
+        $('.posttitle').addClass('hidden');
+        // 进入单列模式时旋转并移动 toolbar
+        $('#top-banner-row').addClass('rotated-preview');
+        
+        // 窄屏下强制设置宽度
+        if (isNarrowScreen) {
+            document.getElementById("editor").style.width = 'calc(100vw - 45px)';
+            document.getElementById("preview").style.width = 'calc(100vw - 45px)';
+        }
+        
+        //Height
+        document.getElementById("editor").style.height = `${window.innerHeight - 25}px`;
+        document.getElementById("preview").style.height = `${window.innerHeight - 50}px`;
+    } else if (editorcfg.layout == "preview") {
+        // 单栏预览模式（窄屏专用）
+        console.log('Applying preview mode');
+        $('body').addClass('single').addClass('preview-mode');
+        $('#top-banner-row').addClass('autohide');
+        // posttitle 由 hotspot 点击控制，默认隐藏
+        $('.posttitle').addClass('hidden');
+        $('#top-banner-row').addClass('rotated-preview');
+        
+        // 窄屏下强制设置宽度
+        if (isNarrowScreen) {
+            document.getElementById("editor").style.width = 'calc(100vw - 45px)';
+            document.getElementById("preview").style.width = 'calc(100vw - 45px)';
+        }
+        
         //Height
         document.getElementById("editor").style.height = `${window.innerHeight - 25}px`;
         document.getElementById("preview").style.height = `${window.innerHeight - 50}px`;
     } else {
         //Height
+        console.log('Applying full/dual mode');
         document.getElementById("editor").style.height = `${window.innerHeight - 55}px`;
         document.getElementById("preview").style.height = `${window.innerHeight - 70}px`;
-        $('body').removeClass('single');
+        $('body').removeClass('single').removeClass('preview-mode');
         $('#top-banner-row').removeClass('autohide');
+        // full 模式下 banner 和 posttitle 始终显示
+        $('.posttitle').removeClass('hidden');
+        // 恢复原位
+        $('#top-banner-row').removeClass('rotated-preview');
     }
     // 加载主题样式 Load theme stylesheet
     $('#stylehdl').remove();
@@ -232,12 +280,41 @@ function setView() {
         editor.setTheme("ace/theme/kuroir");
     else
         editor.setTheme("ace/theme/tomorrow_night_eighties");
+    // 更新 tooltip 定位（如果存在）
+    if (typeof positionTooltipToToolBanner === 'function') positionTooltipToToolBanner();
+    // Ensure hotspot exists and is positioned after view change
+    if (typeof ensureBannerHotspot === 'function') ensureBannerHotspot();
 }
 
 
 // ==========================
 // 初始化检查 GitHub 令牌 Initialize GitHub Token Check
 // ==========================
+
+// posttitle 的显示/隐藏现在完全由 hotspot 点击控制
+
+// 将 tooltip 定位到与 #tool-banner 左上角对齐的位置
+function positionTooltipToToolBanner() {
+    const tip = document.querySelector('#top-banner-row .tooltip');
+    const tool = document.querySelector('#tool-banner');
+    if (!tip || !tool) return;
+    // 获取 #tool-banner 左上角相对于视口的位置
+    const r = tool.getBoundingClientRect();
+    // 让 tooltip 的左上角对齐到 tool-banner 的左上角（水平对齐），
+    // 垂直位置使用 50% - 150px 的计算与 CSS 保持一致
+    tip.style.left = `${Math.max(0, Math.round(r.left))}px`;
+    const topPx = Math.max(0, Math.round(window.innerHeight / 2 - 150));
+    tip.style.top = `${topPx}px`;
+    // 确保使用旋转但不使用 translateY(-50%)
+    tip.style.transform = 'rotate(-90deg)';
+}
+
+// 监听窗口变化以保持对齐
+window.addEventListener('resize', positionTooltipToToolBanner);
+window.addEventListener('load', () => {
+    // 延迟定位，确保元素已布局
+    setTimeout(positionTooltipToToolBanner, 120);
+});
 
 async function init() {
     // 等待 GitHub 实例和访问令牌 Wait for GitHub instance and access token
@@ -247,3 +324,69 @@ async function init() {
 }
 
 init();
+
+// Create a small invisible hotspot to trigger banner reveal in single/rotated mode
+function ensureBannerHotspot() {
+    let hotspot = document.getElementById('banner-hotspot');
+    if (!hotspot) {
+        hotspot = document.createElement('div');
+        hotspot.id = 'banner-hotspot';
+        document.body.appendChild(hotspot);
+        console.log('Hotspot created and added to body');
+    }
+    
+    // 强制设置样式，确保显示（防止 CSS 缓存问题）
+    const isDark = skin === 'dark';
+    Object.assign(hotspot.style, {
+        position: 'fixed',
+        top: '0',
+        right: '0',
+        width: '42px',
+        height: '42px',
+        background: isDark ? '#0df7188a' : '#ff95008a',
+        clipPath: 'polygon(100% 0, 100% 100%, 0 0)',
+        boxShadow: '-2px 2px 6px rgba(0, 0, 0, 0.15)',
+        zIndex: '200001',
+        cursor: 'pointer'
+    });
+    
+    console.log('Hotspot styles forced, background:', hotspot.style.background);
+    
+    // ensure expanded state cleared if layout changed
+    if (!$('#top-banner-row').hasClass('rotated-preview')) {
+        $('#top-banner-row').removeClass('expanded');
+    }
+}
+
+// Ensure hotspot exists on load/resize and when layout toggles
+window.addEventListener('load', () => setTimeout(ensureBannerHotspot, 100));
+window.addEventListener('resize', ensureBannerHotspot);
+
+// 备用的委托处理器，确保点击事件即使在元素重建或绑定问题时也能触发
+$(document).on('click', '#banner-hotspot', function (e) {
+    console.log('banner-hotspot clicked (delegated)');
+    const banner = $('#top-banner-row');
+    const posttitle = $('.posttitle');
+    const wasExpanded = banner.hasClass('expanded');
+    
+    // 调试信息
+    console.log('Banner classes:', banner.attr('class'));
+    console.log('Was expanded:', wasExpanded);
+    
+    if (wasExpanded) {
+        // 收起：移除 expanded，恢复 autohide，隐藏 posttitle
+        banner.removeClass('expanded');
+        posttitle.addClass('hidden');
+        if ($('body').hasClass('single')) {
+            banner.addClass('autohide');
+        }
+        console.log('Banner and posttitle collapsed');
+        console.log('After collapse classes:', banner.attr('class'));
+    } else {
+        // 展开：移除 autohide（它会强制 opacity:0），添加 expanded，显示 posttitle
+        banner.removeClass('autohide').addClass('expanded');
+        posttitle.removeClass('hidden');
+        console.log('Banner and posttitle expanded, autohide removed');
+        console.log('After expand classes:', banner.attr('class'));
+    }
+});

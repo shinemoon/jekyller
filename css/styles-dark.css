@@ -1,4 +1,38 @@
 @charset "UTF-8";
+/* Hotspot to trigger banner reveal when autohide is active */
+#banner-hotspot {
+  /* Right triangle at top-right corner */
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 42px;
+  height: 42px;
+  background: rgba(13, 247, 24, 0.5411764706);
+  clip-path: polygon(100% 0, 100% 100%, 0 0);
+  box-shadow: -2px 2px 6px rgba(0, 0, 0, 0.15);
+  z-index: 200001;
+  cursor: pointer;
+}
+
+/* temporary show the banner when hotspot hovered */
+#top-banner-row.show-temp,
+#top-banner-row.show-temp.autohide {
+  opacity: 1 !important;
+}
+
+/* 点击切换的展开状态 */
+#top-banner-row.expanded,
+#top-banner-row.expanded.autohide {
+  opacity: 1 !important;
+}
+
+/* 确保展开时覆盖其他层并能接收事件 */
+#top-banner-row.expanded {
+  z-index: 200000 !important;
+  pointer-events: auto !important;
+  opacity: 1 !important;
+}
+
 ::-webkit-scrollbar {
   display: none;
 }
@@ -7,6 +41,23 @@ body {
   margin: 0;
   background-color: #2d2d2d;
   overflow-y: hidden;
+}
+body .posttitle {
+  height: 20px;
+  text-align: center;
+  font-size: 16px;
+  padding: 10px 0;
+  z-index: 1103;
+  opacity: 1;
+  transform: translateX(0);
+  transition: opacity 220ms ease, transform 220ms ease;
+  pointer-events: auto;
+}
+body .posttitle.hidden,
+body body.single .posttitle {
+  opacity: 0;
+  transform: translateX(-16px);
+  pointer-events: none;
 }
 body .versioninfo {
   font-size: 8px;
@@ -20,7 +71,7 @@ body .versioninfo {
 
 .top-masker,
 .frame-mask {
-  z-index: 1100;
+  z-index: 1000;
   width: 100%;
   height: 100%;
   position: fixed;
@@ -93,50 +144,64 @@ body .versioninfo {
 
 #top-banner-row {
   display: flex;
-  width: 100%;
-  max-width: 1400px;
-  margin-left: auto;
-  margin-right: auto;
-  justify-content: space-between;
+  width: auto;
+  position: fixed;
+  right: 0;
+  top: 0;
+  z-index: 1103;
+  height: 100vh;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+  transition: transform 320ms ease, top 320ms ease, right 320ms ease, bottom 320ms ease, left 320ms ease, opacity 320ms ease;
+  transform-origin: top right;
 }
 #top-banner-row .tooltip {
   position: fixed;
-  right: calc(50% - 35px);
-  top: -5px;
+  /* 默认位置由 JS 计算并设置为与 #tool-banner 左上对齐 */
+  right: 10px;
+  top: calc(50% - 80px);
+  transform: rotate(-90deg);
+  transform-origin: center;
   background: rgba(99, 99, 93, 0.82);
   opacity: 1;
   text-align: center;
   z-index: 1002;
   width: 120px;
-  padding: 10px 0px 5px 10px;
+  padding: 10px;
   color: white;
-  height: 20px;
+  height: auto;
   border-radius: 5px;
+  white-space: nowrap;
 }
 #top-banner-row .top-banner {
-  height: 20px;
-  text-align: left;
+  width: 30px;
+  height: auto;
+  text-align: center;
   font-size: 16px;
   background: rgba(27, 26, 26, 0.89);
-  padding: 10px 20px 10px;
-  border-bottom: 4px solid #0df718;
+  padding: 10px;
+  border-left: 4px solid #0df718;
   z-index: 1103;
-  width: 400px;
-  box-shadow: rgba(228, 221, 221, 0.8) 2px -2px 4px;
+  box-shadow: rgba(228, 221, 221, 0.8) -2px 2px 4px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 30px;
+  position: relative;
 }
 #top-banner-row .top-banner .frame-icon {
   width: 16px;
   height: 16px;
-  float: right;
-  margin-right: 10px;
-  margin-top: 5px;
+  float: none;
+  margin: 10px 0;
   color: #fff;
   cursor: pointer;
   -webkit-app-region: no-drag;
 }
 #top-banner-row .top-banner .frame-icon.op {
-  width: 20px;
-  height: 20px;
+  width: 16px;
+  height: auto;
   font-size: 14px;
   opacity: 0.8;
 }
@@ -146,16 +211,19 @@ body .versioninfo {
 }
 #top-banner-row .top-banner .frame-icon.op:hover {
   opacity: 0.3;
+  transform: translateX(-5px);
+  transition: all 0.2s ease;
 }
 #top-banner-row .top-banner .frame-pop {
-  left: 0px;
+  right: 70px;
+  top: 0;
   color: black;
   width: 390px;
   height: 320px;
   z-index: 1102;
-  position: relative;
+  position: fixed;
   border: 2px solid #2d2d2d;
-  box-shadow: rgba(20, 20, 20, 0.8) 2px 2px 4px;
+  box-shadow: rgba(20, 20, 20, 0.8) -2px 2px 4px;
   border-radius: 10px;
   padding-left: 20px;
   display: none;
@@ -294,6 +362,13 @@ body .versioninfo {
   font-weight: normal;
   font-family: "Georgia", "Arial", "Microsoft YaHei", sans-serif;
   width: 150px;
+  position: absolute;
+  /* 放在 top-banner 的左下角并逆时针旋转90° */
+  left: -10px;
+  bottom: -30px;
+  transform: rotate(-90deg);
+  transform-origin: left bottom;
+  white-space: nowrap;
 }
 #top-banner-row .top-banner #user_info a {
   color: #bebaba;
@@ -313,26 +388,30 @@ body .versioninfo {
   opacity: 0.3;
 }
 #top-banner-row .top-banner .right-split {
-  border-right: 1px solid grey;
-  padding-right: 10px;
+  border-bottom: 1px solid grey;
+  padding-bottom: 10px;
 }
-#top-banner-row .posttitle {
+
+.posttitle {
   height: 20px;
   color: #fff;
-  text-align: right;
-  padding-right: 30px;
-  font-size: 14px;
-  padding: 10px 20px;
+  text-align: center;
+  font-size: 16px;
   border-bottom: 2px solid #0df718;
-  width: auto;
+  width: 100%;
+  padding: 10px 0px 10px 0px;
   background: rgba(27, 26, 26, 0.89);
   box-shadow: rgba(228, 221, 221, 0.8) 2px -2px 4px;
   z-index: 1103;
+  position: fixed;
+  top: 0px;
+  left: 0px;
 }
 
 #container {
   display: flex;
   justify-content: center;
+  margin-top: 40px;
 }
 #container #editor,
 #container #preview {
@@ -561,14 +640,142 @@ body .versioninfo {
   color: #222;
 }
 
+@media screen and (max-width: 768px) {
+  html, body {
+    overflow-x: hidden;
+    max-width: 100vw;
+  }
+  #top-banner-row .top-banner {
+    width: 40px;
+    padding: 5px;
+  }
+  #top-banner-row .top-banner .frame-icon {
+    margin: 8px 0;
+    width: 14px;
+    height: 14px;
+  }
+  #top-banner-row .top-banner .frame-icon.op {
+    width: 18px;
+    height: 18px;
+    font-size: 12px;
+  }
+  #top-banner-row .tooltip {
+    right: 10px;
+    width: 100px;
+    font-size: 11px;
+    padding: 8px;
+  }
+  #top-banner-row .frame-pop {
+    right: 50px;
+    width: calc(100vw - 70px);
+    max-width: 350px;
+  }
+  #container {
+    flex-direction: column;
+    padding-left: 20px;
+    padding-top: 20px;
+    width: 100vw !important;
+    max-width: 100vw !important;
+    box-sizing: border-box;
+    margin-top: 0;
+  }
+  #container #editor,
+  #container #preview {
+    width: calc(100vw - 45px) !important;
+    max-width: none !important;
+    height: 50vh;
+    box-sizing: border-box;
+  }
+  #container #editor {
+    padding-top: 30px;
+  }
+  #container #editor .ace_editor {
+    padding-top: 10px;
+  }
+  #container #preview {
+    border-left: none;
+    border-top: 1px dotted #222;
+    padding: 15px 10px;
+    padding-top: 30px;
+  }
+  #post-table {
+    width: calc(100% - 55px);
+    font-size: 12px;
+  }
+  #post-table tr td.label {
+    font-size: 10px;
+    width: 80px;
+  }
+}
+@media screen and (max-width: 480px) {
+  #top-banner-row .top-banner {
+    width: 35px;
+    padding: 3px;
+  }
+  #top-banner-row .top-banner .frame-icon {
+    margin: 6px 0;
+    width: 12px;
+    height: 12px;
+  }
+  #top-banner-row .top-banner .frame-icon.op {
+    width: 16px;
+    height: 16px;
+    font-size: 11px;
+  }
+  #top-banner-row .frame-pop {
+    right: 40px;
+    width: calc(100vw - 55px);
+    padding-left: 10px;
+    font-size: 12px;
+  }
+  #container {
+    padding-left: 20px;
+  }
+  #container #editor,
+  #container #preview {
+    font-size: 13px;
+  }
+  #container #preview {
+    padding: 10px 5px;
+  }
+  .notification {
+    font-size: 10px;
+    padding: 3px 6px;
+  }
+}
+/* 预览模式下整体顺时针旋转90度并放到右下角 */
+#top-banner-row.rotated-preview {
+  top: auto;
+  bottom: 0;
+  right: 0;
+  left: auto;
+  transform: rotate(90deg);
+}
+
+/* 展开时取消旋转，回到原位（右上角）以便可见 */
+#top-banner-row.rotated-preview.expanded {
+  transform: none;
+  top: 0;
+  bottom: auto;
+  right: 0;
+  left: auto;
+}
+
+/* 点击切换的展开状态 */
 body.single {
   /* 初始隐藏 banner */
+}
+body.single #top-banner-row {
+  /* 展开状态必须可见，覆盖 autohide */
 }
 body.single #top-banner-row.autohide {
   opacity: 0;
 }
 body.single #top-banner-row.autohide:hover {
   opacity: 1;
+}
+body.single #top-banner-row.expanded {
+  opacity: 1 !important;
 }
 body.single #container #preview {
   display: none;
@@ -582,6 +789,16 @@ body.single #container #editor .ace_active-line {
   /* Change the background color */
   /* Add a left border */
   /* Optional: Adjust opacity for the line */
+}
+
+/* 单栏预览模式（窄屏） */
+body.single.preview-mode #container #editor {
+  display: none;
+}
+body.single.preview-mode #container #preview {
+  display: block;
+  width: 100%;
+  max-width: 100%;
 }
 
 #preview {

@@ -62,10 +62,43 @@ $('.img#layout').click(() => {
 
 function switchLayout() {
     $('.focus').removeClass('focus');
-    if (editorcfg.layout == 'full')
-        editorcfg.layout = 'single';
-    else
-        editorcfg.layout = 'full';
+    
+    // 获取多种宽度值进行调试
+    const widthInfo = {
+        innerWidth: window.innerWidth,
+        outerWidth: window.outerWidth,
+        clientWidth: document.documentElement.clientWidth,
+        bodyWidth: document.body.clientWidth,
+        screenWidth: window.screen.width,
+        availWidth: window.screen.availWidth,
+        matchMedia: window.matchMedia('(max-width: 768px)').matches
+    };
+    console.log('Width debug info:', widthInfo);
+    
+    // 使用 documentElement.clientWidth 作为视口宽度
+    const viewportWidth = document.documentElement.clientWidth;
+    const isNarrowScreen = viewportWidth <= 768;
+    
+    console.log('switchLayout called, viewportWidth:', viewportWidth, 'isNarrowScreen:', isNarrowScreen, 'current layout:', editorcfg.layout);
+    
+    if (isNarrowScreen) {
+        // 窄屏模式：强制只在 'single'（编辑） 和 'preview'（预览） 之间切换
+        if (editorcfg.layout === 'preview') {
+            editorcfg.layout = 'single';
+        } else {
+            // 无论当前是 single 还是 full，都切换到 preview
+            editorcfg.layout = 'preview';
+        }
+    } else {
+        // 宽屏模式：在 'full'（双栏） 和 'single'（单栏编辑） 之间切换
+        if (editorcfg.layout === 'full' || editorcfg.layout === 'preview') {
+            editorcfg.layout = 'single';
+        } else {
+            editorcfg.layout = 'full';
+        }
+    }
+    
+    console.log('switchLayout result, new layout:', editorcfg.layout);
 
     chrome.storage.local.set({ 'editorconfig': editorcfg }, function () {
         logInfo(gm('configUpdated'));

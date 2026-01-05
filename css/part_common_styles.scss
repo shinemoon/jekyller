@@ -1,3 +1,36 @@
+/* Hotspot to trigger banner reveal when autohide is active */
+#banner-hotspot {
+  /* Right triangle at top-right corner */
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 42px;
+  height: 42px;
+  background: #0df7188a;
+  clip-path: polygon(100% 0, 100% 100%, 0 0);
+  box-shadow: -2px 2px 6px rgba(0, 0, 0, 0.15);
+  z-index: 200001;
+  cursor: pointer;
+}
+
+/* temporary show the banner when hotspot hovered */
+#top-banner-row.show-temp,
+#top-banner-row.show-temp.autohide {
+  opacity: 1 !important;
+}
+
+/* 点击切换的展开状态 */
+#top-banner-row.expanded,
+#top-banner-row.expanded.autohide {
+  opacity: 1 !important;
+}
+
+/* 确保展开时覆盖其他层并能接收事件 */
+#top-banner-row.expanded {
+  z-index: 200000 !important;
+  pointer-events: auto !important;
+  opacity: 1 !important;
+}
 // Scrollbar styling
 ::-webkit-scrollbar {
   display: none;
@@ -6,6 +39,28 @@
 // Base styles
 body {
   margin: 0;
+
+// Post title (与 banner 同步显示/隐藏，使用 opacity + transform 动画)
+.posttitle {
+  height: 20px;
+  text-align: center;
+  font-size: 16px;
+  padding: 10px 0;
+  z-index: 1103;
+  // 初始可见状态
+  opacity: 1;
+  transform: translateX(0);
+  transition: opacity 220ms ease, transform 220ms ease;
+  pointer-events: auto;
+}
+
+// 隐藏状态（通过添加 .hidden 类或 body.single 下触发）
+.posttitle.hidden,
+body.single .posttitle {
+  opacity: 0;
+  transform: translateX(-16px);
+  pointer-events: none;
+}
   //background: $bg-light;
   background-color: $bg-light;
   overflow-y: hidden;
@@ -13,18 +68,19 @@ body {
   .versioninfo {
     font-size: 8px;
     color: $fg-color-1;
-    position:fixed;
-    left:5px;
-    bottom:5px; 
-    opacity:0.3;
-    z-index:1103;
+    position: fixed;
+    left: 5px;
+    bottom: 5px;
+    opacity: 0.3;
+    z-index: 1103;
   }
 }
 
 // Masking layers
 .top-masker,
 .frame-mask {
-  z-index: 1100;
+  // 降低遮罩 z-index，确保弹窗/通知优先显示
+  z-index: 1000;
   width: 100%;
   height: 100%;
   position: fixed;
@@ -109,59 +165,70 @@ body {
 
 #top-banner-row {
   display: flex;
-  width: 100%;
-  max-width: 1400px;
-  margin-left: auto;
-  margin-right: auto;
-  justify-content: space-between;
+  width: auto;
+  position: fixed;
+  right: 0;
+  top: 0;
+  // 关键：给父级明确 z-index；否则在 autohide(opacity<1) 形成的堆叠上下文里，子元素再大也“出不去”
+  z-index: 1103;
+  height: 100vh;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+  transition: transform 320ms ease, top 320ms ease, right 320ms ease, bottom 320ms ease, left 320ms ease, opacity 320ms ease;
+  transform-origin: top right;
 
-  //Tool tip
+  //Tool tip — 逆时针旋转并放到屏幕右侧垂直居中
   .tooltip {
     position: fixed;
-    right: calc(50% - 35px);
-    top: -5px;
+    /* 默认位置由 JS 计算并设置为与 #tool-banner 左上对齐 */
+    right: 10px;
+    top: calc(50% - 80px);
+    transform: rotate(-90deg);
+    transform-origin: center;
     background: $tooltip-bg;
     opacity: 1;
     text-align: center;
     z-index: 1002;
     width: 120px;
-    padding: 10px 0px 5px 10px;
+    padding: 10px;
     color: $tooltip-fg;
-
-    height: 20px;
+    height: auto;
     border-radius: 5px;
+    white-space: nowrap;
   }
 
   // Top banner
   .top-banner {
-    height: 20px;
-    text-align: left;
+    width: 30px;
+    height: auto;
+    text-align: center;
     font-size: 16px;
     background: $titlebar-light;
-    padding: 10px 20px 10px;
-    border-bottom: 4px solid $highlight-light;
-    // position: fixed;
-    //top: 0;
-    //right: 0;
+    padding: 10px;
+    border-left: 4px solid $highlight-light;
     z-index: 1103;
-    width: 400px;
-    box-shadow: $box-shadow 2px -2px 4px;
+    box-shadow: $box-shadow -2px 2px 4px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 30px;
+    position: relative; // Ensure .top-banner is position: relative
 
 
 
     .frame-icon {
       width: 16px;
       height: 16px;
-      float: right;
-      margin-right: 10px;
-      margin-top: 5px;
+      float: none;
+      margin: 10px 0;
       color: $fg-color-0;
       cursor: pointer;
       -webkit-app-region: no-drag;
 
       &.op {
-        width: 20px;
-        height: 20px;
+        width: 16px;
+        height: auto;
         font-size: 14px;
         opacity: 0.8;
 
@@ -172,23 +239,25 @@ body {
 
         &:hover {
           opacity: 0.3;
+          transform: translateX(-5px);
+          transition: all 0.2s ease;
         }
       }
     }
 
     .frame-pop {
 
-      left: 0px;
-      // top: 15px;
+      right: 70px;
+      top: 0;
 
       color: black;
       width: 390px;
       height: 320px;
 
       z-index: 1102;
-      position: relative;
+      position: fixed;
       border: 2px solid $bg-light;
-      box-shadow: rgba(20, 20, 20, 0.8) 2px 2px 4px;
+      box-shadow: rgba(20, 20, 20, 0.8) -2px 2px 4px;
       border-radius: 10px;
       padding-left: 20px;
 
@@ -356,6 +425,13 @@ body {
       font-weight: normal;
       font-family: "Georgia", "Arial", "Microsoft YaHei", sans-serif;
       width: 150px;
+      position: absolute; // Positioning for rotation
+      /* 放在 top-banner 的左下角并逆时针旋转90° */
+      left: -10px;
+      bottom: -30px;
+      transform: rotate(-90deg);
+      transform-origin: left bottom;
+      white-space: nowrap;
 
       a {
         color: $fg-color-1;
@@ -382,33 +458,37 @@ body {
 
     //Split ico
     .right-split {
-      border-right: 1px solid grey;
-      padding-right: 10px;
+      border-bottom: 1px solid grey;
+      padding-bottom: 10px;
     }
   }
 
-  .posttitle {
-    height: 20px;
-    color: $fg-color-0;
-    text-align: right;
-    padding-right: 30px;
-    font-size: 14px;
-    padding: 10px 20px;
-    border-bottom: 2px solid $highlight-light;
-    width: auto;
-    background: $titlebar-light;
-    box-shadow: $box-shadow 2px -2px 4px;
-    z-index: 1103;
-  }
+
 
 
 }
 
+.posttitle {
+  height: 20px;
+  color: $fg-color-0;
+  text-align: center;
+  font-size: 16px;
+  border-bottom: 2px solid $highlight-light;
+  width: 100%;
+  padding:10px 0px 10px 0px;
+  background: $titlebar-light;
+  box-shadow: $box-shadow 2px -2px 4px;
+  z-index: 1103;
+  position:fixed;
+  top:0px;
+  left:0px;
+}
 
 // Container styles
 #container {
   display: flex;
   justify-content: center;
+  margin-top:40px;
 
   #editor,
   #preview {
@@ -689,3 +769,162 @@ body {
     }
   }
 }
+
+// 响应式设计 - 移动端和窄屏优化
+@media screen and (max-width: 768px) {
+
+  // 防止横向滚动
+  html, body {
+    overflow-x: hidden;
+    max-width: 100vw;
+  }
+
+  // 菜单栏在窄屏下变得更紧凑
+  #top-banner-row {
+    .top-banner {
+      width: 40px;
+      padding: 5px;
+
+      .frame-icon {
+        margin: 8px 0;
+        width: 14px;
+        height: 14px;
+
+        &.op {
+          width: 18px;
+          height: 18px;
+          font-size: 12px;
+        }
+      }
+    }
+
+    .tooltip {
+      right: 10px;
+      width: 100px;
+      font-size: 11px;
+      padding: 8px;
+    }
+
+    .frame-pop {
+      right: 50px;
+      width: calc(100vw - 70px);
+      max-width: 350px;
+    }
+  }
+
+  // 容器在窄屏下改为单列布局
+  #container {
+    flex-direction: column;
+    padding-left: 20px; // 移除 padding，避免宽度溢出
+    padding-top:20px;
+    width: 100vw !important;
+    max-width: 100vw !important;
+    box-sizing: border-box;
+    margin-top: 0;
+
+    #editor,
+    #preview {
+      width: calc(100vw - 45px) !important; // 减去右侧 banner 的宽度
+      max-width: none !important; // 移除720px的限制
+      height: 50vh;
+      box-sizing: border-box;
+    }
+
+    #editor {
+      padding-top: 30px; // 给编辑器内容留出顶部空间
+      
+      .ace_editor {
+        padding-top: 10px; // Ace 编辑器内部也需要 padding
+      }
+    }
+
+    #preview {
+      border-left: none;
+      border-top: 1px dotted $fg-color-2;
+      padding: 15px 10px;
+      padding-top: 30px; // 预览区域也需要顶部间距
+    }
+  }
+
+  // 表格在窄屏下优化
+  #post-table {
+    width: calc(100% - 55px);
+    font-size: 12px;
+
+    tr td.label {
+      font-size: 10px;
+      width: 80px;
+    }
+  }
+}
+
+@media screen and (max-width: 480px) {
+
+  // 超窄屏（手机竖屏）进一步优化
+  #top-banner-row {
+    .top-banner {
+      width: 35px;
+      padding: 3px;
+
+      .frame-icon {
+        margin: 6px 0;
+        width: 12px;
+        height: 12px;
+
+        &.op {
+          width: 16px;
+          height: 16px;
+          font-size: 11px;
+        }
+      }
+    }
+
+    .frame-pop {
+      right: 40px;
+      width: calc(100vw - 55px);
+      padding-left: 10px;
+      font-size: 12px;
+    }
+  }
+
+  #container {
+//    padding-right: 40px;
+    padding-left: 20px;
+
+    #editor,
+    #preview {
+      font-size: 13px;
+    }
+
+    #preview {
+      padding: 10px 5px;
+    }
+  }
+
+  .notification {
+    font-size: 10px;
+    padding: 3px 6px;
+  }
+}
+
+/* 预览模式下整体顺时针旋转90度并放到右下角 */
+#top-banner-row.rotated-preview {
+  top: auto;
+  bottom: 0;
+  right: 0;
+  left: auto;
+  transform: rotate(90deg);
+}
+
+/* 展开时取消旋转，回到原位（右上角）以便可见 */
+#top-banner-row.rotated-preview.expanded {
+  transform: none;
+  top: 0;
+  bottom: auto;
+  right: 0;
+  left: auto;
+}
+
+/* 点击切换的展开状态 */
+
+         

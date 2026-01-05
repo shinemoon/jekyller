@@ -8,6 +8,11 @@ body.single {
                 opacity: 1;
             }
         }
+        
+        /* 展开状态必须可见，覆盖 autohide */
+        &.expanded {
+            opacity: 1 !important;
+        }
 
     }
 
@@ -29,6 +34,20 @@ body.single {
                 //              opacity: 0.8;
                 /* Optional: Adjust opacity for the line */
             }
+        }
+    }
+}
+
+/* 单栏预览模式（窄屏） */
+body.single.preview-mode {
+    #container {
+        #editor {
+            display: none;
+        }
+        #preview {
+            display: block;
+            width: 100%;
+            max-width: 100%;
         }
     }
 }
