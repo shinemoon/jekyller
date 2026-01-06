@@ -1,0 +1,54 @@
+/* Visual triangle and stroke are implemented with pseudo-elements so the real element
+   keeps a full rectangular hit area (width x height) while the visible shape remains triangular. */
+#banner-hotspot {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 40px;
+  height: 40px;
+  /* ensure the element itself is a full rectangle for pointer events */
+  clip-path: none !important;
+  background: transparent !important;
+  /* move visual shadow to the pseudo-element */
+  box-shadow: none !important;
+}
+
+/* ::after draws the visible filled triangle (matches previous background and clip-path) */
+#banner-hotspot::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none; /* allow clicks to hit the parent rectangular area */
+  clip-path: polygon(100% 0, 100% 100%, 0 0);
+  /* use a CSS variable so the visible triangle color can be overridden elsewhere
+     without editing compiled CSS; fallback matches previous color */
+  background: $hotspot-bg;
+  box-shadow: -2px 2px 6px rgba(0, 0, 0, 0.15);
+  z-index: 200001;
+}
+
+/* ::before draws the 1px white stroke along the triangle edge */
+#banner-hotspot::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40' preserveAspectRatio='none'><polygon points='40,0 40,40 0,0' fill='none' stroke='white' stroke-width='1'/></svg>");
+  z-index: 200002;
+}
+
+/* center an icon inside the hotspot without blocking pointer events */
+#banner-hotspot .hotspot-icon {
+  position: absolute;
+  left: 70%;
+  top: 30%;
+  transform: translate(-50%, -50%);
+  font-family: icomoon, sans-serif;
+  font-size: 12px;
+  color: white;
+  z-index: 200003;
+  pointer-events: none; /* allow clicks to fall through to hotspot element */
+}
+

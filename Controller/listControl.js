@@ -61,7 +61,7 @@ async function listPop(toggle) {
     // 搜索区域 Search area
     $('.frame-pop #top-row').append("<div  id='search-pannel'></div>");
     $('#search-pannel').append("<textarea id='txt-search' οnfοcus='this.select()' οnmοuseοver='this.focus()' spellcheck=false></textarea>");
-    $('#search-pannel').append("<span class='nav icon-search' id='search' title='Search Blog'></span>");
+    $('#search-pannel').append("<span class='nav icon-search' id='search' title=''></span>");
     $('#txt-search').val(searchStr);
 
 

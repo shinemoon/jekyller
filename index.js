@@ -214,6 +214,15 @@ function setView() {
     const viewportWidth = document.documentElement.clientWidth;
     const isNarrowScreen = viewportWidth <= 768;
     
+    // 在调整视图/窗口大小时强制隐藏任何残留的弹窗或 tooltip
+    try {
+        $('.frame-pop').hide();
+        $('.tooltip').hide();
+        $('.frame-mask').hide();
+    } catch (e) {
+        // ignore if jQuery not ready
+    }
+
     console.log('setView called, viewportWidth:', viewportWidth, 'isNarrowScreen:', isNarrowScreen, 'layout:', editorcfg.layout);
     
     // 窄屏模式下，如果是 full 模式，强制转换为 single
@@ -296,24 +305,78 @@ function setView() {
 // 将 tooltip 定位到与 #tool-banner 左上角对齐的位置
 function positionTooltipToToolBanner() {
     const tip = document.querySelector('#top-banner-row .tooltip');
-    const tool = document.querySelector('#tool-banner');
-    if (!tip || !tool) return;
-    // 获取 #tool-banner 左上角相对于视口的位置
-    const r = tool.getBoundingClientRect();
-    // 让 tooltip 的左上角对齐到 tool-banner 的左上角（水平对齐），
-    // 垂直位置使用 50% - 150px 的计算与 CSS 保持一致
-    tip.style.left = `${Math.max(0, Math.round(r.left))}px`;
-    const topPx = Math.max(0, Math.round(window.innerHeight / 2 - 150));
-    tip.style.top = `${topPx}px`;
-    // 确保使用旋转但不使用 translateY(-50%)
-    tip.style.transform = 'rotate(-90deg)';
+    const topBanner = document.querySelector('#top-banner-row .top-banner');
+    const topBannerRow = document.querySelector('#top-banner-row');
+    if (!tip || !topBanner) return;
+    
+    // 如果是旋转状态且未展开，隐藏 tooltip（此时 banner 在右下角）
+    const isRotated = topBannerRow && topBannerRow.classList.contains('rotated-preview');
+    const isExpanded = topBannerRow && topBannerRow.classList.contains('expanded');
+    if (isRotated && !isExpanded) {
+        tip.style.display = 'none';
+        return;
+    }
+    
+    // 直接根据 .top-banner 的实际位置计算 tooltip 位置
+    const bannerRect = topBanner.getBoundingClientRect();
+    
+    // tooltip 的 top 和 left 直接对齐 .top-banner（都是 fixed 定位，不需要加 scrollY）
+    // 位置调整：上移20px，右移5px
+    // 注意：这里只负责定位，不设置 display（由 hover 事件控制）
+    tip.style.position = 'fixed';
+    tip.style.left = `${Math.max(0, Math.round(bannerRect.left) + 5)}px`;
+    tip.style.top = `${Math.round(bannerRect.top - 40)}px`;
+    tip.style.removeProperty('transform');
 }
+
+// 暴露到全局供 bannerSync.js 调用
+window.positionTooltipToToolBanner = positionTooltipToToolBanner;
+
+// tooltip 默认隐藏，只在 hover icon 时显示
+$(document).ready(function() {
+    const tooltip = $('.tooltip');
+    if (tooltip.length) {
+        tooltip.hide(); // 默认隐藏
+        
+        // hover .frame-icon 时显示 tooltip
+        $('.frame-icon').on('mouseenter', function() {
+            const topBannerRow = document.querySelector('#top-banner-row');
+            const isRotated = topBannerRow && topBannerRow.classList.contains('rotated-preview');
+            const isExpanded = topBannerRow && topBannerRow.classList.contains('expanded');
+            // 只在非旋转或已展开时显示
+            if (!isRotated || isExpanded) {
+                positionTooltipToToolBanner();
+                tooltip.show();
+            }
+        }).on('mouseleave', function() {
+            tooltip.hide();
+        });
+    }
+});
 
 // 监听窗口变化以保持对齐
 window.addEventListener('resize', positionTooltipToToolBanner);
 window.addEventListener('load', () => {
     // 延迟定位，确保元素已布局
     setTimeout(positionTooltipToToolBanner, 120);
+    // 初始化全局 tooltip（加入显示延迟以做 hover 防抖）
+    try {
+        if (window.jQuery && jQuery.ui && jQuery.ui.tooltip) {
+            $(document).tooltip({
+                // 延迟显示，避免鼠标快速经过时频繁触发（防抖）
+                show: { delay: 250 },
+                // 隐藏时也可稍作延迟以减少闪烁
+                hide: { delay: 80 }
+            });
+        }
+    } catch (e) {
+        // 忽略初始化失败
+        console.warn('Tooltip init/debounce failed', e);
+    }
+    // Mark UI as ready after a short delay so SCSS can reveal previously-hidden elements
+    setTimeout(() => {
+        try { document.body.classList.add('ui-ready'); } catch (e) {}
+    }, 180);
 });
 
 async function init() {
@@ -332,29 +395,30 @@ function ensureBannerHotspot() {
         hotspot = document.createElement('div');
         hotspot.id = 'banner-hotspot';
         document.body.appendChild(hotspot);
+        // add centered icon inside hotspot
+        const icon = document.createElement('span');
+        icon.className = 'hotspot-icon icon-quotes-right';
+        hotspot.appendChild(icon);
         console.log('Hotspot created and added to body');
     }
     
     // 强制设置样式，确保显示（防止 CSS 缓存问题）
     const isDark = skin === 'dark';
-    Object.assign(hotspot.style, {
-        position: 'fixed',
-        top: '0',
-        right: '0',
-        width: '42px',
-        height: '42px',
-        background: isDark ? '#0df7188a' : '#ff95008a',
-        clipPath: 'polygon(100% 0, 100% 100%, 0 0)',
-        boxShadow: '-2px 2px 6px rgba(0, 0, 0, 0.15)',
-        zIndex: '200001',
-        cursor: 'pointer'
-    });
-    
     console.log('Hotspot styles forced, background:', hotspot.style.background);
     
     // ensure expanded state cleared if layout changed
     if (!$('#top-banner-row').hasClass('rotated-preview')) {
         $('#top-banner-row').removeClass('expanded');
+    }
+    // Show hotspot only in single/rotated layouts; hide in full layout
+    try {
+        if (document.body.classList.contains('single')) {
+            hotspot.style.display = '';
+        } else {
+            hotspot.style.display = 'none';
+        }
+    } catch (e) {
+        // ignore
     }
 }
 
@@ -374,19 +438,29 @@ $(document).on('click', '#banner-hotspot', function (e) {
     console.log('Was expanded:', wasExpanded);
     
     if (wasExpanded) {
-        // 收起：移除 expanded，恢复 autohide，隐藏 posttitle
+        // 收起：移除 expanded，恢复 autohide，隐藏 posttitle 和 tooltip
         banner.removeClass('expanded');
         posttitle.addClass('hidden');
+        $('.tooltip').hide(); // 隐藏 tooltip
         if ($('body').hasClass('single')) {
             banner.addClass('autohide');
         }
         console.log('Banner and posttitle collapsed');
         console.log('After collapse classes:', banner.attr('class'));
     } else {
-        // 展开：移除 autohide（它会强制 opacity:0），添加 expanded，显示 posttitle
-        banner.removeClass('autohide').addClass('expanded');
+        // 展开：移除 autohide（它会强制 opacity:0）和 rotated-preview，添加 expanded，显示 posttitle
+        banner.removeClass('autohide').removeClass('rotated-preview').addClass('expanded');
         posttitle.removeClass('hidden');
         console.log('Banner and posttitle expanded, autohide removed');
         console.log('After expand classes:', banner.attr('class'));
+        
+        // 等待 CSS transform transition 完成（320ms）后再触发对齐
+        // 确保 getBoundingClientRect 返回正确的旋转后尺寸
+        setTimeout(() => {
+            if (window.positionFramePopToTopBanner) {
+                window.positionFramePopToTopBanner();
+            }
+            // 不自动调用 positionTooltipToToolBanner，让 hover 事件控制 tooltip 显示
+        }, 350);
     }
 });
