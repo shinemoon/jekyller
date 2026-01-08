@@ -90,12 +90,9 @@
       // Compute desired width to fill available space left of the banner, clamped
       const desiredWidth = Math.max(240, Math.min(320, Math.round(window.innerWidth - rect.width - 80)));
       const left = Math.round(rect.left - desiredWidth - gap);
-      // Apply positioning using left to avoid conflict with existing 'right' rules
+      // Do not override left/right/width from CSS here — let stylesheet control positioning.
+      // Only ensure the frame keeps the proper height (JS fallback).
       frame.style.position = 'fixed';
-      frame.style.left = `${Math.max(8, left)}px`;
-      frame.style.right = 'auto';
-      frame.style.width = `${desiredWidth}px`;
-      // keep frame height in sync (JS fallback); top is controlled by CSS variable
       frame.style.height = `${Math.round(actualHeight)}px`;
       frame.style.removeProperty('top');
     } catch (e) {

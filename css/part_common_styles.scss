@@ -266,13 +266,12 @@ body {
 
     .frame-pop {
       border-left: solid 5px $highlight-button-bg !important;
-      right: 85px !important;
-      left: auto !important;
+      right: 85px;
       /* Use CSS variables set by JS to align with .top-banner */
       top: var(--top-banner-top, 0px);
 
       color: black;
-      width: 285px !important;
+      width: 285px ;
       max-width: 320px;
       height: var(--top-banner-height, 320px);
 
@@ -602,7 +601,7 @@ body {
 // 搜索列表样式
 #plist-table {
   width: 310px;
-  margin-left: -10px;
+  margin-left: -25px;
 
   a {
     color: grey;
@@ -802,42 +801,6 @@ body {
     max-width: 100vw;
   }
 
-  // 菜单栏在窄屏下变得更紧凑
-  #top-banner-row {
-    .top-banner {
-      width: 40px;
-      padding: 5px;
-
-      .frame-icon {
-        margin: 8px 0;
-        width: 14px;
-        height: 14px;
-
-        &.op {
-          width: 18px;
-          height: 18px;
-          font-size: 12px;
-        }
-      }
-    }
-
-    .tooltip {
-      right: 10px;
-      width: 100px;
-      font-size: 11px;
-      padding: 8px;
-    }
-
-    .frame-pop {
-      right: 50px;
-      width: calc(100vw - 70px);
-      max-width: 320px;
-      /* 高度与 .top-banner 保持一致（通过 JS 同步到 --top-banner-height） */
-      height: var(--top-banner-height, 80px);
-      /* Align top with .top-banner via CSS variable set by JS */
-      top: var(--top-banner-top, 0px);
-    }
-  }
 
   // 容器在窄屏下改为单列布局
   #container {
@@ -935,6 +898,26 @@ body {
     font-size: 10px;
     padding: 3px 6px;
   }
+}
+
+/* 超窄屏优化：小于等于 400px 时的专用规则 */
+@media screen and (max-width: 400px) {
+
+  #top-banner-row .top-banner {
+    .frame-pop {
+      /* 窄屏时固定宽度，覆盖较大的默认值以便于布局 */
+      width: 245px;
+      max-width: 245px;
+      right:75px;
+    }
+  }
+  /* 搜索面板在超窄屏下收窄 */
+  #search-pannel {
+    textarea {
+      width: 80px;
+    }
+  }
+
 }
 
 /* 预览模式下整体顺时针旋转90度并放到右下角 */
