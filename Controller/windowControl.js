@@ -165,7 +165,8 @@ function popFrame(id, toggle = true, cb) {
     //if (editorcfg.layout == 'full')
     if (true)
         $('.frame-mask').show(); //Only show frame-mask in 'full' mode.
-    $('.frame-pop').show();
+        // Use flex layout for .frame-pop instead of default block from jQuery.show()
+        $('.frame-pop').css('display', 'flex');
     //Pop frame will remove 'autohide' in single mode 
     $('#top-banner-row').removeClass('autohide');
 }
