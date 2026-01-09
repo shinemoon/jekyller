@@ -9,7 +9,9 @@ function metaPop(toggle) {
 function refreshPostMeta() {
     $('#post-table').remove();
     const $postTable = $('<div id="post-table"><table></table></div>');
-    $('.frame-pop').append($postTable).find('.ajax-loader').hide();
+    $('.frame-pop').append($postTable);
+    // Hide any ajax loaders inside the frame-pop (ensure we hide all instances)
+    $('.frame-pop').find('.ajax-loader').hide();
 
     const fields = [
         { label: gm('Title'), class: 'title', type: 'text', placeholder: 'Post Title' },

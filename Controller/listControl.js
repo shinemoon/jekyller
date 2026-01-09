@@ -65,9 +65,8 @@ async function listPop(toggle) {
     $('#txt-search').val(searchStr);
 
 
-    $('.frame-pop').append('<div class=ajax-loader><img src="/assets/loader.gif"/></div>');
     $('.frame-pop').append("<div id='list-type'></div>");
-    $('.frame-pop').append('<div id="tool-banner"><img id="refresh" src="/assets/refresh.png"/ title="Refesh the List"></div>');
+    $('.frame-pop').append('<div id="tool-banner"><img id="refresh" src="/assets/refresh.png"/></div>');
 
     if (searchStr == '') {
       $('#list-type').text('All'); // 全部列表 All list
@@ -214,6 +213,9 @@ function refreshPostList() {
       if (page != curpage) processList(page - 1);
     });
     bindPageAction();
+      // Ensure only one loader exists: remove any existing then append hidden loader
+      $('.frame-pop').find('.ajax-loader').remove();
+      $('.frame-pop').append('<div class="ajax-loader" style="display:none"><img src="/assets/loader.gif"/></div>');
   }
 
   constructUI();

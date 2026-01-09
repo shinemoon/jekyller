@@ -293,9 +293,9 @@ body {
       background-position: 5% 120%;
 
       .ajax-loader img {
-        position: fixed;
-        top: 10px;
-        right: calc(50% + 5px);
+        position: relative;
+        bottom: -5px;
+        right: calc(50%);
         opacity: 0.8;
         width: 50px;
         height: 12px;
@@ -466,15 +466,6 @@ body {
         &:visited {
           color: $visited-color;
         }
-      }
-
-      .ajax-loader img {
-        position: relative;
-        left: 20px;
-        top: 5px;
-        width: 50px;
-        height: 10px;
-        opacity: 0.3;
       }
     }
 
@@ -801,7 +792,7 @@ body {
       /* 窄屏时固定宽度，覆盖较大的默认值以便于布局 */
       width: 245px;
       max-width: 245px;
-      right: 75px;
+      right: 78px;
       padding-left: 0px;
     }
   }
