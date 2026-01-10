@@ -499,7 +499,8 @@ body {
 #container {
   display: flex;
   justify-content: center;
-  margin-top: 40px;
+  margin: 40px auto 0 auto;
+  max-width: 1600px;
 
   #editor,
   #preview {
