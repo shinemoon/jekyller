@@ -190,6 +190,9 @@ else
     editor.setTheme("ace/theme/tomorrow_night_eighties");
 */
 
+// 禁用移动端菜单 Disable mobile menu
+editor.setOption("enableMobileMenu", false);
+
 editor.session.setMode("ace/mode/markdown");
 // ==========================
 // Markdown 预览功能 Markdown Preview
