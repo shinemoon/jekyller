@@ -85,6 +85,7 @@ body {
   overflow-y: hidden;
 
   .versioninfo {
+    display:none;
     font-size: 8px;
     color: $fg-color-1;
     position: fixed;
@@ -505,7 +506,6 @@ body {
   #editor,
   #preview {
     width: 50%;
-    height: 100vh;
     max-width: 720px;
   }
 

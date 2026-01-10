@@ -273,8 +273,8 @@ function setView() {
     } else {
         //Height
         console.log('Applying full/dual mode');
-        document.getElementById("editor").style.height = `${window.innerHeight - 55}px`;
-        document.getElementById("preview").style.height = `${window.innerHeight - 70}px`;
+        document.getElementById("editor").style.height = `${window.innerHeight - 120}px`;
+        document.getElementById("preview").style.height = `${window.innerHeight - 120}px`;
         $('body').removeClass('single').removeClass('preview-mode');
         $('#top-banner-row').removeClass('autohide');
         // full 模式下 banner 和 posttitle 始终显示
