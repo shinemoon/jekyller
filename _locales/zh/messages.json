@@ -1,10 +1,10 @@
 {
     "extName": {
-        "message": "Github Jeykller Blog 编辑器",
+        "message": "Github Markdown Writer",
         "description": "Extension Name"
     },
     "extDes": {
-        "message": "用于支持Github Hosted的Jekyll博客的编辑器，可以支持博文的撰写、修改以及支持实时预览等功能。",
+        "message": "用于支持Github Hosted的Jekyll博客/Markdown的编辑器，可以支持博文的撰写、修改以及支持实时预览等功能。",
         "description": "Extension Description"
     },
     "ListRecent": {

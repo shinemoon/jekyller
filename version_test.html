@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jekyller - 版本通知测试工具</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, "Microsoft YaHei", sans-serif;
+      background: #f5f5f5;
+      padding: 40px 20px;
+      line-height: 1.6;
+    }
+    
+    .container {
+      max-width: 700px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+      padding: 30px;
+    }
+    
+    h1 {
+      color: #333;
+      margin-bottom: 10px;
+      font-size: 24px;
+    }
+    
+    .subtitle {
+      color: #666;
+      margin-bottom: 30px;
+      font-size: 14px;
+    }
+    
+    .section {
+      margin-bottom: 30px;
+      padding: 20px;
+      background: #fafafa;
+      border-radius: 6px;
+      border-left: 4px solid #ff9500;
+    }
+    
+    .section h2 {
+      font-size: 16px;
+      color: #333;
+      margin-bottom: 15px;
+    }
+    
+    .info-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px solid #eee;
+    }
+    
+    .info-row:last-child {
+      border-bottom: none;
+    }
+    
+    .label {
+      font-weight: 600;
+      color: #555;
+    }
+    
+    .value {
+      color: #666;
+      font-family: "Consolas", "Monaco", monospace;
+    }
+    
+    .badge {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    
+    .badge.success {
+      background: #d4edda;
+      color: #155724;
+    }
+    
+    .badge.warning {
+      background: #fff3cd;
+      color: #856404;
+    }
+    
+    .badge.info {
+      background: #d1ecf1;
+      color: #0c5460;
+    }
+    
+    .button-group {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    
+    button {
+      appearance: none;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 600;
+      transition: all 0.2s;
+      flex: 1;
+      min-width: 140px;
+    }
+    
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+    
+    button.primary {
+      background: #ff9500;
+      color: white;
+    }
+    
+    button.danger {
+      background: #dc3545;
+      color: white;
+    }
+    
+    button.secondary {
+      background: #6c757d;
+      color: white;
+    }
+    
+    button.success {
+      background: #28a745;
+      color: white;
+    }
+    
+    .instructions {
+      background: #e7f3ff;
+      border-left: 4px solid #2196F3;
+      padding: 15px;
+      border-radius: 4px;
+      margin-top: 20px;
+    }
+    
+    .instructions h3 {
+      font-size: 14px;
+      color: #1976D2;
+      margin-bottom: 10px;
+    }
+    
+    .instructions ol {
+      margin-left: 20px;
+      font-size: 13px;
+      color: #555;
+    }
+    
+    .instructions li {
+      margin: 6px 0;
+    }
+    
+    .log {
+      margin-top: 20px;
+      background: #1e1e1e;
+      color: #d4d4d4;
+      padding: 15px;
+      border-radius: 6px;
+      font-family: "Consolas", "Monaco", monospace;
+      font-size: 12px;
+      max-height: 200px;
+      overflow-y: auto;
+    }
+    
+    .log-entry {
+      margin: 4px 0;
+    }
+    
+    .log-time {
+      color: #858585;
+    }
+    
+    .log-action {
+      color: #4EC9B0;
+    }
+    
+    code {
+      background: #f4f4f4;
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-family: "Consolas", "Monaco", monospace;
+      font-size: 13px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🧪 版本通知测试工具</h1>
+    <div class="subtitle">用于测试 Jekyller 扩展的版本更新通知机制</div>
+    
+    <div class="section">
+      <h2>📊 当前状态</h2>
+      <div class="info-row">
+        <span class="label">扩展版本</span>
+        <span class="value" id="currentVersion">-</span>
+      </div>
+      <div class="info-row">
+        <span class="label">已记录版本</span>
+        <span class="value" id="storedVersion">-</span>
+      </div>
+      <div class="info-row">
+        <span class="label">通知状态</span>
+        <span id="notificationStatus">-</span>
+      </div>
+    </div>
+    
+    <div class="section">
+      <h2>🔧 测试操作</h2>
+      <div class="button-group">
+        <button class="primary" id="checkVersion">检查版本</button>
+        <button class="success" id="openUpdate">打开更新页</button>
+        <button class="secondary" id="simulateNew">模拟首次安装</button>
+        <button class="danger" id="clearVersion">清除版本记录</button>
+      </div>
+    </div>
+    
+    <div class="instructions">
+      <h3>📝 测试步骤说明</h3>
+      <ol>
+        <li><strong>测试首次安装：</strong>点击"清除版本记录"按钮，然后重新加载扩展（chrome://extensions/），应自动弹出更新页面</li>
+        <li><strong>测试版本更新：</strong>修改 <code>manifest.json</code> 中的版本号，然后重新加载扩展</li>
+        <li><strong>手动触发：</strong>点击"打开更新页"可直接打开更新通知页面查看效果</li>
+        <li><strong>验证机制：</strong>点击"检查版本"查看当前存储的版本信息</li>
+        <li><strong>注意：</strong>更新页面关闭后会自动保存版本号，下次不会再弹出（除非版本变化）</li>
+      </ol>
+    </div>
+    
+    <div class="log" id="logContainer">
+      <div class="log-entry">
+        <span class="log-time">[等待操作]</span>
+        <span class="log-action">准备就绪，开始测试...</span>
+      </div>
+    </div>
+  </div>
+  
+  <script src="version_test.js"></script>
+</body>
+</html>

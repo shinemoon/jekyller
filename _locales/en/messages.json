@@ -1,10 +1,10 @@
 {
     "extName": {
-        "message": "Github Jekyll Blog Editor",
+        "message": "Github Markdown Writer",
         "description": "Extension Name"
     },
     "extDes": {
-        "message": "To support writing, editing and managing the github.io based Jekyll Blog, with Markdown Previewer.",
+        "message": "To support writing, editing and managing the github.io based Jekyll/Markdown Blog, with Markdown Previewer.",
         "description": "Extension Description"
     },
     "ListRecent": {

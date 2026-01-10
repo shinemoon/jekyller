@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "__MSG_extName__",
-  "short_name": "Jekyller",
+  "short_name": "GMDWriter",
   "description": "__MSG_extDes__",
   "default_locale":"en",
   "version": "4.0.3",
@@ -11,7 +11,7 @@
       "16": "assets/icon_512.png",
       "128": "assets/icon_512.png"
     },
-    "default_title": "Jeykller"
+    "default_title": "Github Markdown Writer "
   },
   "icons": {
     "16": "assets/icon_512.png",
