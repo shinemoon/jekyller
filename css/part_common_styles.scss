@@ -145,6 +145,7 @@ body {
 #post-table {
   margin-top: 20px;
   margin-left: 10px;
+  width: 240px;
 
   table {
     width: 100%;
@@ -383,18 +384,15 @@ body {
         align-items: center;
         justify-content: space-evenly;
 
-        .radio-option {
-          margin: 0;
-          padding: 5px;
-          font-size: 10px;
-          display: flex;
-          align-items: center;
-
-          input[type="radio"] {
-            width: 16px;
-            height: 16px;
-            margin-right: 5px; // 控制按钮与文本间距
-          }
+        select {
+          padding: 6px 8px;
+          font-size: 12px;
+          border-radius: 3px;
+          border: 1px solid $label-bg;
+          background: $bg-light;
+          color: $fg-color-0;
+          outline: none;
+          width: 100%;
         }
 
         .send {
@@ -704,24 +702,33 @@ body {
 
 // Other config pannel
 .config-input {
-  margin: 30px auto 0;
-  width: 100%;
+  margin: 10px auto 0;
+  width: 240px;
   vertical-align: middle;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 
   .config-title {
     font-size: 11px;
     color: $fg-color-1;
-    width: 50px;
+  //  width: 50px;
     display: inline;
     vertical-align: middle;
+    margin-top: 3px;
+    text-align: left;
+  }
+
+  .config-token-buttons {
+    margin-top: -3px;
   }
 
   textarea {
-    margin-left: 20px;
+    margin-right: 10px;
     padding: 5px 5px 4px;
-    width: 240px;
+    width: 120px;
     resize: none;
-    color: $color-dark;
+    color: $fg-color-0;
     height: 12px;
     font-size: 12px;
     font-family: Arial, Helvetica, sans-serif;
@@ -729,14 +736,15 @@ body {
     border: none;
     border-radius: 2px;
     vertical-align: middle;
+    background-color: $label-bg;
 
     &:focus {
-      background: $textarea-hover;
+      background: $label-bg;
     }
   }
 
   .icon {
-    margin: 0 8px 0 4px;
+    //    margin: 0 8px 0 4px;
     vertical-align: middle;
     color: $color-dark;
     cursor: auto;
@@ -763,15 +771,14 @@ body {
 
 .popping-note {
   margin-top: 12px;
-  width: 350px;
-  height: 170px;
-  background: rgba(0, 0, 0, 0.03);
+  width: 220px;
+  background: $label-bg-light;
   border: 1px dotted $fg-color-2;
-  border-radius: 10px;
   padding: 10px;
   font-size: 12px;
-  color: $fg-color-2;
+  color: $fg-color-1;
   white-space: pre-wrap;
+  text-align: left;
 
   a {
     text-decoration: dotted;
@@ -803,6 +810,12 @@ body {
       width: 80px;
     }
   }
+
+  .config-input {
+    margin: 10px auto 0;
+    width: 220px;
+  }
+
 
 }
 

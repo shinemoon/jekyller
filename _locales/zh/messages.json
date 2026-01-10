@@ -41,7 +41,7 @@
         "description": "ConfigToken"
     },
     "TokenSet": {
-        "message": "令牌输入",
+        "message": "令牌",
         "description": "tokenSet"
     },
     "clearToken": {

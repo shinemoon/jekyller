@@ -20,20 +20,14 @@ function refreshEditorCfg() {
       <tr>
         <td class="cfgEditor label">${gm("editormode")}</td>
         <td class="cfgEditor content">
-          <div class="radio-group">
-            <label class="radio-option">
-              <input type="radio" name="cfgEditorMode" value="normal"> ${gm("normalmode")}
-            </label>
-            <label class="radio-option">
-              <input type="radio" name="cfgEditorMode" value="vim"> ${gm("vimmode")}
-            </label>
-            <label class="radio-option">
-              <input type="radio" name="cfgEditorMode" value="emacs"> ${gm("emacsmode")}
-            </label>
-            <label class="radio-option">
-              <input type="radio" name="cfgEditorMode" value="sublime"> ${gm("sublimemode")}
-            </label>
-          </div>
+                    <div class="radio-group">
+                        <select id="cfgEditorMode" name="cfgEditorMode">
+                            <option value="normal">${gm("normalmode")}</option>
+                            <option value="vim">${gm("vimmode")}</option>
+                            <option value="emacs">${gm("emacsmode")}</option>
+                            <option value="sublime">${gm("sublimemode")}</option>
+                        </select>
+                    </div>
         </td>
        </tr>
       <tr>
@@ -46,14 +40,12 @@ function refreshEditorCfg() {
         <tr>
         <td class="cfgEditor label">${gm("editorLayout")}</td>
         <td class="cfgEditor content">
-          <div class="radio-group">
-            <label class="radio-option">
-              <input type="radio" name="cfgEditorLayout" value="full"> ${gm("fulllayout")}
-            </label>
-            <label class="radio-option">
-              <input type="radio" name="cfgEditorLayout" value="single"> ${gm("singlelayout")}
-            </label>
-          </div>
+                    <div class="radio-group">
+                        <select id="cfgEditorLayout" name="cfgEditorLayout">
+                            <option value="full">${gm("fulllayout")}</option>
+                            <option value="single">${gm("singlelayout")}</option>
+                        </select>
+                    </div>
         </td>
         </tr>
     </table>
@@ -65,18 +57,12 @@ function refreshEditorCfg() {
 
         // Update action:
         $('.cfgEditor .send').click(() => {
-            // 获取被选中的 radio button 的 value
-            editorcfg.mode = document.querySelector('input[name="cfgEditorMode"]:checked').value;
+            // 获取下拉框的 value
+            editorcfg.mode = document.getElementById('cfgEditorMode').value;
 
-            if ($('input[name="cfgEditorNumber"]').prop('checked') == true)
-                editorcfg.shownumber = true;
-            else
-                editorcfg.shownumber = false;
+            editorcfg.shownumber = $('input[name="cfgEditorNumber"]').prop('checked') == true;
 
-            if ($('input[name="cfgEditorLayout"][value="full"]').prop('checked') == true)
-                editorcfg.layout = 'full';
-            else
-                editorcfg.layout = 'single';
+            editorcfg.layout = document.getElementById('cfgEditorLayout').value;
 
             // Save config
             chrome.storage.local.set({ 'editorconfig': editorcfg }, function () {
@@ -101,24 +87,15 @@ function refreshEditorCfg() {
 
         })
         // Refresh the data and fill those rows...
-        //Vim
-        //Set the radio button
-        document.querySelector(`input[name="cfgEditorMode"][value="${editorcfg.mode}"]`).checked = true;
+        // Set select values
+        if (document.getElementById('cfgEditorMode'))
+            document.getElementById('cfgEditorMode').value = editorcfg.mode || 'normal';
 
         //Show number
         $('input[name="cfgEditorNumber"]').prop('checked', editorcfg.shownumber);
 
-        //Vim
-        if (editorcfg.layout == 'full') {
-            //Set the radio button
-            $('input[name="cfgEditorLayout"][value="full"]').prop('checked', true);
-            $('input[name="cfgEditorLayout"][value="single"]').prop('checked', false);
-        }
-        else {
-            // set the normal button
-            $('input[name="cfgEditorLayout"][value="full"]').prop('checked', false);
-            $('input[name="cfgEditorLayout"][value="single"]').prop('checked', true);
-        }
+        if (document.getElementById('cfgEditorLayout'))
+            document.getElementById('cfgEditorLayout').value = editorcfg.layout || 'full';
     });
 
 
@@ -134,13 +111,15 @@ function refreshTokenInfo() {
             <div id="token-input" class="config-input">
                 <div class="config-title">${gm('tokenSet')}</div>
                 <textarea spellcheck="false" class="config-content">${ltoken}</textarea>
+                <div class="config-token-buttons">
                 <span title="${gm('saveToken')}" class="save-token icon icon-checkmark"></span>
                 <span title="${gm('cleartoken')}" class="remove-token icon icon-cross"></span>
+                </div>
             </div>
         `;
         const noteHTML = `<div class="popping-note">${gm('tokenHelp')}</div>`;
 
-        $('.frame-pop').append(tokenInputHTML, noteHTML);
+        $('.frame-pop').append(noteHTML, tokenInputHTML);
 
         // 更新图标状态 Update Icon State
         function refreshIcon() {
