@@ -253,8 +253,8 @@ function setView() {
         }
         
         //Height
-        document.getElementById("editor").style.height = `${window.innerHeight - 25}px`;
-        document.getElementById("preview").style.height = `${window.innerHeight - 50}px`;
+        document.getElementById("editor").style.height = `${window.innerHeight - 55}px`;
+        document.getElementById("preview").style.height = `${window.innerHeight - 55}px`;
     } else if (editorcfg.layout == "preview") {
         // 单栏预览模式（窄屏专用）
         console.log('Applying preview mode');
@@ -271,8 +271,8 @@ function setView() {
         }
         
         //Height
-        document.getElementById("editor").style.height = `${window.innerHeight - 25}px`;
-        document.getElementById("preview").style.height = `${window.innerHeight - 50}px`;
+        document.getElementById("editor").style.height = `${window.innerHeight - 55}px`;
+        document.getElementById("preview").style.height = `${window.innerHeight - 55}px`;
     } else {
         //Height
         console.log('Applying full/dual mode');

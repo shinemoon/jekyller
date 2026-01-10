@@ -243,7 +243,21 @@ function addSyncConfigTable() {
             
             // 只切换 disabled 状态，不修改 textarea 的值
             $('#sync-repo, #sync-folder').prop('disabled', isJekyll);
-            checkConfigChanged();
+            
+            // 自动保存模式变更
+            const generalRepo = $('#sync-repo').val().trim();
+            const generalFolder = $('#sync-folder').val().trim();
+            const newConfig = { mode, generalRepo, generalFolder };
+            
+            chrome.storage.local.set({ 'syncConfig': newConfig }, function () {
+                initialConfig = JSON.parse(JSON.stringify(newConfig));
+                checkConfigChanged();
+                
+                // 更新 GitHub 配置
+                if (gh && gh.updateSyncConfig) {
+                    gh.updateSyncConfig(newConfig);
+                }
+            });
         });
 
         // 检测配置变化 Check Config Changes
@@ -252,8 +266,8 @@ function addSyncConfigTable() {
             const currentRepo = $('#sync-repo').val().trim();
             const currentFolder = $('#sync-folder').val().trim();
             
-            const hasChanged = currentMode !== initialConfig.mode ||
-                             currentRepo !== (initialConfig.generalRepo || '') ||
+            // 只检测 repo 和 folder 的变化（mode 自动保存）
+            const hasChanged = currentRepo !== (initialConfig.generalRepo || '') ||
                              currentFolder !== (initialConfig.generalFolder || '');
             
             $('.sync-update').css({
@@ -281,12 +295,15 @@ function addSyncConfigTable() {
                 actualRepo = user_info.login + '/' + user_info.login + '.github.io';
                 actualFolder = '_posts';
             } else {
-                if (!generalRepo || !generalFolder) {
+                if (!generalRepo) {
                     logError(gm('repoAccessFailed'));
                     return;
                 }
-                actualRepo = generalRepo;
-                actualFolder = generalFolder;
+                // 规范化仓库路径：如果不包含 /，自动添加用户名
+                actualRepo = generalRepo.indexOf('/') !== -1 
+                    ? generalRepo 
+                    : (user_info && user_info.login ? user_info.login + '/' + generalRepo : generalRepo);
+                actualFolder = generalFolder; // 允许为空，表示根目录
             }
 
             // 验证仓库和文件夹是否可访问
@@ -314,8 +331,10 @@ function addSyncConfigTable() {
 // 验证仓库访问权限 Validate Repo Access
 async function validateRepoAccess(repo, folder) {
     return new Promise((resolve) => {
-        // 构建 API URL
-        const apiUrl = `https://api.github.com/repos/${repo}/contents/${folder}`;
+        // 构建 API URL，folder 为空时访问根目录
+        const apiUrl = folder 
+            ? `https://api.github.com/repos/${repo}/contents/${folder}`
+            : `https://api.github.com/repos/${repo}/contents`;
         
         // 使用 gh 的 transparentXhr 方法进行验证
         if (gh && gh.transparentXhr) {

@@ -85,7 +85,7 @@ body {
   overflow-y: hidden;
 
   .versioninfo {
-    display:none;
+    display: none;
     font-size: 8px;
     color: $fg-color-1;
     position: fixed;
@@ -143,9 +143,10 @@ body {
 }
 
 // Table styles
-#post-table , #sync-config-table {
+#post-table,
+#sync-config-table {
   margin-top: 20px;
-  margin-left: 10px;
+  //  margin-left: 10px;
   width: 240px;
 
   table {
@@ -159,11 +160,12 @@ body {
     &:nth-child(even) td {
       background: $label-bg-light;
     }
-   
+
     label {
-      font-size:11px;
-      color:$fg-color-1;
+      font-size: 11px;
+      color: $fg-color-1;
     }
+
     td.label {
       padding-left: 10px;
       color: $fg-color-0;
@@ -185,6 +187,22 @@ body {
 
 
   }
+}
+
+// sync-config-table 特定样式
+#sync-config-table {
+  input[type="text"] {
+    border: none;
+    background-color: $label-bg;
+    color: $fg-color-0;
+  }
+
+  input:disabled {
+    background-color: $mask-bg !important;
+    cursor: not-allowed;
+    color: $fg-color-invert-2;
+  }
+
 }
 
 #top-banner-row {
@@ -425,6 +443,7 @@ body {
         outline: none;
         float: right;
         height: 11px;
+        margin: 5px 4px 0px 0px;
 
         &:hover {
           background: $color-light;
@@ -706,6 +725,8 @@ body {
 
 // Other config pannel
 .config-input {
+  border-bottom: 1px dashed $tooltip-bg;
+  padding-bottom: 14px;
   margin: 10px auto 0;
   width: 240px;
   vertical-align: middle;
@@ -714,9 +735,10 @@ body {
   align-items: center;
 
   .config-title {
+    display: none !important;
     font-size: 11px;
     color: $fg-color-1;
-  //  width: 50px;
+    //  width: 50px;
     display: inline;
     vertical-align: middle;
     margin-top: 3px;
@@ -730,9 +752,8 @@ body {
   textarea {
     margin-right: 10px;
     padding: 5px 5px 4px;
-    width: 120px;
+    width: 180px;
     resize: none;
-    color: $fg-color-0;
     height: 12px;
     font-size: 12px;
     font-family: Arial, Helvetica, sans-serif;
@@ -741,6 +762,7 @@ body {
     border-radius: 2px;
     vertical-align: middle;
     background-color: $label-bg;
+    color: $fg-color-0;
 
     &:focus {
       background: $label-bg;
@@ -818,6 +840,10 @@ body {
   .config-input {
     margin: 10px auto 0;
     width: 220px;
+
+    textarea {
+      width: 160px;
+    }
   }
 
 

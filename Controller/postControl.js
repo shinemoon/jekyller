@@ -1,3 +1,18 @@
+// 获取当前配置的文件夹路径 Get Current Folder Path
+function getPostFolder() {
+    const syncConfig = gh && gh.getSyncConfig ? gh.getSyncConfig() : { mode: 'jekyll' };
+    if (syncConfig.mode === 'jekyll') {
+        return '_posts';
+    }
+    return syncConfig.generalFolder || ''; // 空字符串表示根目录
+}
+
+// 构建文件路径 Build File Path
+function buildFilePath(filename) {
+    const folder = getPostFolder();
+    return folder ? `${folder}/${filename}` : filename;
+}
+
 // 加载当前帖子内容 Load Current Post Content
 function loadPost(content) {
     editor.setValue(content);
@@ -55,7 +70,7 @@ function updatePost(cb) {
     const name = `${curpost.date}-${curpost.slug}`;
     const content = dumpPost();
     const sha = curpost.sha;
-    const path = `_posts/${name}.md`;
+    const path = buildFilePath(`${name}.md`);
 
     gh.updateContent(path, content, sha, (e, r, s) => {
         const responseContent = JSON.parse(s);
@@ -94,7 +109,7 @@ function updateLocalList(newSha) {
 function deletePost(index, cb) {
     const delpost = clist[index];
     const name = `${delpost.date}-${delpost.slug}`;
-    const path = `_posts/${name}.md`;
+    const path = buildFilePath(`${name}.md`);
 
     gh.deleteContent(path, delpost.sha, (e, r, s) => {
         if (r == '200') { // 删除成功 Successfully Deleted

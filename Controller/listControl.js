@@ -334,7 +334,13 @@ async function processList(page = 0, forcerefesh = false) {
 
   var nnlist = [];
   for (var i = 0; i < nlist.length; i++) {
-    if (nlist[i].name.match(/^\d+-\d+-\d+-.*\.md/) != null) {
+    // 使用 path 或 name 字段（取决于 API 返回的数据结构）
+    const itemName = nlist[i].path || nlist[i].name;
+    if (itemName && itemName.match(/^\d+-\d+-\d+-.*\.md/) != null) {
+      // 确保对象有 path 属性
+      if (!nlist[i].path && nlist[i].name) {
+        nlist[i].path = nlist[i].name;
+      }
       nnlist.push(nlist[i]);
     }
   }
@@ -345,7 +351,13 @@ async function processList(page = 0, forcerefesh = false) {
     for (var i = startIndex; i < startIndex + listCnt; i++) {
       if (i == nnlist.length) break;
       console.log(nnlist[nnlist.length - 1 - i].path);
-      var c = await gh.getContentAsync("_posts/" + nnlist[nnlist.length - 1 - i].path);
+      
+      // 获取当前配置的文件夹路径
+      const syncConfig = gh && gh.getSyncConfig ? gh.getSyncConfig() : { mode: 'jekyll' };
+      const folder = syncConfig.mode === 'jekyll' ? '_posts' : (syncConfig.generalFolder || '');
+      const filePath = folder ? folder + '/' + nnlist[nnlist.length - 1 - i].path : nnlist[nnlist.length - 1 - i].path;
+      
+      var c = await gh.getContentAsync(filePath);
       var pcontent = postParse(c.content);
       if (c.date.match(/\d+-\d+-\d+/) == null) {
         continue;

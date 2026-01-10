@@ -71,7 +71,7 @@ gh = (function () {
         callback(null, this.status, this.response);
       }
       //console.log('requestComplete', this.status, this.response);
-      if (this.status != 200) {
+      if (this.status != 200 && failedCallback) {
         failedCallback(null, this.status, this.response);
       }
     }
@@ -130,41 +130,73 @@ gh = (function () {
     xhrWithAuth('GET', repoUrl, false, onUserReposFetched, onLogInFailed);
   }
 
+  // 规范化仓库路径，如果没有用户名前缀则自动添加
+  function normalizeRepoPath(repoPath) {
+    if (!repoPath) return '';
+    // 如果已经包含 /，说明是完整路径
+    if (repoPath.indexOf('/') !== -1) {
+      return repoPath;
+    }
+    // 否则添加当前用户名
+    return user_info.login + '/' + repoPath;
+  }
+
   // Jekyller - start
   // => Oboseleted: as if it's>1000 post, this then can't support well.
   function fetchPostList(user, cb) {
-    const repoPath = syncConfig.mode === 'jekyll' 
+    let repoPath = syncConfig.mode === 'jekyll' 
       ? user + '/' + user + '.github.io'
       : syncConfig.generalRepo;
+    
+    // 规范化仓库路径
+    if (syncConfig.mode !== 'jekyll') {
+      repoPath = normalizeRepoPath(repoPath);
+    }
+    
     const folderPath = syncConfig.mode === 'jekyll' ? '_posts' : syncConfig.generalFolder;
     
-    xhrWithAuth('GET',
-      'https://api.github.com/repos/' + repoPath + '/contents/' + folderPath,
-      true,
-      cb, onLogInFailed);
+    const url = folderPath 
+      ? 'https://api.github.com/repos/' + repoPath + '/contents/' + folderPath
+      : 'https://api.github.com/repos/' + repoPath + '/contents';
+    
+    xhrWithAuth('GET', url, true, cb, onLogInFailed);
   }
 
   //-> Get the Post Folder Tree
   function fetchPostListTree(user, cb) {
-    const repoPath = syncConfig.mode === 'jekyll' 
+    let repoPath = syncConfig.mode === 'jekyll' 
       ? user + '/' + user + '.github.io'
       : syncConfig.generalRepo;
+    
+    // 规范化仓库路径
+    if (syncConfig.mode !== 'jekyll') {
+      repoPath = normalizeRepoPath(repoPath);
+    }
+    
     const folderPath = syncConfig.mode === 'jekyll' ? '_posts' : syncConfig.generalFolder;
     
-    xhrWithAuth('GET',
-      'https://api.github.com/repos/' + repoPath + '/git/trees/HEAD:' + folderPath,
-      true,
-      cb, onLogInFailed);
+    const url = folderPath
+      ? 'https://api.github.com/repos/' + repoPath + '/git/trees/HEAD:' + folderPath
+      : 'https://api.github.com/repos/' + repoPath + '/git/trees/HEAD';
+    
+    xhrWithAuth('GET', url, true, cb, onLogInFailed);
   }
 
   // -> Search code
   function searchPost(user, qstr, cb) {
-    const repoPath = syncConfig.mode === 'jekyll' 
+    let repoPath = syncConfig.mode === 'jekyll' 
       ? user + '/' + user + '.github.io'
       : syncConfig.generalRepo;
+    
+    // 规范化仓库路径
+    if (syncConfig.mode !== 'jekyll') {
+      repoPath = normalizeRepoPath(repoPath);
+    }
+    
     const folderPath = syncConfig.mode === 'jekyll' ? '_posts' : syncConfig.generalFolder;
     
-    var queryString = 'q=' + encodeURIComponent(qstr + ' repo:' + repoPath + ' path:' + folderPath + ' extension:md');
+    const pathQuery = folderPath ? ' path:' + folderPath : '';
+    var queryString = 'q=' + encodeURIComponent(qstr + ' repo:' + repoPath + pathQuery + ' extension:md');
     xhrWithAuth('GET',
       'https://api.github.com/search/code?' + queryString,
       true,
@@ -186,9 +218,14 @@ gh = (function () {
   }
 
   function fetchContent(ulink, cb) {
-    const repoPath = syncConfig.mode === 'jekyll' 
+    let repoPath = syncConfig.mode === 'jekyll' 
       ? user_info.login + '/' + user_info.login + '.github.io'
       : syncConfig.generalRepo;
+    
+    // 规范化仓库路径
+    if (syncConfig.mode !== 'jekyll') {
+      repoPath = normalizeRepoPath(repoPath);
+    }
     
     xhrWithAuth("GET", "https://api.github.com/repos/" + repoPath + "/contents/" + ulink, true, function (e, s, r) {
       cb(e, s, r);
@@ -218,12 +255,19 @@ gh = (function () {
     transparentXhr: function (method, url, cb) {
       xhrWithAuth(method, url, true, function (e, s, r) {
         cb(e, s, r);
+      }, function (e, s, r) {
+        cb(e, s, r);
       });
     },
     updateContent: function (ulink, content, sha, cb) {
-      const repoPath = syncConfig.mode === 'jekyll' 
+      let repoPath = syncConfig.mode === 'jekyll' 
         ? user_info.login + '/' + user_info.login + '.github.io'
         : syncConfig.generalRepo;
+      
+      // 规范化仓库路径
+      if (syncConfig.mode !== 'jekyll') {
+        repoPath = normalizeRepoPath(repoPath);
+      }
       
       var data = {
         message: 'update from Jekyller',
@@ -240,9 +284,14 @@ gh = (function () {
     },
 
     deleteContent: function (ulink, sha, cb) {
-      const repoPath = syncConfig.mode === 'jekyll' 
+      let repoPath = syncConfig.mode === 'jekyll' 
         ? user_info.login + '/' + user_info.login + '.github.io'
         : syncConfig.generalRepo;
+      
+      // 规范化仓库路径
+      if (syncConfig.mode !== 'jekyll') {
+        repoPath = normalizeRepoPath(repoPath);
+      }
       
       var data = {
         message: 'update from Jekyller',
