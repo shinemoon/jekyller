@@ -129,7 +129,7 @@
         "description": "Post"
     },
     "tokenHelp": {
-        "message": "开始使用之前，请先于Github中申请一个Token（要求对本Repo的内容具备读写权限） <br> <br>需要更多的细节和帮助，请<a href='https://docs.github.com/zh/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token'>参考Github的关于Token的官方帮助。 </a>",
+        "message": "请先于Github中申请一个Token（对本Repo具读写权限）, <a href='https://docs.github.com/zh/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token'>参考Github的关于Token的官方文档。 </a>",
         "description": "ConfigHelp"
     },
     "emptyblog": {
@@ -203,5 +203,37 @@
     "configEditor":{
         "message": "编辑器选项",
         "description": "Editor Config"
+    },
+    "syncMode": {
+        "message": "模式",
+        "description": "Sync Mode"
+    },
+    "jekyllMode": {
+        "message": "Jekyll",
+        "description": "Jekyll Mode"
+    },
+    "generalMode": {
+        "message": "通用",
+        "description": "General Mode"
+    },
+    "repoLabel": {
+        "message": "仓库",
+        "description": "Repository Label"
+    },
+    "folderLabel": {
+        "message": "目录",
+        "description": "Folder Label"
+    },
+    "syncConfigUpdated": {
+        "message": "同步配置更新成功！",
+        "description": "Sync Config Updated"
+    },
+    "repoAccessFailed": {
+        "message": "无法访问指定的仓库或目录，请检查设置。",
+        "description": "Repo Access Failed"
+    },
+    "repoAccessSuccess": {
+        "message": "仓库和目录验证成功！",
+        "description": "Repo Access Success"
     }
 }

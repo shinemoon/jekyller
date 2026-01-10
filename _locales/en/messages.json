@@ -129,7 +129,7 @@
     },
 
     "tokenHelp": {
-        "message": "Before you begin, please apply for a token on Github (with read/write access to this repo) <br> <br> For more details and help, please refer to <a href='https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token'>Github's official documentation about tokens.</a>",
+        "message": "Please apply a token on Github , refers to <a href='https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token'>Github's official Doc.</a>",
         "description": "ConfigHelp"
     },
     "emptyblog": {
@@ -204,6 +204,38 @@
     "configEditor":{
         "message": "Editor Configuration",
         "description": "Editor Config"
+    },
+    "syncMode": {
+        "message": "Mode",
+        "description": "Sync Mode"
+    },
+    "jekyllMode": {
+        "message": "Jekyll",
+        "description": "Jekyll Mode"
+    },
+    "generalMode": {
+        "message": "General",
+        "description": "General Mode"
+    },
+    "repoLabel": {
+        "message": "Repo",
+        "description": "Repository Label"
+    },
+    "folderLabel": {
+        "message": "Folder",
+        "description": "Folder Label"
+    },
+    "syncConfigUpdated": {
+        "message": "Sync configuration updated successfully!",
+        "description": "Sync Config Updated"
+    },
+    "repoAccessFailed": {
+        "message": "Failed to access the specified repository or folder. Please check your settings.",
+        "description": "Repo Access Failed"
+    },
+    "repoAccessSuccess": {
+        "message": "Repository and folder validated successfully!",
+        "description": "Repo Access Success"
     }
 
 }

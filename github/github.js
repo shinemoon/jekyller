@@ -9,6 +9,23 @@ gh = (function () {
   var revoke_button;
   var user_info_div;
   var access_token = null;
+  var syncConfig = {
+    mode: 'jekyll',
+    generalRepo: '',
+    generalFolder: ''
+  };
+
+  // 加载同步配置 Load Sync Config
+  function loadSyncConfig() {
+    chrome.storage.local.get('syncConfig', function (result) {
+      if (result.syncConfig) {
+        syncConfig = result.syncConfig;
+      }
+    });
+  }
+
+  // 初始化时加载配置
+  loadSyncConfig();
 
   function xhrWithDataAuth(method, url, data, callback) {
     var retry = true;
@@ -85,6 +102,10 @@ gh = (function () {
     if (!error && status == 200) {
       //console.log("Got the following user info: " + response);
       user_info = JSON.parse(response);
+      
+      // 保存用户信息到 storage
+      chrome.storage.local.set({ 'user_info': user_info });
+      
       populateUserInfo(user_info);
       showButton(revoke_button);
       logInfo(gm("loginDone"));
@@ -112,23 +133,38 @@ gh = (function () {
   // Jekyller - start
   // => Oboseleted: as if it's>1000 post, this then can't support well.
   function fetchPostList(user, cb) {
+    const repoPath = syncConfig.mode === 'jekyll' 
+      ? user + '/' + user + '.github.io'
+      : syncConfig.generalRepo;
+    const folderPath = syncConfig.mode === 'jekyll' ? '_posts' : syncConfig.generalFolder;
+    
     xhrWithAuth('GET',
-      'https://api.github.com/repos/' + user + '/' + user + '.github.io/contents/_posts',
+      'https://api.github.com/repos/' + repoPath + '/contents/' + folderPath,
       true,
       cb, onLogInFailed);
   }
 
   //-> Get the Post Folder Tree
   function fetchPostListTree(user, cb) {
+    const repoPath = syncConfig.mode === 'jekyll' 
+      ? user + '/' + user + '.github.io'
+      : syncConfig.generalRepo;
+    const folderPath = syncConfig.mode === 'jekyll' ? '_posts' : syncConfig.generalFolder;
+    
     xhrWithAuth('GET',
-      'https://api.github.com/repos/' + user + '/' + user + '.github.io/git/trees/HEAD:_posts',
+      'https://api.github.com/repos/' + repoPath + '/git/trees/HEAD:' + folderPath,
       true,
       cb, onLogInFailed);
   }
 
   // -> Search code
   function searchPost(user, qstr, cb) {
-    var queryString = 'q=' + encodeURIComponent(qstr + ' repo:' + user + '/' + user + '.github.io path:_posts extension:md');
+    const repoPath = syncConfig.mode === 'jekyll' 
+      ? user + '/' + user + '.github.io'
+      : syncConfig.generalRepo;
+    const folderPath = syncConfig.mode === 'jekyll' ? '_posts' : syncConfig.generalFolder;
+    
+    var queryString = 'q=' + encodeURIComponent(qstr + ' repo:' + repoPath + ' path:' + folderPath + ' extension:md');
     xhrWithAuth('GET',
       'https://api.github.com/search/code?' + queryString,
       true,
@@ -150,7 +186,11 @@ gh = (function () {
   }
 
   function fetchContent(ulink, cb) {
-    xhrWithAuth("GET", "https://api.github.com/repos/" + user_info.login + "/" + user_info.login + ".github.io/contents/" + ulink, true, function (e, s, r) {
+    const repoPath = syncConfig.mode === 'jekyll' 
+      ? user_info.login + '/' + user_info.login + '.github.io'
+      : syncConfig.generalRepo;
+    
+    xhrWithAuth("GET", "https://api.github.com/repos/" + repoPath + "/contents/" + ulink, true, function (e, s, r) {
       cb(e, s, r);
     }, onLogInFailed);
   }
@@ -181,6 +221,10 @@ gh = (function () {
       });
     },
     updateContent: function (ulink, content, sha, cb) {
+      const repoPath = syncConfig.mode === 'jekyll' 
+        ? user_info.login + '/' + user_info.login + '.github.io'
+        : syncConfig.generalRepo;
+      
       var data = {
         message: 'update from Jekyller',
         sha: sha,
@@ -190,18 +234,22 @@ gh = (function () {
         delete (data.sha);
       }
       var sdata = JSON.stringify(data);
-      xhrWithDataAuth("PUT", "https://api.github.com/repos/" + user_info.login + "/" + user_info.login + ".github.io/contents/" + ulink, sdata, function (e, s, r) {
+      xhrWithDataAuth("PUT", "https://api.github.com/repos/" + repoPath + "/contents/" + ulink, sdata, function (e, s, r) {
         cb(e, s, r);
       });
     },
 
     deleteContent: function (ulink, sha, cb) {
+      const repoPath = syncConfig.mode === 'jekyll' 
+        ? user_info.login + '/' + user_info.login + '.github.io'
+        : syncConfig.generalRepo;
+      
       var data = {
         message: 'update from Jekyller',
         sha: sha
       };
       var sdata = JSON.stringify(data);
-      xhrWithDataAuth("DELETE", "https://api.github.com/repos/" + user_info.login + "/" + user_info.login + ".github.io/contents/" + ulink, sdata, function (e, s, r) {
+      xhrWithDataAuth("DELETE", "https://api.github.com/repos/" + repoPath + "/contents/" + ulink, sdata, function (e, s, r) {
         cb(e, s, r);
       });
     },
@@ -235,14 +283,30 @@ gh = (function () {
       return access_token;
     },
 
+    // 更新同步配置 Update Sync Config
+    updateSyncConfig: function (config) {
+      syncConfig = config;
+      loadSyncConfig(); // 重新加载配置
+    },
+
+    // 获取同步配置 Get Sync Config
+    getSyncConfig: function () {
+      return syncConfig;
+    },
+
     onload: function () {
       revoke_button = document.querySelector('#token');
       user_info_div = document.querySelector('#user_info');
-      chrome.storage.local.get("ltoken", function (obj) {
+      chrome.storage.local.get(["ltoken", "syncConfig"], function (obj) {
         if (typeof (obj.ltoken) != 'undefined') {
           access_token = obj.ltoken;
         } else {
           access_token = '';
+        }
+        
+        // 加载同步配置
+        if (obj.syncConfig) {
+          syncConfig = obj.syncConfig;
         }
       });
 

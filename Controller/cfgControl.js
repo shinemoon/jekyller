@@ -175,5 +175,159 @@ function refreshTokenInfo() {
             const isChanged = $(this).val() !== ltoken && $(this).val() !== '';
             $('.save-token').toggleClass('active', isChanged);
         });
+
+        // 添加同步配置表 Add Sync Configuration Table
+        addSyncConfigTable();
+    });
+}
+
+// 添加同步配置表 Add Sync Configuration Table
+function addSyncConfigTable() {
+    chrome.storage.local.get(['syncConfig'], function (result) {
+        const defaultConfig = {
+            mode: 'jekyll',
+            generalRepo: '',
+            generalFolder: ''
+        };
+        
+        let syncConfig = result.syncConfig || defaultConfig;
+        
+        // textarea 只显示 general 模式的配置
+        const generalRepo = syncConfig.generalRepo || '';
+        const generalFolder = syncConfig.generalFolder || '';
+
+        const syncTableHTML = `
+            <div id="sync-config-table">
+                <table>
+                    <tr>
+                        <td class="label">${gm('syncMode')}</td>
+                        <td class="content">
+                            <div class="radio-group">
+                                <label>
+                                    <input type="radio" name="syncMode" value="jekyll" ${syncConfig.mode === 'jekyll' ? 'checked' : ''}>
+                                    ${gm('jekyllMode')}
+                                </label>
+                                <label style="margin-left: 10px;">
+                                    <input type="radio" name="syncMode" value="general" ${syncConfig.mode === 'general' ? 'checked' : ''}>
+                                    ${gm('generalMode')}
+                                </label>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="label">${gm('repoLabel')}</td>
+                        <td class="content">
+                            <input type="text" id="sync-repo" spellcheck="false" ${syncConfig.mode === 'jekyll' ? 'disabled' : ''} value="${generalRepo}">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="label">${gm('folderLabel')}</td>
+                        <td class="content">
+                            <input type="text" id="sync-folder" spellcheck="false" ${syncConfig.mode === 'jekyll' ? 'disabled' : ''} value="${generalFolder}">
+                        </td>
+                    </tr>
+                </table>
+                <div class="send sync-update" style="opacity: 0.5; pointer-events: none;">${gm('Update')}</div>
+            </div>
+        `;
+
+        $('.frame-pop').append(syncTableHTML);
+
+        // 保存初始值用于检测变化
+        let initialConfig = JSON.parse(JSON.stringify(syncConfig));
+
+        // 切换模式 Toggle Mode
+        $('input[name="syncMode"]').on('change', function () {
+            const mode = $(this).val();
+            const isJekyll = mode === 'jekyll';
+            
+            // 只切换 disabled 状态，不修改 textarea 的值
+            $('#sync-repo, #sync-folder').prop('disabled', isJekyll);
+            checkConfigChanged();
+        });
+
+        // 检测配置变化 Check Config Changes
+        function checkConfigChanged() {
+            const currentMode = $('input[name="syncMode"]:checked').val();
+            const currentRepo = $('#sync-repo').val().trim();
+            const currentFolder = $('#sync-folder').val().trim();
+            
+            const hasChanged = currentMode !== initialConfig.mode ||
+                             currentRepo !== (initialConfig.generalRepo || '') ||
+                             currentFolder !== (initialConfig.generalFolder || '');
+            
+            $('.sync-update').css({
+                'opacity': hasChanged ? '1' : '0.5',
+                'pointer-events': hasChanged ? 'auto' : 'none'
+            });
+        }
+
+        // 监听输入变化
+        $('#sync-repo, #sync-folder').on('input', checkConfigChanged);
+
+        // 更新配置 Update Config
+        $('.sync-update').on('click', async function () {
+            const mode = $('input[name="syncMode"]:checked').val();
+            const generalRepo = $('#sync-repo').val().trim();
+            const generalFolder = $('#sync-folder').val().trim();
+
+            // 获取实际使用的 repo 和 folder 用于验证
+            let actualRepo, actualFolder;
+            if (mode === 'jekyll') {
+                if (!user_info || !user_info.login) {
+                    logError(gm('loginFail'));
+                    return;
+                }
+                actualRepo = user_info.login + '/' + user_info.login + '.github.io';
+                actualFolder = '_posts';
+            } else {
+                if (!generalRepo || !generalFolder) {
+                    logError(gm('repoAccessFailed'));
+                    return;
+                }
+                actualRepo = generalRepo;
+                actualFolder = generalFolder;
+            }
+
+            // 验证仓库和文件夹是否可访问
+            const isValid = await validateRepoAccess(actualRepo, actualFolder);
+            
+            if (isValid) {
+                const newConfig = { mode, generalRepo, generalFolder };
+                chrome.storage.local.set({ 'syncConfig': newConfig }, function () {
+                    logInfo(gm('syncConfigUpdated'));
+                    initialConfig = JSON.parse(JSON.stringify(newConfig));
+                    checkConfigChanged();
+                    
+                    // 更新 GitHub 配置
+                    if (gh && gh.updateSyncConfig) {
+                        gh.updateSyncConfig(newConfig);
+                    }
+                });
+            } else {
+                logError(gm('repoAccessFailed'));
+            }
+        });
+    });
+}
+
+// 验证仓库访问权限 Validate Repo Access
+async function validateRepoAccess(repo, folder) {
+    return new Promise((resolve) => {
+        // 构建 API URL
+        const apiUrl = `https://api.github.com/repos/${repo}/contents/${folder}`;
+        
+        // 使用 gh 的 transparentXhr 方法进行验证
+        if (gh && gh.transparentXhr) {
+            gh.transparentXhr('GET', apiUrl, function (error, status, response) {
+                if (!error && status >= 200 && status < 300) {
+                    resolve(true);
+                } else {
+                    resolve(false);
+                }
+            });
+        } else {
+            resolve(false);
+        }
     });
 }
