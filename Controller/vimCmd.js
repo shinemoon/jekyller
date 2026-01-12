@@ -128,25 +128,30 @@
 
             // language ex command: :language en|zh  or :lang en|zh
             addEx("language", "lang", gm("exLanguage"), function (cm, input) {
-                // input may be a string containing args or undefined depending on VimApi implementation
+                // Determine argument (if provided)
                 var arg = '';
                 try { arg = (typeof input === 'string') ? input.trim() : (input && input.args) ? String(input.args).trim() : ''; } catch (e) { arg = ''; }
+
+                // If no arg provided, toggle between en and zh
                 if (!arg) {
-                    arg = prompt(gm('exLanguage') + ' (en | zh):', 'en');
-                    if (!arg) return;
+                    var current = (window.selected_ui_lang) ? window.selected_ui_lang : (chrome.i18n.getUILanguage && chrome.i18n.getUILanguage());
+                    current = current ? current.toLowerCase() : 'en';
+                    var isZh = current.indexOf('zh') === 0 || current.indexOf('zh-') === 0;
+                    arg = isZh ? 'en' : 'zh';
                 }
+
                 arg = arg.toLowerCase();
                 if (arg !== 'en' && arg !== 'zh') {
                     logError(gm('languageUnsupported') || ('Unsupported language: ' + arg));
                     return;
                 }
+
                 if (typeof setUILanguage === 'function') {
                     setUILanguage(arg, function () {
-                        // reload view strings if needed
                         setView && typeof setView === 'function' && setView();
                     });
                 } else {
-                    try { chrome.storage.local.set({ ui_lang: arg }); } catch (e) {}
+                    try { chrome.storage.local.set({ ui_lang: arg }, function () { window.selected_ui_lang = arg; }); } catch (e) {}
                 }
             });
         }
