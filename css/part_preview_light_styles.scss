@@ -3,6 +3,7 @@ $font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, s
 $text-color: #24292e;
 $link-color: #0366d6;
 $code-bg: #f6f8fa;
+$code-color: #111;
 $blockquote-color: #6a737d;
 $blockquote-border: #dfe2e5;
 $blockquote-bg: #f1f8ff;
@@ -29,8 +30,9 @@ a {
 pre, code {
     font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, Courier, monospace;
     background-color: $code-bg;
-    padding: 0.3em 0.5em;
+    padding: 0.8em 1.5em;
     border-radius: 3px;
+    line-height:1.5em;
 }
 
 blockquote {

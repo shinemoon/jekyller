@@ -71,53 +71,35 @@ chrome.storage.local.get({
     // 其余的都靠自动保存（key），Vim可以做手动……
     //Vim => Pure for fun.. not necessary
     ace.config.loadModule("ace/keyboard/vim", function (m) {
-        var VimApi = require("ace/keyboard/vim").CodeMirror.Vim
-        //Write
-        VimApi.defineEx("write", "w", function (cm, input) {
-            syncLocalPost();
-            logInfo(gm("vimsave"));
-        })
-        //Quit
-        VimApi.defineEx("quit", "q", function (cm, input) {
-            window.close();
-        })
-        //Switch full/single
-        VimApi.defineEx("layout", "l", function (cm, input) {
-            switchLayout();
-        })
-        //Switch day/night 
-        VimApi.defineEx("switch", "s", function (cm, input) {
-            switchSkin();
-        })
-        // Create!
-        VimApi.defineEx("new", "n", function (cm, input) {
-            if (user_info) {
-                $('.img#create').click();
+        // Use the exported Vim API from the ace keyboard vim module
+        var vimMod = require("ace/keyboard/vim");
+        var VimApi = (vimMod && vimMod.Vim) || (vimMod && vimMod.CodeMirror && vimMod.CodeMirror.Vim);
+        // Load externalized Vim ex command registrations (robust: try require, fallback to global, else dynamic load)
+        (function () {
+            var vimModule = null;
+            try {
+                vimModule = require && require('./Controller/vimCmd');
+            } catch (e) {
+                vimModule = null;
             }
-        })
-
-        // Post!
-        VimApi.defineEx("published", "pu", function (cm, input) {
-            if (user_info) {
-                //To mark publish as true
-                curpost.published = true;
-                $('.content.post input').prop('checked', curpost.published);
-                storePost(() => {
-                    updatePost(() => logInfo(gm("postUpdated")));
-                });
+            if (vimModule && vimModule.register && VimApi) {
+                try { vimModule.register(VimApi); } catch (e) { console.error(e); }
+                return;
             }
-        })
-        // Post!
-        VimApi.defineEx("unpublished", "un", function (cm, input) {
-            if (user_info) {
-                //To mark publish as true
-                curpost.published = false;
-                $('.content.post input').prop('checked', curpost.published);
-                storePost(() => {
-                    updatePost(() => logInfo(gm("postUpdated")));
-                });
+            if (typeof window !== 'undefined' && window.vimCmd && window.vimCmd.register && VimApi) {
+                try { window.vimCmd.register(VimApi); } catch (e) { console.error(e); }
+                return;
             }
-        })
+            // Dynamic load as last resort
+            if (typeof document !== 'undefined') {
+                var s = document.createElement('script');
+                s.src = 'Controller/vimCmd.js';
+                s.onload = function () {
+                    if (window.vimCmd && window.vimCmd.register) window.vimCmd.register(VimApi);
+                };
+                document.head.appendChild(s);
+            }
+        })();
     })
 });
 

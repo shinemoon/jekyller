@@ -52,3 +52,45 @@
   pointer-events: none; /* allow clicks to fall through to hotspot element */
 }
 
+/* vim help mask/banner styles */
+#vim-help-mask {
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#vim-help-banner {
+  background: $code-bg;
+  color: $code-color;
+  padding: 16px 20px;
+//  border-radius: 6px;
+//  max-width: 90%;
+  width: 100%; 
+  max-height: 70%;
+  overflow: auto;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.3);
+}
+
+#vim-help-title {
+  font-weight: 600;
+  margin-bottom: 8px;
+  width:200px;
+  margin-left:auto;
+  margin-right:auto;
+}
+
+#vim-help-list {
+  margin-right: auto;
+  margin-left: auto;
+  white-space: pre-wrap;
+  font-family: monospace;
+  width:300px;
+}
+
