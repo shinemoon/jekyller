@@ -282,5 +282,22 @@
         "message": "Unsupported language",
         "description": "Unsupported language message"
     }
-
+,
+    "language": {
+        "message": "Language",
+        "description": "UI language label"
+    },
+    "lang_en": {
+        "message": "English",
+        "description": "English language option"
+    },
+    "lang_zh": {
+        "message": "中文",
+        "description": "Chinese language option"
+    }
+    ,
+    "helpTitle": {
+        "message": "Supported ex commands",
+        "description": "Title for ex command help"
+    }
 }

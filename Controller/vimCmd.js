@@ -24,7 +24,7 @@
 
                 var title = document.createElement('div');
                 title.id = 'vim-help-title';
-                title.textContent = 'Supported ex commands';
+                title.textContent = gm('helpTitle');
 
                 var list = document.createElement('pre');
                 list.id = 'vim-help-list';
@@ -121,7 +121,7 @@
                 if (typeof document !== 'undefined' && document.body) {
                     showHelpLines(lines);
                 } else if (typeof alert !== 'undefined') {
-                    alert("Supported ex commands:\n" + lines.join('\n'));
+                    alert(gm('helpTitle') + ":\n" + lines.join('\n'));
                 }
                 if (typeof console !== 'undefined') console.log(lines.join('\n'));
             });

@@ -281,4 +281,22 @@
         "message": "不支持的语言",
         "description": "不支持的语言提示"
     }
+    ,
+    "language": {
+        "message": "语言",
+        "description": "界面语言标签"
+    },
+    "lang_en": {
+        "message": "English",
+        "description": "English language option"
+    },
+    "lang_zh": {
+        "message": "中文",
+        "description": "Chinese language option"
+    }
+    ,
+    "helpTitle": {
+        "message": "支持的 ex 命令",
+        "description": "ex 命令帮助标题"
+    }
 }

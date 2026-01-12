@@ -48,6 +48,17 @@ function refreshEditorCfg() {
                     </div>
         </td>
         </tr>
+        <tr>
+        <td class="cfgEditor label">${gm("language")}</td>
+        <td class="cfgEditor content">
+                    <div class="radio-group">
+                        <select id="cfgLanguage" name="cfgLanguage">
+                            <option value="en">${gm("lang_en")}</option>
+                            <option value="zh">${gm("lang_zh")}</option>
+                        </select>
+                    </div>
+        </td>
+        </tr>
     </table>
   </div>
   <div class="send">${gm("Update")}</div>
@@ -63,6 +74,18 @@ function refreshEditorCfg() {
             editorcfg.shownumber = $('input[name="cfgEditorNumber"]').prop('checked') == true;
 
             editorcfg.layout = document.getElementById('cfgEditorLayout').value;
+            // 保存语言选择
+            var chosenLang = (document.getElementById('cfgLanguage') && document.getElementById('cfgLanguage').value) || null;
+            if (chosenLang) {
+                if (typeof setUILanguage === 'function') {
+                    setUILanguage(chosenLang);
+                } else {
+                    chrome.storage.local.set({ ui_lang: chosenLang }, function () {
+                        window.selected_ui_lang = chosenLang;
+                        logInfo(gm('languageSet'));
+                    });
+                }
+            }
 
             // Save config
             chrome.storage.local.set({ 'editorconfig': editorcfg }, function () {
@@ -96,6 +119,14 @@ function refreshEditorCfg() {
 
         if (document.getElementById('cfgEditorLayout'))
             document.getElementById('cfgEditorLayout').value = editorcfg.layout || 'full';
+        // set language select initial value
+        if (document.getElementById('cfgLanguage')) {
+            try {
+                document.getElementById('cfgLanguage').value = window.selected_ui_lang || ((chrome.i18n.getUILanguage && chrome.i18n.getUILanguage().indexOf('zh') === 0) ? 'zh' : 'en');
+            } catch (e) {
+                document.getElementById('cfgLanguage').value = 'en';
+            }
+        }
     });
 
 
