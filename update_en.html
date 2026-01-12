@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Github Markdown Writer - Update Notice</title>
+  <style>
+    /* styling copied from update.html */
+    :root {
+      --highlight: #ff9500;
+      --highlight-opacity: #ff95008f;
+      --bg: #e8e8e8;
+      --panel: #dad8d8;
+      --fg: #333333;
+      --fg-muted: #666666;
+      --fg-light: #ccc;
+      --shadow: rgba(20, 20, 20, 0.8);
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { height: 100%; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, "Microsoft YaHei", sans-serif; background: var(--bg); color: var(--fg); line-height: 1.6; }
+    .container { max-width: 800px; margin: 60px auto 40px; background: #ffffff; border-radius: 12px; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15); overflow: hidden; animation: slideIn 0.4s ease-out; }
+    @keyframes slideIn { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+    header { background: var(--panel); padding: 24px 30px; display: flex; align-items: center; justify-content: space-between; border-bottom: 3px solid var(--highlight); }
+    header h1 { font-size: 22px; font-weight: 600; color: var(--fg); display: flex; align-items: center; gap: 12px; }
+    header h1::before { content: "🎉"; font-size: 28px; }
+    header .version { background: var(--highlight); color: white; padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: 700; letter-spacing: 0.5px; }
+    main { padding: 30px; }
+    .welcome { font-size: 16px; margin-bottom: 20px; color: var(--fg); }
+    .changelog { background: #fafafa; border-radius: 8px; padding: 20px; margin: 20px 0; border-left: 4px solid var(--highlight); }
+    .changelog h2 { font-size: 16px; margin-bottom: 12px; color: var(--fg); }
+    .changelog ul { list-style: none; padding: 0; }
+    .changelog li { padding: 8px 0; padding-left: 24px; position: relative; font-size: 14px; color: var(--fg-muted); }
+    .changelog li::before { content: "→"; position: absolute; left: 0; color: var(--highlight); font-weight: bold; }
+    .info-box { background: linear-gradient(135deg, var(--highlight-opacity) 0%, var(--highlight) 100%); color: white; padding: 16px 20px; border-radius: 8px; margin: 20px 0; font-size: 14px; display: flex; align-items: center; gap: 12px; }
+    .info-box::before { content: "ℹ️"; font-size: 20px; }
+    .link-section { margin: 24px 0; font-size: 14px; }
+    .link-section a { color: var(--highlight); text-decoration: none; font-weight: 600; transition: opacity 0.2s; }
+    .link-section a:hover { opacity: 0.7; text-decoration: underline; }
+    .actions { display: flex; justify-content: flex-end; gap: 12px; padding: 20px 30px; background: #f5f5f5; border-top: 1px solid #e0e0e0; }
+    .btn { appearance: none; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: 600; transition: all 0.2s; }
+    .btn:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); }
+    .btn.primary { background: var(--highlight); color: white; }
+    .btn.primary:hover { background: #e68600; }
+    .btn.secondary { background: transparent; border: 2px solid var(--fg-light); color: var(--fg-muted); }
+    .btn.secondary:hover { border-color: var(--fg-muted); color: var(--fg); }
+    footer { text-align: center; padding: 20px; font-size: 12px; color: var(--fg-muted); }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Update Notice</h1>
+      <div class="version" id="version">v?</div>
+    </header>
+    <main>
+      <div class="welcome">
+        Welcome to the latest version of <strong>Github Markdown Writer</strong>! We have delivered a set of improvements and new features.
+      </div>
+      <div class="changelog">
+        <h2>📝 What's new</h2>
+        <ul id="changelogList">
+          <li>Jekyller renamed to Github Markdown Writer for clarity</li>
+          <li>Improved UI layout and interaction logic; enhanced mobile experience</li>
+          <li>Added broader support for publishing files to GitHub</li>
+        </ul>
+      </div>
+      <div class="info-box">
+        This notice is shown only once per update. For full release notes, please visit the project release page.
+      </div>
+      <div class="link-section">
+        Full release notes: <a id="releaseLink" href="https://github.com/shinemoon/jekyller" target="_blank">GitHub Releases</a>
+      </div>
+    </main>
+    <div class="actions">
+      <button class="btn primary" id="okBtn">Got it</button>
+    </div>
+    <footer>
+      Github Markdown Writer - Making GitHub-based blogging simpler | © 2026
+    </footer>
+  </div>
+  <script src="update.js"></script>
+</body>
+</html>

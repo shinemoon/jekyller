@@ -120,8 +120,6 @@
                 const lines = cmdList.map(function (c) { return ':' + c.name + ' (' + c.short + ') ' + c.desc; });
                 if (typeof document !== 'undefined' && document.body) {
                     showHelpLines(lines);
-                } else if (typeof alert !== 'undefined') {
-                    alert(gm('helpTitle') + ":\n" + lines.join('\n'));
                 }
                 if (typeof console !== 'undefined') console.log(lines.join('\n'));
             });

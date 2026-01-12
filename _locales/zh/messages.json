@@ -80,13 +80,29 @@
         "message": "登录失败，令牌错误或未正确设置，请确认!",
         "description": "Login Failed"
     },
-    "ErrVerion": {
-        "message": "版本冲突，请复制保存内容后，重新加载文章!",
-        "description": "Version Conflicted, Please reload the post (after copy your content)"
+    "ErrVersion": {
+        "message": "版本冲突！远程文章已被其他设备或用户修改",
+        "description": "Version Conflicted"
+    },
+    "ErrVersionDetails": {
+        "message": "：建议手动保存然后重新加载远程文章合并，避免丢失。",
+        "description": "Version Conflict Details"
     },
     "ErrGeneral": {
         "message": "发生错误，请重新检查!",
         "description": "Genreal Error"
+    },
+    "copyContent": {
+        "message": "复制当前内容",
+        "description": "Copy Current Content"
+    },
+    "contentCopied": {
+        "message": "内容已复制到剪贴板！",
+        "description": "Content Copied"
+    },
+    "close": {
+        "message": "关闭",
+        "description": "Close"
     },
     "Title": {
         "message": "标题",

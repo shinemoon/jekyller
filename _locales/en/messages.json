@@ -79,13 +79,29 @@
         "message": "Login failed, invalid token or not set properly. Please verify!",
         "description": "Login Failed"
     },
-    "ErrVerion": {
-        "message": "Version conflict, please reload the post!",
+    "ErrVersion": {
+        "message": "Version conflict! ",
         "description": "Version Conflicted"
+    },
+    "ErrVersionDetails": {
+        "message": ":<br/>Pls manually backup current page and then reload the remote content to merge.",
+        "description": "Version Conflict Details"
     },
     "ErrGeneral": {
         "message": "An error occurred, please check again!",
         "description": "General Error"
+    },
+    "copyContent": {
+        "message": "Copy Current Content",
+        "description": "Copy Current Content"
+    },
+    "contentCopied": {
+        "message": "Content copied to clipboard!",
+        "description": "Content Copied"
+    },
+    "close": {
+        "message": "Close",
+        "description": "Close"
     },
     "Title": {
         "message": "Title",

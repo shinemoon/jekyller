@@ -15,9 +15,9 @@ function buildFilePath(filename) {
 
 // 加载当前帖子内容 Load Current Post Content
 function loadPost(content) {
-    editor.setValue(content);
-    editor.moveCursorTo(0, 0);      // 将光标移至文档开头 Move Cursor to Start
-    editor.clearSelection();        // 清除选区 Clear Selection
+    // 使用 -1 参数避免选中所有文本，将光标移至文档开头
+    // Use -1 to move cursor to start without selecting all text
+    editor.setValue(content, -1);
     updatePreview();                // 刷新预览 Refresh Preview
 
     // 移除弹框与蒙层 Remove Pop-ups and Mask
@@ -52,10 +52,11 @@ function createNewPost() {
 // 导出帖子数据为 Markdown 格式 Dump Post Data as Markdown
 function dumpPost() {
     var shadowpost = { ...curpost };  // 创建内容副本 Create Copy of Post
-    var contentstr = shadowpost.content;
+    var contentstr = shadowpost.content.trim();  // trim内容避免多余空行
     delete shadowpost.content;
     var metastr = YAML.stringify(shadowpost);
-    return `---\n${metastr}\n---\n${contentstr}`;
+    // YAML front matter后接一个换行，然后是内容
+    return `---\n${metastr}---\n${contentstr}`;
 }
 
 // 加载当前帖子内容 Load Current Post Content
@@ -85,8 +86,11 @@ function updatePost(cb) {
             curpost.sha = responseContent.content.sha;
             clist.push({ ...curpost });
             storePost();
-        } else { // 出现冲突或错误 Conflict or General Error
-            logError(r == '409' ? gm('ErrVersion') : gm('ErrGeneral'));
+        } else if (r == '409') { // 版本冲突 Version Conflict
+            // 显示冲突错误提示
+            logError(gm('ErrVersion') + ' ' + gm('ErrVersionDetails').replace(/<br\/?>/gi, ' '));
+        } else { // 其他错误 General Error
+            logError(gm('ErrGeneral'));
         }
 
         chrome.storage.local.set({ clist:clist }, () => $('.frame-mask').click());
@@ -138,4 +142,22 @@ function getLocalPost(cb) {
         cb(o.syncpost);
         console.log('Sync complete');
     });
+}
+
+// 测试409冲突错误 Test 409 Conflict Error (for testing purposes)
+function test409Conflict() {
+    console.log('Testing 409 conflict error...');
+    // 模拟409冲突响应
+    const mockResponse = {
+        content: {
+            sha: 'mock_sha_123'
+        }
+    };
+    const r = '409';
+    const s = JSON.stringify(mockResponse);
+    
+    // 执行与updatePost中相同的错误处理逻辑
+    if (r == '409') {
+        logError(gm('ErrVersion') + ' ' + gm('ErrVersionDetails').replace(/<br\/?>/gi, ' '));
+    }
 }

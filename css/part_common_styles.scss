@@ -535,6 +535,12 @@ body {
   #editor {
     line-height: 1.6em;
     overflow-y: hidden;
+    
+    // 改善中文等CJK字符的换行行为
+    .ace_line {
+      word-break: normal;
+      overflow-wrap: break-word;
+    }
   }
 
   #preview {

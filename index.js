@@ -53,7 +53,12 @@ chrome.storage.local.get({
         showPrintMargin: false,
         showLineNumbers: editorcfg.shownumber,
         wrap: true,
+        wrapMethod: "text",  // 使用text模式以改善中文等字符的换行行为
     });
+    
+    // 设置换行限制，让编辑器尽可能在更合适的位置换行
+    editor.getSession().setUseWrapMode(true);
+    editor.getSession().setWrapLimitRange(null, null);  // 不限制wrap范围
 
     //Version info
     $('body').append("<div class='versioninfo'>V"+manifestData.version+"</div>");
