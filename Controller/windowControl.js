@@ -4,8 +4,58 @@
 // i18n 多语言翻译功能 i18n Translation Function
 // ==========================
 function gm(str) {
+    // If a user-selected language override is loaded, use it first
+    try {
+        var sel = window.selected_ui_lang;
+        if (sel && window._localMessages && window._localMessages[sel] && window._localMessages[sel][str]) {
+            return window._localMessages[sel][str].message;
+        }
+    } catch (e) {
+        // fall back
+    }
     return chrome.i18n.getMessage(str);
 }
+
+// Load local messages for supported locales so we can override chrome.i18n at runtime
+function initI18n() {
+    window._localMessages = window._localMessages || {};
+    // supported locales: en, zh
+    ['en', 'zh'].forEach(function (loc) {
+        var path = '../_locales/' + loc + '/messages.json';
+        fetch(path).then(function (r) { return r.json(); }).then(function (json) {
+            window._localMessages[loc] = json;
+        }).catch(function (e) {
+            console.warn('Could not load locale', loc, e);
+        });
+    });
+
+    // load stored ui_lang or use browser language as default
+    chrome.storage.local.get('ui_lang', function (res) {
+        var ui = res && res.ui_lang;
+        if (!ui) {
+            var full = chrome.i18n.getUILanguage();
+            ui = (full && full.indexOf('zh') === 0) ? 'zh' : 'en';
+        }
+        window.selected_ui_lang = ui;
+    });
+}
+
+// Set UI language and persist it
+function setUILanguage(lang, cb) {
+    if (lang !== 'en' && lang !== 'zh') {
+        logError('Unsupported language: ' + lang);
+        if (cb) cb(new Error('unsupported'));
+        return;
+    }
+    chrome.storage.local.set({ ui_lang: lang }, function () {
+        window.selected_ui_lang = lang;
+        logInfo(gm('languageSet'));
+        if (typeof cb === 'function') cb();
+    });
+}
+
+// initialize i18n loader
+initI18n();
 
 // ==========================
 // 主要操作绑定 Primary Action Bindings

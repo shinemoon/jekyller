@@ -72,30 +72,30 @@
         function register(VimApi) {
             VimApiAvailable = VimApi;
 
-            addEx("write", "w", "save", function (cm, input) {
+            addEx("write", "w", gm("exWrite"), function (cm, input) {
                 syncLocalPost();
                 logInfo(gm("vimsave"));
             });
 
-            addEx("quit", "q", "quit", function (cm, input) {
+            addEx("quit", "q", gm("exQuit"), function (cm, input) {
                 window.close();
             });
 
-            addEx("layout", "l", "switch layout", function (cm, input) {
+            addEx("layout", "l", gm("exLayout"), function (cm, input) {
                 switchLayout();
             });
 
-            addEx("switch", "s", "toggle skin", function (cm, input) {
+            addEx("switch", "s", gm("exSwitch"), function (cm, input) {
                 switchSkin();
             });
 
-            addEx("new", "n", "create new post", function (cm, input) {
+            addEx("new", "n", gm("exNew"), function (cm, input) {
                 if (user_info) {
                     $('.img#create').click();
                 }
             });
 
-            addEx("published", "pu", "Update & published", function (cm, input) {
+            addEx("published", "pu", gm("exPublished"), function (cm, input) {
                 if (user_info) {
                     curpost.published = true;
                     $('.content.post input').prop('checked', curpost.published);
@@ -105,7 +105,7 @@
                 }
             });
 
-            addEx("unpublished", "un", "Update & unpublished", function (cm, input) {
+            addEx("unpublished", "un", gm("exUnpublished"), function (cm, input) {
                 if (user_info) {
                     curpost.published = false;
                     $('.content.post input').prop('checked', curpost.published);
@@ -116,7 +116,7 @@
             });
 
             // Help: list supported ex commands
-            addEx("help", "h", "show supported ex commands", function (cm, input) {
+            addEx("help", "h", gm("exHelp"), function (cm, input) {
                 const lines = cmdList.map(function (c) { return ':' + c.name + ' (' + c.short + ') ' + c.desc; });
                 if (typeof document !== 'undefined' && document.body) {
                     showHelpLines(lines);
@@ -124,6 +124,30 @@
                     alert("Supported ex commands:\n" + lines.join('\n'));
                 }
                 if (typeof console !== 'undefined') console.log(lines.join('\n'));
+            });
+
+            // language ex command: :language en|zh  or :lang en|zh
+            addEx("language", "lang", gm("exLanguage"), function (cm, input) {
+                // input may be a string containing args or undefined depending on VimApi implementation
+                var arg = '';
+                try { arg = (typeof input === 'string') ? input.trim() : (input && input.args) ? String(input.args).trim() : ''; } catch (e) { arg = ''; }
+                if (!arg) {
+                    arg = prompt(gm('exLanguage') + ' (en | zh):', 'en');
+                    if (!arg) return;
+                }
+                arg = arg.toLowerCase();
+                if (arg !== 'en' && arg !== 'zh') {
+                    logError(gm('languageUnsupported') || ('Unsupported language: ' + arg));
+                    return;
+                }
+                if (typeof setUILanguage === 'function') {
+                    setUILanguage(arg, function () {
+                        // reload view strings if needed
+                        setView && typeof setView === 'function' && setView();
+                    });
+                } else {
+                    try { chrome.storage.local.set({ ui_lang: arg }); } catch (e) {}
+                }
             });
         }
 

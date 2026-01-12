@@ -153,7 +153,7 @@
         "description": "cancel"
     },
     "blogName": {
-        "message": "博客",
+        "message": "用户",
         "description": "Blog Owner"
     },
     "editorLayout":{
@@ -235,5 +235,50 @@
     "repoAccessSuccess": {
         "message": "仓库和目录验证成功！",
         "description": "Repo Access Success"
+    },
+    "exWrite": {
+        "message": "保存",
+        "description": "Ex 命令: write"
+    },
+    "exQuit": {
+        "message": "退出",
+        "description": "Ex 命令: quit"
+    },
+    "exLayout": {
+        "message": "切换布局",
+        "description": "Ex 命令: layout"
+    },
+    "exSwitch": {
+        "message": "切换皮肤",
+        "description": "Ex 命令: switch"
+    },
+    "exNew": {
+        "message": "新建文章",
+        "description": "Ex 命令: new"
+    },
+    "exPublished": {
+        "message": "更新并发布",
+        "description": "Ex 命令: published"
+    },
+    "exUnpublished": {
+        "message": "更新并取消发布",
+        "description": "Ex 命令: unpublished"
+    },
+    "exHelp": {
+        "message": "显示支持的 ex 命令",
+        "description": "Ex 命令: help"
+    }
+    ,
+    "exLanguage": {
+        "message": "切换界面语言",
+        "description": "Ex 命令: language"
+    },
+    "languageSet": {
+        "message": "语言偏好已保存",
+        "description": "语言设置确认"
+    },
+    "languageUnsupported": {
+        "message": "不支持的语言",
+        "description": "不支持的语言提示"
     }
 }

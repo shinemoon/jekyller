@@ -236,6 +236,51 @@
     "repoAccessSuccess": {
         "message": "Repository and folder validated successfully!",
         "description": "Repo Access Success"
+    },
+    "exWrite": {
+        "message": "Save",
+        "description": "Ex command: write"
+    },
+    "exQuit": {
+        "message": "Quit",
+        "description": "Ex command: quit"
+    },
+    "exLayout": {
+        "message": "Switch layout",
+        "description": "Ex command: layout"
+    },
+    "exSwitch": {
+        "message": "Toggle skin",
+        "description": "Ex command: switch"
+    },
+    "exNew": {
+        "message": "Create new post",
+        "description": "Ex command: new"
+    },
+    "exPublished": {
+        "message": "Update & publish",
+        "description": "Ex command: published"
+    },
+    "exUnpublished": {
+        "message": "Update & unpublish",
+        "description": "Ex command: unpublished"
+    },
+    "exHelp": {
+        "message": "Show supported ex commands",
+        "description": "Ex command: help"
+    }
+    ,
+    "exLanguage": {
+        "message": "Switch UI language",
+        "description": "Ex command: language"
+    },
+    "languageSet": {
+        "message": "Language preference saved",
+        "description": "Language set confirmation"
+    },
+    "languageUnsupported": {
+        "message": "Unsupported language",
+        "description": "Unsupported language message"
     }
 
 }

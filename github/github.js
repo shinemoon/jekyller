@@ -122,7 +122,7 @@ gh = (function () {
     var elem = user_info_div;
     var nameElem = document.createElement('div');
     //console.info(user_info);
-    nameElem.innerHTML = gm("blogname") + ": <a href='http://" + user_info.login + ".github.io' target=_blank>" + user_info.login + "</a>";
+    nameElem.innerHTML = gm("blogName") + ": <a href='http://" + user_info.login + ".github.io' target=_blank>" + user_info.login + "</a>";
     elem.innerHTML = nameElem.innerHTML;
   }
 
