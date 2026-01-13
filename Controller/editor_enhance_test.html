@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>编辑器增强功能测试</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            border-bottom: 3px solid #4CAF50;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #555;
+            margin-top: 30px;
+        }
+        .test-section {
+            background: #f9f9f9;
+            padding: 15px;
+            margin: 15px 0;
+            border-left: 4px solid #4CAF50;
+            border-radius: 4px;
+        }
+        .symbol-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 10px;
+            margin: 15px 0;
+        }
+        .symbol-item {
+            background: #e8f5e9;
+            padding: 10px;
+            border-radius: 4px;
+            text-align: center;
+            font-family: monospace;
+            font-size: 18px;
+        }
+        .usage-steps {
+            background: #fff3e0;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 15px 0;
+        }
+        .usage-steps ol {
+            margin: 10px 0;
+            padding-left: 25px;
+        }
+        .usage-steps li {
+            margin: 8px 0;
+            line-height: 1.6;
+        }
+        code {
+            background: #263238;
+            color: #aed581;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+        }
+        .note {
+            background: #e3f2fd;
+            padding: 12px;
+            border-left: 4px solid #2196F3;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+        .feature-tag {
+            display: inline-block;
+            background: #4CAF50;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            margin: 5px 5px 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 编辑器增强功能测试页面</h1>
+        
+        <div class="test-section">
+            <h2>✨ 功能特性</h2>
+            <div>
+                <span class="feature-tag">自动配对</span>
+                <span class="feature-tag">智能退格</span>
+                <span class="feature-tag">选中包围</span>
+                <span class="feature-tag">快捷跳出</span>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h2>📝 支持的符号对</h2>
+            <h3>英文符号：</h3>
+            <div class="symbol-list">
+                <div class="symbol-item">( )</div>
+                <div class="symbol-item">[ ]</div>
+                <div class="symbol-item">{ }</div>
+                <div class="symbol-item">' '</div>
+                <div class="symbol-item">" "</div>
+                <div class="symbol-item">` `</div>
+            </div>
+            
+            <h3>中文符号：</h3>
+            <div class="symbol-list">
+                <div class="symbol-item">（ ）</div>
+                <div class="symbol-item">【 】</div>
+                <div class="symbol-item">《 》</div>
+                <div class="symbol-item">「 」</div>
+                <div class="symbol-item">『 』</div>
+                <div class="symbol-item">" "</div>
+                <div class="symbol-item">' '</div>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h2>🎯 测试步骤</h2>
+            
+            <div class="usage-steps">
+                <h3>测试 1：基本自动配对</h3>
+                <ol>
+                    <li>在编辑器中输入 <code>(</code></li>
+                    <li>观察：应该自动生成 <code>()</code>，光标在中间</li>
+                    <li>输入内容：<code>hello world</code></li>
+                    <li>结果：<code>(hello world)</code>，光标在内容后、右括号前</li>
+                    <li>按 <code>Enter</code> 键，光标应跳到右括号之后（配对模式下）</li>
+                </ol>
+            </div>
+
+            <div class="usage-steps">
+                <h3>测试 2：包围选中文本</h3>
+                <ol>
+                    <li>在编辑器中输入：<code>hello world</code></li>
+                    <li>选中全部文本</li>
+                    <li>输入 <code>(</code></li>
+                    <li>结果：<code>(hello world)</code>，文本保持选中状态</li>
+                </ol>
+            </div>
+
+            <div class="usage-steps">
+                <h3>测试 3：智能退格</h3>
+                <ol>
+                    <li>输入 <code>(</code>，自动生成 <code>()</code></li>
+                    <li>不输入任何内容，直接按 <code>Backspace</code></li>
+                    <li>结果：成对符号应该一起被删除</li>
+                </ol>
+            </div>
+
+            <div class="usage-steps">
+                <h3>测试 4：中文符号</h3>
+                <ol>
+                    <li>输入 <code>"</code>（中文左引号）</li>
+                    <li>自动生成：<code>""</code>，光标在中间</li>
+                    <li>输入：<code>这是中文内容</code></li>
+                    <li>按 <code>Enter</code> 键，光标跳到右引号后</li>
+                </ol>
+            </div>
+
+            <div class="usage-steps">
+                <h3>测试 5：嵌套符号</h3>
+                <ol>
+                    <li>输入 <code>[</code>，得到 <code>[]</code></li>
+                    <li>输入 <code>{</code>，得到 <code>[{}]</code></li>
+                    <li>输入内容：<code>key: value</code></li>
+                    <li>按 <code>Enter</code>，跳出 <code>{}</code></li>
+                    <li>继续输入其他内容</li>
+                </ol>
+            </div>
+
+            <div class="usage-steps">
+                <h3>测试 6：正常换行</h3>
+                <ol>
+                    <li>输入普通文本：<code>hello world</code></li>
+                    <li>光标移到行尾（不在配对符号中）</li>
+                    <li>按 <code>Enter</code></li>
+                    <li>结果：正常换行到下一行（不是跳出符号）</li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h2>⚙️ 配置选项</h2>
+            <p>在 <code>index.js</code> 中配置：</p>
+            <pre style="background: #263238; color: #aed581; padding: 15px; border-radius: 4px; overflow-x: auto;"><code>enableEditorEnhancement(editor, {
+    autoPairing: true,      // 启用/禁用自动配对
+    smartBackspace: true    // 启用/禁用智能退格
+});</code></pre>
+        </div>
+
+        <div class="note">
+            <h3>📌 注意事项</h3>
+            <ul>
+                <li>该功能已自动集成到编辑器中，无需额外配置</li>
+                <li>支持与 Vim 模式等其他编辑器模式共存</li>
+                <li>智能退格只在成对符号中间且无内容时触发</li>
+                <li><strong>智能回车</strong>：在配对模式下 <code>Enter</code> 跳出符号，否则正常换行</li>
+                <li>也可使用 <code>Tab</code> 键快速跳出（备选方案）</li>
+                <li>可以直接使用方向键移动光标，不影响正常编辑</li>
+                <li>支持中英文各种成对符号</li>
+            </ul>
+        </div>
+
+        <div class="test-section">
+            <h2>🔧 实现文件</h2>
+            <ul>
+                <li><strong>功能实现：</strong> <code>/Controller/editorEnhance.js</code></li>
+                <li><strong>功能启用：</strong> <code>index.js</code> 中调用 <code>enableEditorEnhancement()</code></li>
+                <li><strong>脚本加载：</strong> <code>index.html</code> 中引入</li>
+                <li><strong>说明文档：</strong> <code>/Controller/EDITOR_ENHANCE_README.md</code></li>
+            </ul>
+        </div>
+
+        <div style="text-align: center; margin-top: 40px; padding-top: 20px; border-top: 1px solid #ddd; color: #888;">
+            <p>编辑器增强功能 v1.0 | 成对符号自动配对系统</p>
+        </div>
+    </div>
+</body>
+</html>

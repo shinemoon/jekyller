@@ -60,6 +60,14 @@ chrome.storage.local.get({
     editor.getSession().setUseWrapMode(true);
     editor.getSession().setWrapLimitRange(null, null);  // 不限制wrap范围
 
+    // 启用编辑器增强功能 Enable editor enhancement features
+    if (typeof enableEditorEnhancement === 'function') {
+        enableEditorEnhancement(editor, {
+            autoPairing: true,      // 启用自动配对
+            smartBackspace: true    // 启用智能退格
+        });
+    }
+
     //Version info
     $('body').append("<div class='versioninfo'>V"+manifestData.version+"</div>");
 
