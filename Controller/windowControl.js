@@ -110,6 +110,12 @@ $('.img#layout').click(() => {
     switchLayout();
 });
 
+// 显示帮助 Show Help
+$('.img#help').click(() => {
+    $('.focus').removeClass('focus');
+    openHelp();
+});
+
 function switchLayout() {
     $('.focus').removeClass('focus');
     
@@ -315,6 +321,42 @@ function switchSkin() {
         //Other
         setView();
     });
+}
+
+// ==========================
+// 打开帮助文档 Open Help Documentation
+// ==========================
+
+/** 打开帮助页面 Open Help Page */
+function openHelp() {
+    try {
+        // 获取语言设置
+        chrome.storage.local.get('ui_lang', function(res) {
+            let lang = 'en';
+            
+            // 优先使用存储的语言设置
+            if (res && res.ui_lang) {
+                lang = res.ui_lang.toLowerCase();
+            } else if (window.selected_ui_lang) {
+                lang = window.selected_ui_lang.toLowerCase();
+            } else if (typeof chrome !== 'undefined' && chrome.i18n && chrome.i18n.getUILanguage) {
+                lang = chrome.i18n.getUILanguage().toLowerCase();
+            } else if (navigator && navigator.language) {
+                lang = navigator.language.toLowerCase();
+            }
+            
+            // 根据语言选择帮助文件
+            const helpFile = (lang.indexOf('zh') === 0) ? 'help_zh.html' : 'help_en.html';
+            
+            // 打开帮助页面
+            chrome.tabs.create({ url: chrome.runtime.getURL(helpFile) });
+            
+            logInfo(gm('helpOpened') || 'Help opened');
+        });
+    } catch (e) {
+        console.warn('Failed to open help:', e);
+        logError('Failed to open help: ' + e.message);
+    }
 }
 
 

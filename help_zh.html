@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Github Markdown Writer - 帮助文档</title>
+  <style>
+    :root {
+      --highlight: #ff9500;
+      --highlight-opacity: #ff95008f;
+      --bg: #e8e8e8;
+      --panel: #dad8d8;
+      --fg: #333333;
+      --fg-muted: #666666;
+      --fg-light: #ccc;
+      --shadow: rgba(20, 20, 20, 0.8);
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    html, body {
+      height: 100%;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, "Microsoft YaHei", sans-serif;
+      background: var(--bg);
+      color: var(--fg);
+      line-height: 1.6;
+    }
+    
+    .container {
+      max-width: 900px;
+      margin: 40px auto;
+      background: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+      overflow: hidden;
+    }
+    
+    header {
+      background: var(--panel);
+      padding: 24px 30px;
+      border-bottom: 3px solid var(--highlight);
+    }
+    
+    header h1 {
+      font-size: 24px;
+      font-weight: 600;
+      color: var(--fg);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    
+    header h1::before {
+      content: "📖";
+      font-size: 28px;
+    }
+    
+    main {
+      padding: 30px;
+    }
+    
+    .section {
+      margin-bottom: 30px;
+    }
+    
+    .section h2 {
+      font-size: 20px;
+      margin-bottom: 16px;
+      color: var(--fg);
+      border-left: 4px solid var(--highlight);
+      padding-left: 12px;
+    }
+    
+    .section h3 {
+      font-size: 16px;
+      margin: 20px 0 12px;
+      color: var(--highlight);
+    }
+    
+    .section p {
+      font-size: 14px;
+      color: var(--fg-muted);
+      margin-bottom: 12px;
+      line-height: 1.8;
+    }
+    
+    .section ul {
+      list-style: none;
+      padding: 0;
+      margin-bottom: 16px;
+    }
+    
+    .section li {
+      padding: 8px 0;
+      padding-left: 24px;
+      position: relative;
+      font-size: 14px;
+      color: var(--fg-muted);
+    }
+    
+    .section li::before {
+      content: "•";
+      position: absolute;
+      left: 8px;
+      color: var(--highlight);
+      font-weight: bold;
+      font-size: 18px;
+    }
+    
+    .feature-card {
+      background: #fafafa;
+      border-radius: 8px;
+      padding: 16px;
+      margin: 12px 0;
+      border-left: 4px solid var(--highlight);
+    }
+    
+    .feature-card strong {
+      color: var(--highlight);
+    }
+    
+    .tip-box {
+      background: linear-gradient(135deg, var(--highlight-opacity) 0%, var(--highlight) 100%);
+      color: white;
+      padding: 16px 20px;
+      border-radius: 8px;
+      margin: 20px 0;
+      font-size: 14px;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+    
+    .tip-box::before {
+      content: "💡";
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+    
+    .actions {
+      padding: 20px 30px;
+      background: var(--bg);
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+    }
+    
+    .btn {
+      padding: 12px 32px;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .btn.primary {
+      background: var(--highlight);
+      color: white;
+    }
+    
+    .btn.primary:hover {
+      background: #e68600;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(255, 149, 0, 0.3);
+    }
+    
+    code {
+      background: #f5f5f5;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: "Consolas", "Monaco", monospace;
+      font-size: 13px;
+      color: var(--highlight);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Github Markdown Writer 帮助文档</h1>
+    </header>
+    
+    <main>
+      <div class="section">
+        <h2>🎯 扩展简介</h2>
+        <p>Github Markdown Writer（原 Jekyller）是一款专为基于 Github 的博客创作而设计的浏览器扩展。它可以帮助您更便捷地编写、预览和发布 Markdown 文章到 GitHub Pages。</p>
+      </div>
+      
+      <div class="section">
+        <h2>✨ 主要功能</h2>
+        
+        <div class="feature-card">
+          <h3>📝 Markdown 编辑器</h3>
+          <p>强大的 Markdown 编辑器，支持实时预览和语法高亮。</p>
+          <ul>
+            <li>支持标准 Markdown 语法</li>
+            <li>实时预览功能</li>
+            <li>代码语法高亮</li>
+            <li>支持 Front Matter 编辑</li>
+          </ul>
+        </div>
+        
+        <div class="feature-card">
+          <h3>🚀 快速发布</h3>
+          <p>一键发布文章到 GitHub Pages。</p>
+          <ul>
+            <li>自动提交到 GitHub 仓库</li>
+            <li>支持多个博客站点配置</li>
+            <li>自动生成文件名和路径</li>
+          </ul>
+        </div>
+        
+        <div class="feature-card">
+          <h3>🎨 界面定制</h3>
+          <p>灵活的界面和主题设置。</p>
+          <ul>
+            <li>多语言支持（中文/英文）</li>
+            <li>明暗主题切换</li>
+            <li>自定义编辑器配置</li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="section">
+        <h2>🔧 使用指南</h2>
+        
+        <h3>第一次使用</h3>
+        <p>1. 点击浏览器工具栏中的扩展图标</p>
+        <p>2. 在设置中配置您的 GitHub 信息：</p>
+        <ul>
+          <li>GitHub 用户名</li>
+          <li>仓库名称</li>
+          <li>访问令牌（Token）</li>
+        </ul>
+        
+        <div class="tip-box">
+          <div>
+            <strong>提示：</strong>如何获取 GitHub Token？<br>
+            前往 GitHub Settings → Developer settings → Personal access tokens → Generate new token<br>
+            需要勾选 <code>repo</code> 权限。
+          </div>
+        </div>
+        
+        <h3>创建新文章</h3>
+        <p>1. 点击"新建文章"按钮</p>
+        <p>2. 在编辑器中编写您的内容</p>
+        <p>3. 填写文章的 Front Matter（标题、日期、分类等）</p>
+        <p>4. 点击"发布"按钮上传到 GitHub</p>
+        
+        <h3>编辑现有文章</h3>
+        <p>1. 从文章列表中选择要编辑的文章</p>
+        <p>2. 修改内容后保存</p>
+        <p>3. 点击"更新"按钮同步到 GitHub</p>
+      </div>
+      
+      <div class="section">
+        <h2>⚙️ 设置说明</h2>
+        
+        <h3>语言设置</h3>
+        <p>在扩展设置中可以切换界面语言（中文/English）。</p>
+        
+        <h3>编辑器配置</h3>
+        <p>可以自定义编辑器的行为，包括：</p>
+        <ul>
+          <li>字体大小</li>
+          <li>自动保存</li>
+          <li>快捷键绑定</li>
+        </ul>
+        
+        <h3>GitHub 配置</h3>
+        <p>配置您的 GitHub 仓库信息和访问权限。</p>
+      </div>
+      
+      <div class="section">
+        <h2>❓ 常见问题</h2>
+        
+        <h3>无法连接到 GitHub？</h3>
+        <p>请检查：</p>
+        <ul>
+          <li>网络连接是否正常</li>
+          <li>GitHub Token 是否有效</li>
+          <li>Token 权限是否正确配置</li>
+        </ul>
+        
+        <h3>文章无法发布？</h3>
+        <p>可能的原因：</p>
+        <ul>
+          <li>仓库名称配置错误</li>
+          <li>文件路径不正确</li>
+          <li>Front Matter 格式有误</li>
+        </ul>
+        
+        <h3>如何获取更多帮助？</h3>
+        <p>访问我们的 GitHub 仓库：<br>
+        <a href="https://github.com/shinemoon/jekyller" target="_blank" style="color: var(--highlight);">https://github.com/shinemoon/jekyller</a></p>
+      </div>
+      
+      <div class="tip-box">
+        <div>
+          <strong>需要更多帮助？</strong><br>
+          如果您遇到问题或有功能建议，欢迎在 GitHub 上提交 Issue。
+        </div>
+      </div>
+    </main>
+    
+    <div class="actions">
+      <button class="btn primary" onclick="window.close()">关闭</button>
+    </div>
+  </div>
+</body>
+</html>
