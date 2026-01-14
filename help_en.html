@@ -270,8 +270,140 @@
         <ul>
           <li>Font size</li>
           <li>Auto-save</li>
-          <li>Keyboard shortcuts</li>
+          <li>Key binding mode</li>
+          <li>Show line numbers</li>
         </ul>
+        
+        <h3>⌨️ Key Binding Modes</h3>
+        <p>The editor supports multiple key binding modes to suit different editing preferences:</p>
+        
+        <div class="feature-card">
+          <h3>🔹 Normal Mode (Default)</h3>
+          <p>Standard editor mode with common keyboard shortcuts.</p>
+          <ul>
+            <li><code>Ctrl+S</code> - Save document</li>
+            <li><code>Ctrl+Z</code> - Undo</li>
+            <li><code>Ctrl+Y</code> / <code>Ctrl+Shift+Z</code> - Redo</li>
+            <li><code>Ctrl+F</code> - Find</li>
+            <li><code>Ctrl+H</code> - Replace</li>
+            <li><code>Ctrl+A</code> - Select all</li>
+            <li><code>Ctrl+/</code> - Toggle comment</li>
+            <li><code>Home</code> / <code>End</code> - Jump to line start/end</li>
+            <li><code>Ctrl+Home</code> / <code>Ctrl+End</code> - Jump to document start/end</li>
+          </ul>
+        </div>
+        
+        <div class="feature-card">
+          <h3>🔹 Vim Mode</h3>
+          <p>Provides familiar modal editing experience for Vim users. Supports Normal, Insert, and Visual modes.</p>
+          
+          <p><strong>Basic Operations:</strong></p>
+          <ul>
+            <li><code>i</code> - Enter insert mode (before cursor)</li>
+            <li><code>a</code> - Enter insert mode (after cursor)</li>
+            <li><code>I</code> - Insert at line start</li>
+            <li><code>A</code> - Insert at line end</li>
+            <li><code>o</code> - Open new line below and insert</li>
+            <li><code>O</code> - Open new line above and insert</li>
+            <li><code>Esc</code> - Return to Normal mode</li>
+          </ul>
+          
+          <p><strong>Motion Commands:</strong></p>
+          <ul>
+            <li><code>h/j/k/l</code> - Left/down/up/right</li>
+            <li><code>w/b</code> - Forward/backward one word</li>
+            <li><code>0</code> / <code>^</code> - Jump to line start</li>
+            <li><code>$</code> - Jump to line end</li>
+            <li><code>gg</code> - Jump to document start</li>
+            <li><code>G</code> - Jump to document end</li>
+            <li><code>{number}G</code> - Jump to specific line</li>
+            <li><code>%</code> - Jump to matching bracket</li>
+          </ul>
+          
+          <p><strong>Edit Commands:</strong></p>
+          <ul>
+            <li><code>x</code> - Delete character under cursor</li>
+            <li><code>dd</code> - Delete current line</li>
+            <li><code>D</code> - Delete to line end</li>
+            <li><code>yy</code> - Yank (copy) current line</li>
+            <li><code>p</code> / <code>P</code> - Paste after/before cursor</li>
+            <li><code>u</code> - Undo</li>
+            <li><code>Ctrl+r</code> - Redo</li>
+            <li><code>.</code> - Repeat last operation</li>
+          </ul>
+          
+          <p><strong>Visual Mode:</strong></p>
+          <ul>
+            <li><code>v</code> - Enter character-wise visual mode</li>
+            <li><code>V</code> - Enter line-wise visual mode</li>
+            <li><code>Ctrl+v</code> - Enter block-wise visual mode</li>
+            <li>After selection: <code>d</code>(delete), <code>y</code>(yank), <code>c</code>(change), etc.</li>
+          </ul>
+          
+          <p><strong>Ex Commands (type <code>:</code> in Normal mode):</strong></p>
+          <ul>
+            <li><code>:w</code> - Write (save)</li>
+            <li><code>:q</code> - Quit</li>
+            <li><code>:wq</code> - Write and quit</li>
+            <li><code>:{number}</code> - Jump to specific line</li>
+            <li><code>:s/old/new/g</code> - Substitute in current line</li>
+            <li><code>:%s/old/new/g</code> - Substitute in entire file</li>
+            <li><code>:h</code> / <code>:help</code> - Show command help list</li>
+          </ul>
+          
+          <p><strong>Extended Ex Commands (Editor-specific):</strong></p>
+          <ul>
+            <li><code>:layout</code> / <code>:l</code> - Switch editor layout (full/single/preview)</li>
+            <li><code>:switch</code> / <code>:s</code> - Switch theme (light/dark)</li>
+            <li><code>:new</code> / <code>:n</code> - Create new post</li>
+            <li><code>:published</code> / <code>:pu</code> - Mark current post as published</li>
+            <li><code>:unpublished</code> / <code>:un</code> - Mark current post as unpublished</li>
+            <li><code>:language [en|zh]</code> / <code>:lang [en|zh]</code> - Switch UI language (auto-toggle if no argument)</li>
+          </ul>
+          
+          <div class="tip-box">
+            <div>
+              <strong>Vim Mode Tip:</strong><br>
+              Type <code>:help</code> or <code>:h</code> to see a list of all available Ex commands.
+            </div>
+          </div>
+        </div>
+        
+        <div class="feature-card">
+          <h3>🔹 Sublime Mode</h3>
+          <p>Emulates Sublime Text editor shortcuts, perfect for Sublime users.</p>
+          <ul>
+            <li><code>Ctrl+D</code> - Select next occurrence</li>
+            <li><code>Ctrl+K, Ctrl+D</code> - Skip current selection, select next</li>
+            <li><code>Alt+F3</code> - Select all occurrences</li>
+            <li><code>Ctrl+L</code> - Select current line</li>
+            <li><code>Ctrl+Shift+K</code> - Delete line</li>
+            <li><code>Ctrl+Shift+D</code> - Duplicate line</li>
+            <li><code>Ctrl+]</code> / <code>Ctrl+[</code> - Indent/outdent</li>
+            <li><code>Ctrl+Shift+Up/Down</code> - Move line up/down</li>
+            <li><code>Ctrl+/</code> - Toggle line comment</li>
+            <li><code>Ctrl+Shift+/</code> - Toggle block comment</li>
+            <li><code>Ctrl+P</code> - Quick file jump</li>
+            <li><code>Ctrl+G</code> - Go to line</li>
+          </ul>
+        </div>
+        
+        <div class="feature-card">
+          <h3>🔹 Emacs Mode</h3>
+          <p>Key bindings for Emacs users.</p>
+          <ul>
+            <li><code>Ctrl+F/B</code> - Forward/backward character</li>
+            <li><code>Ctrl+N/P</code> - Next/previous line</li>
+            <li><code>Ctrl+A/E</code> - Beginning/end of line</li>
+            <li><code>Alt+F/B</code> - Forward/backward word</li>
+            <li><code>Ctrl+K</code> - Kill to end of line</li>
+            <li><code>Ctrl+D</code> - Delete character</li>
+            <li><code>Ctrl+Y</code> - Yank (paste)</li>
+            <li><code>Ctrl+Space</code> - Set mark</li>
+            <li><code>Ctrl+W</code> - Kill region</li>
+            <li><code>Alt+W</code> - Copy region</li>
+          </ul>
+        </div>
         
         <h3>GitHub Configuration</h3>
         <p>Configure your GitHub repository information and access permissions.</p>

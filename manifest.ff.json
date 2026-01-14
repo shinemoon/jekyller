@@ -5,7 +5,12 @@
   "description": "__MSG_extDes__",
   "default_locale":"en",
   "version": "5.0",
-  "minimum_chrome_version": "88",
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "{jeykller@mooninsky}",
+      "strict_min_version": "109.0"
+    }
+  },
   "action": {
     "default_icon": {
       "16": "assets/icon_512.png",
@@ -18,7 +23,7 @@
     "128": "assets/icon_512.png"
   },
   "background": {
-    "service_worker": "service_worker.js"
+    "scripts": ["service_worker.js"]
   },
   "permissions": [
     "storage"
