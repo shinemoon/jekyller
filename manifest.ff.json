@@ -7,7 +7,10 @@
   "version": "5.0.1",
   "browser_specific_settings": {
     "gecko": {
-      "id": "{jeykller@mooninsky}",
+      "id": "jeykller@mooninsky",
+      "data_collection_permissions": {
+        "required": ["none"]
+      },
       "strict_min_version": "109.0"
     }
   },
