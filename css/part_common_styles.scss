@@ -535,7 +535,7 @@ body {
   #editor {
     line-height: 1.6em;
     overflow-y: hidden;
-    
+
     // 改善中文等CJK字符的换行行为
     .ace_line {
       word-break: normal;
@@ -555,7 +555,7 @@ body {
 // Other components and utility styles...
 //Config table style
 #post-table {
-  margin: 20px 0 0 0px;
+  margin: 40px 0 0 0px;
   border: 0 solid $notify-info-bg;
 
   table {
@@ -571,7 +571,7 @@ body {
 
     &:has(input[type="checkbox"]) {
       display: flex;
-      justify-content: space-between;
+      justify-content: flex-end;
     }
 
     &.label {
@@ -622,6 +622,8 @@ body {
 
 // 搜索列表样式
 #plist-table {
+  margin-top:20px;
+  width: 280px;
 
   a {
     color: grey;
@@ -802,7 +804,7 @@ body {
 }
 
 .popping-note {
-  margin-top: 12px;
+  margin-top: 32px;
   width: 220px;
   background: $label-bg-light;
   border: 1px dotted $fg-color-2;
@@ -833,6 +835,10 @@ body {
       max-width: 245px;
       right: 78px;
       padding-left: 0px;
+
+      #plist-table {
+        width: 260px;
+      }
     }
   }
 
