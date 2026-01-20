@@ -298,6 +298,8 @@ function logError(str) {
 
 /** 关闭所有弹窗和蒙层 Close All Pop-ups and Mask */
 function popClose() {
+    // Before removing popups, snapshot #post-table inputs so values can be restored later
+    try { if (window.snapshotPostTable) window.snapshotPostTable(); } catch (e) { console.warn('snapshot before popClose failed', e); }
     $('.frame-pop, .frame-mask').remove();
     $('.frame-icon.focus').removeClass('focus');
     $('.top-masker').hide();

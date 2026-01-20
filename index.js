@@ -164,6 +164,86 @@ function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
+// ==========================
+// Post-table snapshot utilities
+// ==========================
+// Capture current values inside #post-table inputs into sessionStorage
+function snapshotPostTable() {
+    try {
+        const $table = $('#post-table');
+        if ($table.length === 0) return;
+        const data = {};
+        $table.find('input, textarea, select').each(function (i, el) {
+            const $el = $(el);
+            // Determine a key: prefer parent td class that's not 'content'
+            const parentClass = $el.closest('td').attr('class') || '';
+            let key = null;
+            if (parentClass) {
+                const parts = parentClass.split(/\s+/).filter(Boolean);
+                for (let p of parts) {
+                    if (p !== 'content') { key = p; break; }
+                }
+            }
+            if (!key) key = $el.attr('name') || $el.attr('id') || (`field_${i}`);
+
+            if ($el.is(':checkbox')) {
+                data[key] = { type: 'checkbox', value: $el.prop('checked') };
+            } else if ($el.is(':radio')) {
+                // store checked state only for named radios
+                data[key] = { type: 'radio', value: $el.prop('checked'), name: $el.attr('name') };
+            } else {
+                data[key] = { type: 'value', value: $el.val() };
+            }
+        });
+        try { sessionStorage.setItem('postTableSnapshot', JSON.stringify(data)); } catch (e) { window._postTableSnapshot = data; }
+    } catch (e) {
+        console.warn('snapshotPostTable failed', e);
+    }
+}
+
+// Restore values previously stored for #post-table inputs
+function restorePostTable() {
+    try {
+        let data = null;
+        try { data = JSON.parse(sessionStorage.getItem('postTableSnapshot')); } catch (e) { data = window._postTableSnapshot || null; }
+        if (!data) return;
+        const $table = $('#post-table');
+        if ($table.length === 0) return;
+        Object.keys(data).forEach(key => {
+            const entry = data[key];
+            if (!entry) return;
+            // find input by td classname first
+            let $el = $table.find(`td.${key}.content`).find('input,textarea,select');
+            if ($el.length === 0) {
+                // fallback: by name or id
+                $el = $table.find(`[name="${key}"]`);
+            }
+            if ($el.length === 0) return;
+            if (entry.type === 'checkbox') {
+                $el.prop('checked', !!entry.value);
+            } else if (entry.type === 'radio') {
+                if (entry.name) {
+                    $table.find(`input[type=radio][name="${entry.name}"]`).each(function () {
+                        const $r = $(this);
+                        if ($r.val() == entry.value || $r.prop('checked') === entry.value) {
+                            $r.prop('checked', !!entry.value);
+                        }
+                    });
+                } else {
+                    $el.prop('checked', !!entry.value);
+                }
+            } else {
+                $el.val(entry.value);
+            }
+        });
+    } catch (e) {
+        console.warn('restorePostTable failed', e);
+    }
+}
+
+window.snapshotPostTable = snapshotPostTable;
+window.restorePostTable = restorePostTable;
+
 
 // ==========================
 // 字体和编辑器初始化 Font and Editor Initialization

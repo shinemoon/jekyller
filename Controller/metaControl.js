@@ -44,6 +44,9 @@ function refreshPostMeta() {
 
     loadDataIntoFields();
 
+    // 如果之前有临时快照，则恢复它（覆盖默认 curpost 填充），以便在 frame-pop 被移除重建后保留用户输入
+    try { if (window.restorePostTable) window.restorePostTable(); } catch (e) { console.warn('restorePostTable failed', e); }
+
     $('.send').on('click', () => {
         if (user_info) {
             $('.top-masker').show();
