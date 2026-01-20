@@ -25,9 +25,14 @@ chrome.runtime.onInstalled.addListener(function(details) {
     // 检查存储的版本
     chrome.storage.local.get(['lastSeenVersion'], function(result) {
         const lastVersion = result.lastSeenVersion;
-        
-        // 如果没有存储版本或版本不同，打开更新页面
-        if (!lastVersion || lastVersion !== currentVersion) {
+        // 如果没有存储版本，仍然打开更新页面（首次安装或未记录）
+        if (!lastVersion) {
+            chrome.tabs.create({ url: chrome.runtime.getURL('update.html') });
+            return;
+        }
+
+        // 仅当版本的前3段（major.minor.patch）有差异时才触发更新通知
+        if (shouldNotifyVersionChange(lastVersion, currentVersion)) {
             chrome.tabs.create({
                 url: chrome.runtime.getURL('update.html')
             });
@@ -42,11 +47,37 @@ chrome.runtime.onStartup.addListener(function() {
     
     chrome.storage.local.get(['lastSeenVersion'], function(result) {
         const lastVersion = result.lastSeenVersion;
-        
-        if (!lastVersion || lastVersion !== currentVersion) {
+        if (!lastVersion) {
+            chrome.tabs.create({ url: chrome.runtime.getURL('update.html') });
+            return;
+        }
+
+        if (shouldNotifyVersionChange(lastVersion, currentVersion)) {
             chrome.tabs.create({
                 url: chrome.runtime.getURL('update.html')
             });
         }
     });
 });
+
+// Helper: compare first three numeric segments of semver-like version strings
+function shouldNotifyVersionChange(oldVer, newVer) {
+    function firstThree(v) {
+        if (!v || typeof v !== 'string') return [0,0,0];
+        const parts = v.split('.');
+        const nums = [0,0,0];
+        for (let i = 0; i < 3; i++) {
+            const p = parts[i];
+            if (typeof p === 'undefined') { nums[i] = 0; }
+            else {
+                const n = parseInt(p.replace(/[^0-9].*$/,''), 10);
+                nums[i] = isNaN(n) ? 0 : n;
+            }
+        }
+        return nums;
+    }
+
+    const a = firstThree(oldVer);
+    const b = firstThree(newVer);
+    return a[0] !== b[0] || a[1] !== b[1] || a[2] !== b[2];
+}

@@ -4,7 +4,7 @@
   "short_name": "GMDWriter",
   "description": "__MSG_extDes__",
   "default_locale":"en",
-  "version": "5.0.3",
+  "version": "5.0.3.1",
   "browser_specific_settings": {
     "gecko": {
       "id": "jeykller@mooninsky",

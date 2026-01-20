@@ -4,9 +4,6 @@ body.single {
     #top-banner-row {
         &.autohide {
             opacity: 0;
-            &:hover {
-                opacity: 1;
-            }
         }
         
         /* 展开状态必须可见，覆盖 autohide */
