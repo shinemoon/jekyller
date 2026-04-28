@@ -1,0 +1,22 @@
+{
+  "name": "jekyller",
+  "version": "5.0.3.1",
+  "description": "Github Markdown Writer - Browser Extension",
+  "private": true,
+  "scripts": {
+    "build:chrome": "node build.js chrome",
+    "build:ff": "node build.js ff",
+    "build": "npm run build:chrome && npm run build:ff"
+  },
+  "build": {
+    "chrome": {
+      "manifest": "manifest.chrome.json"
+    },
+    "ff": {
+      "manifest": "manifest.ff.json"
+    }
+  },
+  "devDependencies": {
+    "archiver": "^7.0.0"
+  }
+}
